@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسوق بلس - تسجيل الدخول</title>
+    <title>تسوق بلس - تسجيل الدخول / إنشاء حساب</title>
     <!-- مكتبة Supabase JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
@@ -36,20 +36,20 @@
                 <input type="password" id="password" required placeholder="أدخل كلمة المرور">
             </div>
             <button type="submit" id="submitBtn" class="btn-primary">تسجيل الدخول</button>
-            <button type="button" id="toggleBtn" class="btn-secondary" onclick="toggleMode()">ليس لديك حساب؟ أنشئ حساباً جديداً</button>
+            <button type="button" id="toggleBtn" class="btn-secondary" onclick="toggleMode(event)">ليس لديك حساب؟ أنشئ حساباً جديداً</button>
         </form>
     </div>
 
     <script>
-        // ضع بيانات مشروعك هنا في الـ URL و Anon Key
-        const SUPABASE_URL = 'https://رابط_مشروعك_هنا.supabase.co';
-        const SUPABASE_ANON_KEY = 'مفتاح_anon_هنا';
+        const SUPABASE_URL = 'https://valzgpkozmjiqiyhordx.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZhbHpncGtvem1qaXFpeWhvcmR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE1NTUwOTAsImV4cCI6MjEwNzEzMTA5MH0.uCt9nDEupkUYbt-xyLMjCmaOFrE1XqbfCrqU1L-Yx3w';
         
         const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         let isSignUp = false;
 
-        function toggleMode() {
+        function toggleMode(e) {
+            if (e) e.preventDefault();
             isSignUp = !isSignUp;
             const title = document.getElementById('formTitle');
             const submitBtn = document.getElementById('submitBtn');
@@ -68,7 +68,8 @@
 
         async function handleAuth(event) {
             event.preventDefault();
-            const email = document.getElementById('email').value;
+
+            const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
 
             if (isSignUp) {
@@ -76,7 +77,7 @@
                 if (error) {
                     alert("خطأ في إنشاء الحساب: " + error.message);
                 } else {
-                    alert("تم إنشاء الحساب بنجاح! يمكنك تسجيل الدخول الآن.");
+                    alert("تم إنشاء الحساب بنجاح! يمكنك الآن تسجيل الدخول.");
                     toggleMode();
                 }
             } else {
@@ -84,8 +85,7 @@
                 if (error) {
                     alert("خطأ في تسجيل الدخول: " + error.message);
                 } else {
-                    alert("تم تسجيل الدخول بنجاح!");
-                    window.location.reload();
+                    alert("تم تسجيل الدخول بنجاح! مرحباً بك في تسوق بلس.");
                 }
             }
         }
