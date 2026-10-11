@@ -36,7 +36,7 @@
                 <input type="password" id="password" required placeholder="أدخل كلمة المرور">
             </div>
             <button type="submit" id="submitBtn" class="btn-primary">تسجيل الدخول</button>
-            <button type="button" id="toggleBtn" class="btn-secondary" onclick="toggleMode(event)">ليس لديك حساب؟ أنشئ حساباً جديداً</button>
+            <button type="button" id="toggleBtn" class="btn-secondary" onclick="toggleMode()">ليس لديك حساب؟ أنشئ حساباً جديداً</button>
         </form>
     </div>
 
@@ -44,12 +44,11 @@
         const SUPABASE_URL = 'https://valzgpkozmjiqiyhordx.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZhbHpncGtvem1qaXFpeWhvcmR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE1NTUwOTAsImV4cCI6MjEwNzEzMTA5MH0.uCt9nDEupkUYbt-xyLMjCmaOFrE1XqbfCrqU1L-Yx3w';
         
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         let isSignUp = false;
 
-        function toggleMode(e) {
-            if (e) e.preventDefault();
+        function toggleMode() {
             isSignUp = !isSignUp;
             const title = document.getElementById('formTitle');
             const submitBtn = document.getElementById('submitBtn');
