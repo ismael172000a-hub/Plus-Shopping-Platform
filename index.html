@@ -1,1 +1,151 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تسوق بلس | تسجيل الدخول</title>
+  <!-- مكتبة Supabase JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+    body { background-color: #121212; color: #ffffff; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+    .card { background: #1e1e1e; width: 100%; max-width: 400px; padding: 25px; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); border: 1px solid #2a2a2a; }
+    h2 { text-align: center; margin-bottom: 20px; color: #4caf50; }
+    .form-group { margin-bottom: 15px; }
+    label { display: block; margin-bottom: 6px; font-size: 14px; color: #ccc; }
+    input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #333; background: #2a2a2a; color: #fff; font-size: 15px; outline: none; }
+    input:focus { border-color: #4caf50; }
+    button { width: 100%; padding: 12px; background: #4caf50; border: none; border-radius: 8px; color: white; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; margin-top: 10px; }
+    button:hover { background: #45a049; }
+    .switch-btn { background: transparent; border: 1px solid #4caf50; color: #4caf50; margin-top: 10px; }
+    .switch-btn:hover { background: rgba(76, 175, 80, 0.1); }
+    .msg { margin-top: 15px; font-size: 14px; text-align: center; }
+    .error { color: #ff5252; }
+    .success { color: #4caf50; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2 id="title">تسوق بلس - تسجيل الدخول</h2>
+
+    <!-- نموذج التسجيل / الدخول -->
+    <div id="authForm">
+      <div class="form-group" id="nameGroup" style="display: none;">
+        <label>الاسم الكامل</label>
+        <input type="text" id="fullName" placeholder="أدخل اسمك الكامل">
+      </div>
+      <div class="form-group">
+        <label>البريد الإلكتروني</label>
+        <input type="email" id="email" placeholder="name@example.com">
+      </div>
+      <div class="form-group">
+        <label>كلمة المرور</label>
+        <input type="password" id="password" placeholder="••••••••">
+      </div>
+      
+      <button id="mainBtn" onclick="handleAuth()">تسجيل الدخول</button>
+      <button class="switch-btn" id="switchBtn" onclick="toggleMode()">ليس لديك حساب؟ أنشئ حساباً جديداً</button>
+    </div>
+
+    <!-- شاشة الملف الشخصي عند الدخول -->
+    <div id="profileSection" class="hidden">
+      <p style="margin-bottom: 10px;">مرحباً بك، <b id="userEmail"></b> 👋</p>
+      <div class="form-group">
+        <label>اسم الملف الشخصي</label>
+        <input type="text" id="profileName" placeholder="أدخل اسمك لتحديثه">
+      </div>
+      <button onclick="updateProfile()">تحديث الاسم</button>
+      <button onclick="signOut()" style="background: #e53935; margin-top: 10px;">تسجيل الخروج</button>
+    </div>
+
+    <div id="message" class="msg"></div>
+  </div>
+
+  <script>
+    // بيانات الربط الخاصة بمشروعك
+    const SUPABASE_URL = 'https://valzgpkozmjiqiyhordx.supabase.co';
+    const SUPABASE_ANON_KEY = 'Sb_publishable__124XkEekFg5DRceAlhXhQ_r2pf7PnM';
+
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    let isSignUp = false;
+
+    function toggleMode() {
+      isSignUp = !isSignUp;
+      document.getElementById('title').innerText = isSignUp ? 'تسوق بلس - حساب جديد' : 'تسوق بلس - تسجيل الدخول';
+      document.getElementById('nameGroup').style.display = isSignUp ? 'block' : 'none';
+      document.getElementById('mainBtn').innerText = isSignUp ? 'إنشاء حساب' : 'تسجيل الدخول';
+      document.getElementById('switchBtn').innerText = isSignUp ? 'لديك حساب بالفعل؟ سجل دخولك' : 'ليس لديك حساب؟ أنشئ حساباً جديداً';
+      clearMsg();
+    }
+
+    async function handleAuth() {
+      clearMsg();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const fullName = document.getElementById('fullName').value;
+
+      if (!email || !password) {
+        showMsg('يرجى إدخال البريد الإلكتروني وكلمة المرور', true);
+        return;
+      }
+
+      if (isSignUp) {
+        const { data, error } = await supabase.auth.signUp({ email, password });
+        if (error) return showMsg(error.message, true);
+        
+        if (data.user) {
+          await supabase.from('profiles').insert([{ id: data.user.id, full_name: fullName }]);
+        }
+        showMsg('تم إنشاء الحساب بنجاح!', false);
+      } else {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) return showMsg(error.message, true);
+        checkUser();
+      }
+    }
+
+    async function checkUser() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        document.getElementById('authForm').classList.add('hidden');
+        document.getElementById('profileSection').classList.remove('hidden');
+        document.getElementById('userEmail').innerText = user.email;
+
+        const { data } = await supabase.from('profiles').select('full_name').eq('id', user.id).single();
+        if (data && data.full_name) {
+          document.getElementById('profileName').value = data.full_name;
+        }
+      }
+    }
+
+    async function updateProfile() {
+      const { data: { user } } = await supabase.auth.getUser();
+      const newName = document.getElementById('profileName').value;
+      
+      const { error } = await supabase.from('profiles').upsert({ id: user.id, full_name: newName });
+      if (error) showMsg(error.message, true);
+      else showMsg('تم تحديث الاسم بنجاح! ✨', false);
+    }
+
+    async function signOut() {
+      await supabase.auth.signOut();
+      location.reload();
+    }
+
+    function showMsg(txt, isErr) {
+      const el = document.getElementById('message');
+      el.innerText = txt;
+      el.className = 'msg ' + (isErr ? 'error' : 'success');
+    }
+
+    function clearMsg() {
+      document.getElementById('message').innerText = '';
+    }
+
+    checkUser();
+  </script>
+</body>
+</html>
 
