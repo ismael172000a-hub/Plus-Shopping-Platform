@@ -4,20 +4,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>تسوق بلس - تسجيل الدخول</title>
+  <title>تسوق بلس</title>
   <style>
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       background: #121212;
       color: #fff;
       font-family: Arial, sans-serif;
     }
+
     .card {
       width: 100%;
       max-width: 400px;
@@ -27,56 +29,62 @@
       border-radius: 18px;
       box-shadow: 0 10px 35px #0005;
     }
+
     h1 {
+      margin: 0 0 10px;
       color: #4CAF50;
       text-align: center;
       font-size: 27px;
-      margin: 0 0 10px;
     }
+
     .subtitle {
       color: #bbb;
       text-align: center;
-      margin-bottom: 25px;
-      line-height: 1.7;
+      line-height: 1.8;
+      margin-bottom: 24px;
     }
-    .switch {
+
+    .tabs {
       display: flex;
       gap: 8px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
-    button, input {
-      font: inherit;
-    }
-    .switch button {
+
+    .tabs button {
       flex: 1;
       padding: 12px 5px;
       border: 1px solid #444;
       border-radius: 9px;
       background: #292929;
       color: #ddd;
+      font-size: 14px;
     }
-    .switch button.active {
+
+    .tabs button.active {
       background: #234b2a;
       border-color: #4CAF50;
       color: #fff;
     }
+
     label {
       display: block;
-      margin: 15px 0 8px;
-      color: #eee;
+      margin: 16px 0 8px;
     }
+
     input {
       width: 100%;
       padding: 13px;
-      background: #292929;
       border: 1px solid #444;
       border-radius: 9px;
-      color: white;
-      outline: none;
-      direction: ltr;
-      text-align: left;
+      background: #292929;
+      color: #fff;
+      font-size: 16px;
     }
-    input:focus { border-color: #4CAF50; }
+
+    input:focus {
+      outline: 1px solid #4CAF50;
+    }
+
     .main-btn {
       width: 100%;
       margin-top: 22px;
@@ -84,12 +92,15 @@
       border: 0;
       border-radius: 9px;
       background: #4CAF50;
-      color: white;
+      color: #fff;
+      font-size: 16px;
       font-weight: bold;
     }
+
     button:disabled {
       opacity: .6;
     }
+
     #message {
       display: none;
       padding: 12px;
@@ -98,21 +109,25 @@
       line-height: 1.7;
       overflow-wrap: anywhere;
     }
+
     .note {
       color: #999;
       font-size: 12px;
-      line-height: 1.7;
+      line-height: 1.8;
       text-align: center;
       margin-top: 18px;
     }
   </style>
 </head>
+
 <body>
   <main class="card">
     <h1>مرحبًا بك في تسوق بلس</h1>
-    <p class="subtitle">أنجز المهام وتعرّف على فرص التسويق بالعمولة</p>
+    <p class="subtitle">
+      تسوّق، أنجز المهام، واكتشف فرص التسويق بالعمولة
+    </p>
 
-    <div class="switch">
+    <div class="tabs">
       <button type="button" id="registerTab" class="active">
         إنشاء حساب
       </button>
@@ -121,7 +136,7 @@
       </button>
     </div>
 
-    <div class="switch">
+    <div class="tabs">
       <button type="button" id="emailTab" class="active">
         البريد الإلكتروني
       </button>
@@ -134,6 +149,7 @@
       <label id="identityLabel" for="identity">
         البريد الإلكتروني
       </label>
+
       <input
         id="identity"
         type="email"
@@ -143,6 +159,7 @@
       >
 
       <label for="password">كلمة المرور</label>
+
       <input
         id="password"
         type="password"
@@ -160,11 +177,12 @@
     <div id="message" role="status" aria-live="polite"></div>
 
     <p class="note">
-      لا تشارك كلمة مرورك مع أي شخص.
+      حافظ على سرية كلمة المرور ولا تشاركها مع أي شخص.
     </p>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <script>
     const SUPABASE_URL =
       'https://valzgpkozmjiqiyhordx.supabase.co';
@@ -185,7 +203,7 @@
 
     try {
       if (!window.supabase) {
-        throw new Error('لم يتم تحميل مكتبة الاتصال.');
+        throw new Error('تعذّر تحميل مكتبة الاتصال.');
       }
 
       client = window.supabase.createClient(
@@ -194,7 +212,7 @@
       );
     } catch (error) {
       showMessage(
-        'تعذّر الاتصال بواجهة التسجيل. تأكد من اتصال الإنترنت.',
+        'تعذّر تجهيز الاتصال. تأكد من اتصال الإنترنت.',
         false
       );
       console.error(error);
@@ -225,8 +243,8 @@
       document.getElementById('phoneTab')
         .classList.toggle('active', method === 'phone');
 
-      identityLabel.textContent =
-        method === 'email' ? 'البريد الإلكتروني' : 'رقم الهاتف';
+      identityLabel.textContent = method === 'email'
+        ? 'البريد الإلكتروني' : 'رقم الهاتف';
 
       identity.type = method === 'email' ? 'email' : 'tel';
 
@@ -234,11 +252,13 @@
         ? 'أدخل بريدك الإلكتروني'
         : 'مثال: +201xxxxxxxxx';
 
-      identity.autocomplete = method === 'email'
-        ? 'email' : 'tel';
+      identity.autocomplete = method === 'email' ? 'email' : 'tel';
 
       submitBtn.textContent = mode === 'register'
         ? 'إنشاء حساب جديد' : 'تسجيل الدخول';
+
+      password.autocomplete = mode === 'register'
+        ? 'new-password' : 'current-password';
 
       clearMessage();
     }
@@ -272,16 +292,11 @@
       }
 
       if (text.includes('invalid login credentials')) {
-        return 'بيانات الدخول غير صحيحة. راجع البيانات وحاول مجددًا.';
+        return 'بيانات الدخول غير صحيحة.';
       }
 
       if (text.includes('email not confirmed')) {
-        return 'البريد يحتاج إلى تأكيد. راجع إعدادات المصادقة في Supabase.';
-      }
-
-      if (text.includes('password') &&
-          (text.includes('least') || text.includes('short'))) {
-        return 'كلمة المرور قصيرة. استخدم 6 أحرف على الأقل.';
+        return 'البريد يحتاج إلى تأكيد. راجع إعدادات المصادقة.';
       }
 
       if (text.includes('invalid email')) {
@@ -290,15 +305,15 @@
 
       if (text.includes('phone provider is disabled') ||
           text.includes('phone signups are disabled')) {
-        return 'تسجيل الهاتف غير مفعّل في Supabase حتى الآن.';
+        return 'تسجيل الهاتف غير مفعّل في إعدادات Supabase.';
       }
 
       if (text.includes('sms') || text.includes('phone')) {
-        return 'تعذّر تسجيل الهاتف. راجع إعدادات مزوّد الهاتف في Supabase.';
+        return 'تعذّر تسجيل الهاتف. راجع إعدادات الهاتف في Supabase.';
       }
 
       if (text.includes('fetch')) {
-        return 'تعذّر الاتصال بالخدمة. تحقق من الإنترنت وحاول مجددًا.';
+        return 'تعذّر الاتصال بالخدمة. تحقق من الإنترنت.';
       }
 
       if (text.includes('rate limit')) {
@@ -313,7 +328,7 @@
       clearMessage();
 
       if (!client) {
-        showMessage('الاتصال بالخدمة غير جاهز. أعد تحميل الصفحة.', false);
+        showMessage('الاتصال بالخدمة غير جاهز.', false);
         return;
       }
 
@@ -321,16 +336,17 @@
       const pass = password.value;
 
       if (!value || !pass) {
-        showMessage('أدخل البيانات المطلوبة أولًا.', false);
+        showMessage('أدخل البيانات المطلوبة.', false);
         return;
       }
 
       if (pass.length < 6) {
-        showMessage('استخدم كلمة مرور من 6 أحرف على الأقل.', false);
+        showMessage('كلمة المرور يجب ألا تقل عن 6 أحرف.', false);
         return;
       }
 
-      if (method === 'phone' && !/^\+[1-9]\d{7,14}$/.test(value)) {
+      if (method === 'phone' &&
+          !/^\+[1-9]\d{7,14}$/.test(value)) {
         showMessage(
           'اكتب رقم الهاتف مع مفتاح الدولة، مثل +201xxxxxxxxx.',
           false
@@ -372,7 +388,7 @@
 
         if (mode === 'register' && !result.data.session) {
           showMessage(
-            'تم إرسال طلب إنشاء الحساب. قد تحتاج إعدادات المصادقة إلى مراجعة قبل الدخول.',
+            'تم إرسال طلب التسجيل، لكن تسجيل الدخول لم يكتمل. راجع إعدادات المصادقة في Supabase.',
             true
           );
         } else {
