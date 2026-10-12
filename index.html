@@ -2,316 +2,398 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسوق بلس - تسجيل الدخول / إنشاء حساب</title>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Tahoma, sans-serif;
-        }
-
-        body {
-            background-color: #121212;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .card {
-            background: #1e1e1e;
-            padding: 30px;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 400px;
-            box-shadow: 0 4px 15px rgba(0,0,0,.5);
-        }
-
-        h2 {
-            text-align: center;
-            color: #4CAF50;
-            margin-bottom: 20px;
-        }
-
-        .input-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 14px;
-            color: #bbb;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #444;
-            border-radius: 8px;
-            background: #2a2a2a;
-            color: #fff;
-            font-size: 16px;
-        }
-
-        input:focus {
-            border-color: #4CAF50;
-            outline: none;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        button:disabled {
-            opacity: .6;
-            cursor: not-allowed;
-        }
-
-        .btn-primary {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: #43a047;
-        }
-
-        .btn-secondary {
-            background-color: transparent;
-            color: #4CAF50;
-            border: 1px solid #4CAF50;
-        }
-
-        .btn-secondary:hover {
-            background-color: rgba(76,175,80,.1);
-        }
-
-        #message {
-            display: none;
-            margin-top: 15px;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 14px;
-            line-height: 1.7;
-            overflow-wrap: anywhere;
-        }
-
-        #message.success {
-            display: block;
-            background: #163522;
-            color: #8be9a4;
-        }
-
-        #message.error {
-            display: block;
-            background: #3b1c1c;
-            color: #ffaaaa;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تسوق بلس - تسجيل الدخول</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background: #121212;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+    .card {
+      width: 100%;
+      max-width: 400px;
+      padding: 28px 22px;
+      background: #1e1e1e;
+      border: 1px solid #333;
+      border-radius: 18px;
+      box-shadow: 0 10px 35px #0005;
+    }
+    h1 {
+      color: #4CAF50;
+      text-align: center;
+      font-size: 27px;
+      margin: 0 0 10px;
+    }
+    .subtitle {
+      color: #bbb;
+      text-align: center;
+      margin-bottom: 25px;
+      line-height: 1.7;
+    }
+    .switch {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    button, input {
+      font: inherit;
+    }
+    .switch button {
+      flex: 1;
+      padding: 12px 5px;
+      border: 1px solid #444;
+      border-radius: 9px;
+      background: #292929;
+      color: #ddd;
+    }
+    .switch button.active {
+      background: #234b2a;
+      border-color: #4CAF50;
+      color: #fff;
+    }
+    label {
+      display: block;
+      margin: 15px 0 8px;
+      color: #eee;
+    }
+    input {
+      width: 100%;
+      padding: 13px;
+      background: #292929;
+      border: 1px solid #444;
+      border-radius: 9px;
+      color: white;
+      outline: none;
+      direction: ltr;
+      text-align: left;
+    }
+    input:focus { border-color: #4CAF50; }
+    .main-btn {
+      width: 100%;
+      margin-top: 22px;
+      padding: 14px;
+      border: 0;
+      border-radius: 9px;
+      background: #4CAF50;
+      color: white;
+      font-weight: bold;
+    }
+    button:disabled {
+      opacity: .6;
+    }
+    #message {
+      display: none;
+      padding: 12px;
+      margin-top: 16px;
+      border-radius: 8px;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+    }
+    .note {
+      color: #999;
+      font-size: 12px;
+      line-height: 1.7;
+      text-align: center;
+      margin-top: 18px;
+    }
+  </style>
 </head>
-
 <body>
-    <div class="card">
-        <h2 id="formTitle">تسجيل الدخول</h2>
+  <main class="card">
+    <h1>مرحبًا بك في تسوق بلس</h1>
+    <p class="subtitle">أنجز المهام وتعرّف على فرص التسويق بالعمولة</p>
 
-        <form id="authForm">
-            <div class="input-group">
-                <label for="email">البريد الإلكتروني</label>
-                <input
-                    type="email"
-                    id="email"
-                    required
-                    autocomplete="email"
-                    placeholder="أدخل بريدك الإلكتروني"
-                >
-            </div>
-
-            <div class="input-group">
-                <label for="password">كلمة المرور</label>
-                <input
-                    type="password"
-                    id="password"
-                    required
-                    minlength="6"
-                    autocomplete="current-password"
-                    placeholder="أدخل كلمة المرور"
-                >
-            </div>
-
-            <button type="submit" id="submitBtn" class="btn-primary">
-                تسجيل الدخول
-            </button>
-
-            <button type="button" id="toggleBtn" class="btn-secondary">
-                ليس لديك حساب؟ أنشئ حساباً جديداً
-            </button>
-
-            <div id="message" role="status" aria-live="polite"></div>
-        </form>
+    <div class="switch">
+      <button type="button" id="registerTab" class="active">
+        إنشاء حساب
+      </button>
+      <button type="button" id="loginTab">
+        تسجيل الدخول
+      </button>
     </div>
 
-    <script>
-        // إعداد الاتصال بـ Supabase
-        const SUPABASE_URL =
-            'https://valzgpkozmjiqiyhordx.supabase.co';
+    <div class="switch">
+      <button type="button" id="emailTab" class="active">
+        البريد الإلكتروني
+      </button>
+      <button type="button" id="phoneTab">
+        رقم الهاتف
+      </button>
+    </div>
 
-        const SUPABASE_ANON_KEY =
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJIUzI1NiIsInJlZiI6InZhbHpncGtvem1qaXFpeWhvcmR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE1NTUwOTAsImV4cCI6MjEwNzEzMTA5MH0.uCt9nDEupkUYbt-xyLMjCmaOFrE1XqbfCrqU1L-Yx3w';
+    <form id="authForm">
+      <label id="identityLabel" for="identity">
+        البريد الإلكتروني
+      </label>
+      <input
+        id="identity"
+        type="email"
+        placeholder="أدخل بريدك الإلكتروني"
+        autocomplete="email"
+        required
+      >
 
-        // إصلاح تعارض اسم مكتبة Supabase مع اسم المتغير
-        const supabaseClient = window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_ANON_KEY
+      <label for="password">كلمة المرور</label>
+      <input
+        id="password"
+        type="password"
+        placeholder="أدخل كلمة المرور"
+        minlength="6"
+        autocomplete="current-password"
+        required
+      >
+
+      <button class="main-btn" id="submitBtn" type="submit">
+        إنشاء حساب جديد
+      </button>
+    </form>
+
+    <div id="message" role="status" aria-live="polite"></div>
+
+    <p class="note">
+      لا تشارك كلمة مرورك مع أي شخص.
+    </p>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL =
+      'https://valzgpkozmjiqiyhordx.supabase.co';
+
+    const SUPABASE_ANON_KEY =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhbGciOiJIUzI1NiIsInJlZiI6InZhbHpncGtvem1qaXFpeWhvcmR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE1NTUwOTAsImV4cCI6MjEwNzEzMTA5MH0.uCt9nDEupkUYbt-xyLMjCmaOFrE1XqbfCrqU1L-Yx3w';
+
+    const form = document.getElementById('authForm');
+    const identity = document.getElementById('identity');
+    const password = document.getElementById('password');
+    const identityLabel = document.getElementById('identityLabel');
+    const submitBtn = document.getElementById('submitBtn');
+    const message = document.getElementById('message');
+
+    let mode = 'register';
+    let method = 'email';
+    let client = null;
+
+    try {
+      if (!window.supabase) {
+        throw new Error('لم يتم تحميل مكتبة الاتصال.');
+      }
+
+      client = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+      );
+    } catch (error) {
+      showMessage(
+        'تعذّر الاتصال بواجهة التسجيل. تأكد من اتصال الإنترنت.',
+        false
+      );
+      console.error(error);
+    }
+
+    function showMessage(text, success) {
+      message.textContent = text;
+      message.style.display = 'block';
+      message.style.background = success ? '#183b22' : '#482020';
+      message.style.color = success ? '#b9f6ca' : '#ffcaca';
+    }
+
+    function clearMessage() {
+      message.style.display = 'none';
+      message.textContent = '';
+    }
+
+    function updateInterface() {
+      document.getElementById('registerTab')
+        .classList.toggle('active', mode === 'register');
+
+      document.getElementById('loginTab')
+        .classList.toggle('active', mode === 'login');
+
+      document.getElementById('emailTab')
+        .classList.toggle('active', method === 'email');
+
+      document.getElementById('phoneTab')
+        .classList.toggle('active', method === 'phone');
+
+      identityLabel.textContent =
+        method === 'email' ? 'البريد الإلكتروني' : 'رقم الهاتف';
+
+      identity.type = method === 'email' ? 'email' : 'tel';
+
+      identity.placeholder = method === 'email'
+        ? 'أدخل بريدك الإلكتروني'
+        : 'مثال: +201xxxxxxxxx';
+
+      identity.autocomplete = method === 'email'
+        ? 'email' : 'tel';
+
+      submitBtn.textContent = mode === 'register'
+        ? 'إنشاء حساب جديد' : 'تسجيل الدخول';
+
+      clearMessage();
+    }
+
+    document.getElementById('registerTab').onclick = () => {
+      mode = 'register';
+      updateInterface();
+    };
+
+    document.getElementById('loginTab').onclick = () => {
+      mode = 'login';
+      updateInterface();
+    };
+
+    document.getElementById('emailTab').onclick = () => {
+      method = 'email';
+      updateInterface();
+    };
+
+    document.getElementById('phoneTab').onclick = () => {
+      method = 'phone';
+      updateInterface();
+    };
+
+    function translateError(error) {
+      const text = (error.message || '').toLowerCase();
+
+      if (text.includes('already registered') ||
+          text.includes('already been registered')) {
+        return 'هذا الحساب مسجل بالفعل. جرّب تسجيل الدخول.';
+      }
+
+      if (text.includes('invalid login credentials')) {
+        return 'بيانات الدخول غير صحيحة. راجع البيانات وحاول مجددًا.';
+      }
+
+      if (text.includes('email not confirmed')) {
+        return 'البريد يحتاج إلى تأكيد. راجع إعدادات المصادقة في Supabase.';
+      }
+
+      if (text.includes('password') &&
+          (text.includes('least') || text.includes('short'))) {
+        return 'كلمة المرور قصيرة. استخدم 6 أحرف على الأقل.';
+      }
+
+      if (text.includes('invalid email')) {
+        return 'صيغة البريد الإلكتروني غير صحيحة.';
+      }
+
+      if (text.includes('phone provider is disabled') ||
+          text.includes('phone signups are disabled')) {
+        return 'تسجيل الهاتف غير مفعّل في Supabase حتى الآن.';
+      }
+
+      if (text.includes('sms') || text.includes('phone')) {
+        return 'تعذّر تسجيل الهاتف. راجع إعدادات مزوّد الهاتف في Supabase.';
+      }
+
+      if (text.includes('fetch')) {
+        return 'تعذّر الاتصال بالخدمة. تحقق من الإنترنت وحاول مجددًا.';
+      }
+
+      if (text.includes('rate limit')) {
+        return 'محاولات كثيرة. انتظر قليلًا ثم حاول مجددًا.';
+      }
+
+      return 'تعذّر إكمال العملية: ' + error.message;
+    }
+
+    form.addEventListener('submit', async function(event) {
+      event.preventDefault();
+      clearMessage();
+
+      if (!client) {
+        showMessage('الاتصال بالخدمة غير جاهز. أعد تحميل الصفحة.', false);
+        return;
+      }
+
+      const value = identity.value.trim();
+      const pass = password.value;
+
+      if (!value || !pass) {
+        showMessage('أدخل البيانات المطلوبة أولًا.', false);
+        return;
+      }
+
+      if (pass.length < 6) {
+        showMessage('استخدم كلمة مرور من 6 أحرف على الأقل.', false);
+        return;
+      }
+
+      if (method === 'phone' && !/^\+[1-9]\d{7,14}$/.test(value)) {
+        showMessage(
+          'اكتب رقم الهاتف مع مفتاح الدولة، مثل +201xxxxxxxxx.',
+          false
         );
+        return;
+      }
 
-        let isSignUp = false;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'جارٍ التنفيذ...';
 
-        const authForm = document.getElementById('authForm');
-        const emailInput = document.getElementById('email');
-        const passwordInput = document.getElementById('password');
-        const title = document.getElementById('formTitle');
-        const submitBtn = document.getElementById('submitBtn');
-        const toggleBtn = document.getElementById('toggleBtn');
-        const message = document.getElementById('message');
+      try {
+        let result;
 
-        function showMessage(text, type) {
-            message.textContent = text;
-            message.className = type;
+        if (mode === 'register' && method === 'email') {
+          result = await client.auth.signUp({
+            email: value,
+            password: pass
+          });
+        } else if (mode === 'login' && method === 'email') {
+          result = await client.auth.signInWithPassword({
+            email: value,
+            password: pass
+          });
+        } else if (mode === 'register' && method === 'phone') {
+          result = await client.auth.signUp({
+            phone: value,
+            password: pass
+          });
+        } else {
+          result = await client.auth.signInWithPassword({
+            phone: value,
+            password: pass
+          });
         }
 
-        function clearMessage() {
-            message.textContent = '';
-            message.className = '';
+        if (result.error) {
+          throw result.error;
         }
 
-        function toggleMode() {
-            isSignUp = !isSignUp;
-
-            title.textContent = isSignUp
-                ? 'إنشاء حساب جديد'
-                : 'تسجيل الدخول';
-
-            submitBtn.textContent = isSignUp
-                ? 'إنشاء الحساب'
-                : 'تسجيل الدخول';
-
-            toggleBtn.textContent = isSignUp
-                ? 'لديك حساب بالفعل؟ تسجيل الدخول'
-                : 'ليس لديك حساب؟ أنشئ حساباً جديداً';
-
-            passwordInput.autocomplete = isSignUp
-                ? 'new-password'
-                : 'current-password';
-
-            clearMessage();
+        if (mode === 'register' && !result.data.session) {
+          showMessage(
+            'تم إرسال طلب إنشاء الحساب. قد تحتاج إعدادات المصادقة إلى مراجعة قبل الدخول.',
+            true
+          );
+        } else {
+          showMessage(
+            mode === 'register'
+              ? 'تم إنشاء الحساب وتسجيل الدخول بنجاح.'
+              : 'تم تسجيل الدخول بنجاح.',
+            true
+          );
         }
+      } catch (error) {
+        console.error('Supabase Auth error:', error);
+        showMessage(translateError(error), false);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = mode === 'register'
+          ? 'إنشاء حساب جديد' : 'تسجيل الدخول';
+      }
+    });
 
-        toggleBtn.addEventListener('click', toggleMode);
-
-        authForm.addEventListener('submit', async function(event) {
-            event.preventDefault();
-            clearMessage();
-
-            if (!window.supabase) {
-                showMessage(
-                    'تعذر تحميل مكتبة Supabase. تحقق من اتصال الإنترنت ثم أعد المحاولة.',
-                    'error'
-                );
-                return;
-            }
-
-            const email = emailInput.value.trim();
-            const password = passwordInput.value;
-
-            submitBtn.disabled = true;
-            toggleBtn.disabled = true;
-            submitBtn.textContent = 'جارٍ المعالجة...';
-
-            try {
-                if (isSignUp) {
-                    const { data, error } =
-                        await supabaseClient.auth.signUp({
-                            email: email,
-                            password: password
-                        });
-
-                    if (error) throw error;
-
-                    if (data.session) {
-                        showMessage(
-                            'تم إنشاء حسابك وتسجيل دخولك بنجاح!',
-                            'success'
-                        );
-                    } else {
-                        showMessage(
-                            'تم إرسال طلب إنشاء الحساب. إذا كان تأكيد البريد مفعلاً، افتح بريدك الإلكتروني واضغط رابط التأكيد قبل تسجيل الدخول.',
-                            'success'
-                        );
-                    }
-
-                } else {
-                    const { data, error } =
-                        await supabaseClient.auth.signInWithPassword({
-                            email: email,
-                            password: password
-                        });
-
-                    if (error) throw error;
-
-                    showMessage(
-                        'تم تسجيل الدخول بنجاح! مرحباً بك في تسوق بلس.',
-                        'success'
-                    );
-
-                    // أضف التوجيه إلى الصفحة الرئيسية هنا
-                    // بعد إنشاء ملف الصفحة الرئيسية، مثلاً:
-                    // window.location.href = 'home.html';
-                }
-
-            } catch (error) {
-                let errorText = error.message || 'حدث خطأ غير معروف.';
-
-                if (error.message === 'Invalid login credentials') {
-                    errorText =
-                        'البريد الإلكتروني أو كلمة المرور غير صحيحة.';
-                } else if (
-                    error.message.toLowerCase().includes('already registered')
-                ) {
-                    errorText =
-                        'هذا البريد مسجل بالفعل. جرّب تسجيل الدخول.';
-                } else if (
-                    error.message.toLowerCase().includes('email not confirmed')
-                ) {
-                    errorText =
-                        'يرجى تأكيد بريدك الإلكتروني أولاً.';
-                }
-
-                showMessage('تعذر إكمال العملية: ' + errorText, 'error');
-
-            } finally {
-                submitBtn.disabled = false;
-                toggleBtn.disabled = false;
-                submitBtn.textContent = isSignUp
-                    ? 'إنشاء الحساب'
-                    : 'تسجيل الدخول';
-            }
-        });
-    </script>
+    updateInterface();
+  </script>
 </body>
 </html>
