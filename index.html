@@ -2,414 +2,195 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>تسوق بلس</title>
-  <style>
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      padding: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #121212;
-      color: #fff;
-      font-family: Arial, sans-serif;
-    }
-
-    .card {
-      width: 100%;
-      max-width: 400px;
-      padding: 28px 22px;
-      background: #1e1e1e;
-      border: 1px solid #333;
-      border-radius: 18px;
-      box-shadow: 0 10px 35px #0005;
-    }
-
-    h1 {
-      margin: 0 0 10px;
-      color: #4CAF50;
-      text-align: center;
-      font-size: 27px;
-    }
-
-    .subtitle {
-      color: #bbb;
-      text-align: center;
-      line-height: 1.8;
-      margin-bottom: 24px;
-    }
-
-    .tabs {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 18px;
-    }
-
-    .tabs button {
-      flex: 1;
-      padding: 12px 5px;
-      border: 1px solid #444;
-      border-radius: 9px;
-      background: #292929;
-      color: #ddd;
-      font-size: 14px;
-    }
-
-    .tabs button.active {
-      background: #234b2a;
-      border-color: #4CAF50;
-      color: #fff;
-    }
-
-    label {
-      display: block;
-      margin: 16px 0 8px;
-    }
-
-    input {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid #444;
-      border-radius: 9px;
-      background: #292929;
-      color: #fff;
-      font-size: 16px;
-    }
-
-    input:focus {
-      outline: 1px solid #4CAF50;
-    }
-
-    .main-btn {
-      width: 100%;
-      margin-top: 22px;
-      padding: 14px;
-      border: 0;
-      border-radius: 9px;
-      background: #4CAF50;
-      color: #fff;
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    button:disabled {
-      opacity: .6;
-    }
-
-    #message {
-      display: none;
-      padding: 12px;
-      margin-top: 16px;
-      border-radius: 8px;
-      line-height: 1.7;
-      overflow-wrap: anywhere;
-    }
-
-    .note {
-      color: #999;
-      font-size: 12px;
-      line-height: 1.8;
-      text-align: center;
-      margin-top: 18px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#073d2b">
+<title>تسوق بلس</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--g:#073d2b;--g2:#0d6747;--gold:#e8bd61;--bg:#fffaf0}
+*{box-sizing:border-box}
+body{margin:0;font-family:Tahoma,Arial,sans-serif;background:var(--bg);color:#17392b}
+header{padding:17px 6%;background:var(--g);color:white;border-bottom:3px solid var(--gold);display:flex;justify-content:space-between;align-items:center}
+.brand{font-size:23px;font-weight:bold}.brand span{color:var(--gold)}
+header small{color:#f5dfaa}
+.hero{background:radial-gradient(ellipse at 85% 15%,#19724e,transparent 45%),linear-gradient(135deg,#062f22,#0c6042);color:white;padding:35px 6%;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:20px}
+.hero h1{font-size:clamp(28px,5vw,44px);line-height:1.6;margin:10px 0}
+.hero h1 span{color:var(--gold)}
+.hero p{line-height:2;color:#e0ece5}
+.pill{display:inline-block;border:1px solid var(--gold);color:var(--gold);padding:7px 13px;border-radius:30px;font-size:12px}
+.art{text-align:center;background:#ffffff0d;border:1px solid #ffffff24;border-radius:24px;padding:20px 8px}
+.people{font-size:48px}.phones{font-size:34px;margin:12px 0}.coins{font-size:27px;letter-spacing:4px}
+.art small{display:block;color:#ffe9b2;margin-top:12px}
+main{width:min(100% - 28px,900px);margin:-20px auto 30px;position:relative}
+.card{max-width:460px;margin:auto;background:white;border:1px solid #eee8d9;border-radius:20px;padding:24px;box-shadow:0 12px 40px #103c2514}
+h2{text-align:center;color:var(--g);margin:0 0 8px}
+.sub{text-align:center;color:#718078;font-size:13px;line-height:1.8;margin-bottom:20px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;background:#f0f4ef;border-radius:11px;padding:4px;margin-bottom:20px}
+button{font-family:inherit;cursor:pointer}
+.tabs button{padding:12px 5px;border:0;border-radius:9px;background:transparent;font-weight:bold;color:#52645a}
+.tabs button.active{background:var(--g);color:white}
+.field{margin-bottom:15px}
+label{display:block;font-size:13px;font-weight:bold;margin-bottom:7px}
+input{display:block;width:100%;padding:13px;border:1px solid #dce4dc;border-radius:10px;background:#fcfdfb;font-family:inherit;font-size:15px;direction:ltr;text-align:left}
+input:focus{outline:2px solid #0d674733;border-color:var(--g2)}
+.hint{font-size:11px;color:#718078;line-height:1.8;margin-top:6px}
+.mainbtn{width:100%;padding:14px;border:0;border-radius:11px;background:var(--g);color:white;font-size:15px;font-weight:bold;margin-top:5px}
+.mainbtn:disabled{opacity:.6}
+.msg{display:none;padding:12px;border-radius:9px;font-size:13px;line-height:1.8;margin-top:14px;overflow-wrap:anywhere}
+.msg.show{display:block}.error{background:#fff0ed;color:#a52c1d}.success{background:#e9f8ed;color:#176438}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:25px 0}
+.feature{background:white;border:1px solid #eee8d9;border-radius:14px;padding:17px 6px;text-align:center}
+.feature b{display:block;color:var(--g);font-size:13px;margin:8px 0}
+.feature small{font-size:11px;color:#718078;line-height:1.7}
+footer{background:var(--g);color:#dce9e0;text-align:center;padding:20px;font-size:12px;line-height:2}
+@media(max-width:600px){header{padding:15px 5%}.brand{font-size:20px}.hero{grid-template-columns:1fr;padding:28px 5% 38px}.hero h1{font-size:30px}.art{padding:15px}.people{font-size:42px}.card{padding:20px 16px}.features{gap:7px}.feature{padding:13px 4px}}
+</style>
 </head>
-
 <body>
-  <main class="card">
-    <h1>مرحبًا بك في تسوق بلس</h1>
-    <p class="subtitle">
-      تسوّق، أنجز المهام، واكتشف فرص التسويق بالعمولة
-    </p>
+<header>
+  <div class="brand">تسوق <span>بلس</span></div>
+  <small>التسوق والمهام في مكان واحد</small>
+</header>
 
-    <div class="tabs">
-      <button type="button" id="registerTab" class="active">
-        إنشاء حساب
-      </button>
-      <button type="button" id="loginTab">
-        تسجيل الدخول
-      </button>
+<section class="hero">
+  <div>
+    <span class="pill">مرحبًا بك في تسوق بلس</span>
+    <h1>ابدأ رحلتك مع <span>فرص جديدة</span></h1>
+    <p>اكتشف المنتجات والمهام التسويقية من خلال تجربة عربية سهلة ومريحة من هاتفك.</p>
+  </div>
+  <div class="art">
+    <div class="people">👩🏻‍💻 🤝 👨🏻‍💼</div>
+    <div class="phones">📱 🪙 📱</div>
+    <div class="coins">🪙 🪙 🪙</div>
+    <small>تسوق • مهام • فرص تسويقية</small>
+  </div>
+</section>
+
+<main>
+<section class="card">
+  <h2 id="title">أنشئ حسابك</h2>
+  <div class="sub" id="subtitle">انضم إلى تسوق بلس وابدأ رحلتك</div>
+  <div class="tabs">
+    <button type="button" id="regtab" class="active">إنشاء حساب</button>
+    <button type="button" id="logtab">تسجيل الدخول</button>
+  </div>
+
+  <form id="authform">
+    <div class="field" id="nickfield">
+      <label for="nickname">الاسم المستعار</label>
+      <input id="nickname" type="text" maxlength="40" autocomplete="nickname" placeholder="اكتب اسمك" required>
     </div>
-
-    <div class="tabs">
-      <button type="button" id="emailTab" class="active">
-        البريد الإلكتروني
-      </button>
-      <button type="button" id="phoneTab">
-        رقم الهاتف
-      </button>
+    <div class="field">
+      <label for="phone">رقم الهاتف</label>
+      <input id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+201xxxxxxxxx" required>
+      <div class="hint">اكتب رقمك مع رمز الدولة، مثل +20 للأرقام المصرية.</div>
     </div>
-
-    <form id="authForm">
-      <label id="identityLabel" for="identity">
-        البريد الإلكتروني
-      </label>
-
-      <input
-        id="identity"
-        type="email"
-        placeholder="أدخل بريدك الإلكتروني"
-        autocomplete="email"
-        required
-      >
-
+    <div class="field">
       <label for="password">كلمة المرور</label>
+      <input id="password" type="password" minlength="8" autocomplete="new-password" placeholder="8 أحرف أو أرقام على الأقل" required>
+    </div>
+    <button class="mainbtn" id="submit" type="submit">إنشاء حساب</button>
+    <div id="message" class="msg" role="status" aria-live="polite"></div>
+  </form>
+</section>
 
-      <input
-        id="password"
-        type="password"
-        placeholder="أدخل كلمة المرور"
-        minlength="6"
-        autocomplete="current-password"
-        required
-      >
+<section class="features">
+  <div class="feature"><div>🛍️</div><b>المنتجات</b><small>تعرّف على المنتجات المتاحة</small></div>
+  <div class="feature"><div>📋</div><b>المهام</b><small>تابع المهام التسويقية</small></div>
+  <div class="feature"><div>🔐</div><b>حسابك</b><small>دخول شخصي آمن</small></div>
+</section>
+</main>
 
-      <button class="main-btn" id="submitBtn" type="submit">
-        إنشاء حساب جديد
-      </button>
-    </form>
+<footer>تسوق بلس © 2026<br>منصة تسوق ومهام تسويقية قيد التطوير</footer>
 
-    <div id="message" role="status" aria-live="polite"></div>
+<script>
+const SUPABASE_URL="https://valzgpkozmjiqiyhordx.supabase.co";
+const SUPABASE_ANON_KEY="sb_publishable__124XkEekFg5DRceAlhXhQ_r2pf7PnM";
 
-    <p class="note">
-      حافظ على سرية كلمة المرور ولا تشاركها مع أي شخص.
-    </p>
-  </main>
+const form=document.getElementById("authform");
+const nick=document.getElementById("nickname");
+const phone=document.getElementById("phone");
+const password=document.getElementById("password");
+const nickfield=document.getElementById("nickfield");
+const submit=document.getElementById("submit");
+const message=document.getElementById("message");
+const regtab=document.getElementById("regtab");
+const logtab=document.getElementById("logtab");
+let mode="register";
+let client=null;
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+function say(text,type){
+  message.textContent=text;
+  message.className="msg show "+type;
+}
+function setMode(next){
+  mode=next;
+  const registering=mode==="register";
+  regtab.classList.toggle("active",registering);
+  logtab.classList.toggle("active",!registering);
+  nickfield.style.display=registering?"block":"none";
+  nick.required=registering;
+  password.autocomplete=registering?"new-password":"current-password";
+  document.getElementById("title").textContent=registering?"أنشئ حسابك":"مرحبًا بعودتك";
+  document.getElementById("subtitle").textContent=registering?"انضم إلى تسوق بلس وابدأ رحلتك":"سجّل الدخول إلى حسابك";
+  submit.textContent=registering?"إنشاء حساب":"تسجيل الدخول";
+  message.className="msg";
+}
+regtab.addEventListener("click",()=>setMode("register"));
+logtab.addEventListener("click",()=>setMode("login"));
 
-  <script>
-    const SUPABASE_URL =
-      'https://valzgpkozmjiqiyhordx.supabase.co';
+function getClient(){
+  if(!window.supabase) throw new Error("تعذّر تحميل مكتبة الاتصال. تحقق من الإنترنت.");
+  if(!SUPABASE_ANON_KEY.startsWith("sb_publishable_"))
+    throw new Error("تحقق من المفتاح العام في إعدادات الكود.");
+  if(!client) client=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+  return client;
+}
 
-    const SUPABASE_ANON_KEY =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhbGciOiJIUzI1NiIsInJlZiI6InZhbHpncGtvem1qaXFpeWhvcmR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE1NTUwOTAsImV4cCI6MjEwNzEzMTA5MH0.uCt9nDEupkUYbt-xyLMjCmaOFrE1XqbfCrqU1L-Yx3w';
-
-    const form = document.getElementById('authForm');
-    const identity = document.getElementById('identity');
-    const password = document.getElementById('password');
-    const identityLabel = document.getElementById('identityLabel');
-    const submitBtn = document.getElementById('submitBtn');
-    const message = document.getElementById('message');
-
-    let mode = 'register';
-    let method = 'email';
-    let client = null;
-
-    try {
-      if (!window.supabase) {
-        throw new Error('تعذّر تحميل مكتبة الاتصال.');
-      }
-
-      client = window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_ANON_KEY
-      );
-    } catch (error) {
-      showMessage(
-        'تعذّر تجهيز الاتصال. تأكد من اتصال الإنترنت.',
-        false
-      );
-      console.error(error);
+form.addEventListener("submit",async function(e){
+  e.preventDefault();
+  submit.disabled=true;
+  submit.textContent="جارٍ التنفيذ...";
+  message.className="msg";
+  try{
+    const db=getClient();
+    const p=phone.value.trim();
+    if(!/^\+[1-9]\d{7,14}$/.test(p))
+      throw new Error("اكتب رقم الهاتف مع رمز الدولة، مثل +201xxxxxxxxx.");
+    if(password.value.length<8)
+      throw new Error("كلمة المرور يجب أن تكون 8 أحرف أو أرقام على الأقل.");
+    let result;
+    if(mode==="register"){
+      if(!nick.value.trim()) throw new Error("اكتب الاسم المستعار.");
+      result=await db.auth.signUp({
+        phone:p,
+        password:password.value,
+        options:{data:{nickname:nick.value.trim()}}
+      });
+    }else{
+      result=await db.auth.signInWithPassword({phone:p,password:password.value});
     }
-
-    function showMessage(text, success) {
-      message.textContent = text;
-      message.style.display = 'block';
-      message.style.background = success ? '#183b22' : '#482020';
-      message.style.color = success ? '#b9f6ca' : '#ffcaca';
+    if(result.error) throw result.error;
+    if(mode==="register"&&!result.data.session){
+      say("تم إرسال طلب إنشاء الحساب. قد تحتاج إلى إكمال تأكيد الهاتف إذا كان مفعّلًا في سوبابيس.","success");
+    }else if(mode==="register"){
+      say("تم إنشاء الحساب بنجاح.","success");
+    }else{
+      say("تم تسجيل الدخول بنجاح. لوحة المستخدم لم تُربط بعد.","success");
     }
-
-    function clearMessage() {
-      message.style.display = 'none';
-      message.textContent = '';
-    }
-
-    function updateInterface() {
-      document.getElementById('registerTab')
-        .classList.toggle('active', mode === 'register');
-
-      document.getElementById('loginTab')
-        .classList.toggle('active', mode === 'login');
-
-      document.getElementById('emailTab')
-        .classList.toggle('active', method === 'email');
-
-      document.getElementById('phoneTab')
-        .classList.toggle('active', method === 'phone');
-
-      identityLabel.textContent = method === 'email'
-        ? 'البريد الإلكتروني' : 'رقم الهاتف';
-
-      identity.type = method === 'email' ? 'email' : 'tel';
-
-      identity.placeholder = method === 'email'
-        ? 'أدخل بريدك الإلكتروني'
-        : 'مثال: +201xxxxxxxxx';
-
-      identity.autocomplete = method === 'email' ? 'email' : 'tel';
-
-      submitBtn.textContent = mode === 'register'
-        ? 'إنشاء حساب جديد' : 'تسجيل الدخول';
-
-      password.autocomplete = mode === 'register'
-        ? 'new-password' : 'current-password';
-
-      clearMessage();
-    }
-
-    document.getElementById('registerTab').onclick = () => {
-      mode = 'register';
-      updateInterface();
-    };
-
-    document.getElementById('loginTab').onclick = () => {
-      mode = 'login';
-      updateInterface();
-    };
-
-    document.getElementById('emailTab').onclick = () => {
-      method = 'email';
-      updateInterface();
-    };
-
-    document.getElementById('phoneTab').onclick = () => {
-      method = 'phone';
-      updateInterface();
-    };
-
-    function translateError(error) {
-      const text = (error.message || '').toLowerCase();
-
-      if (text.includes('already registered') ||
-          text.includes('already been registered')) {
-        return 'هذا الحساب مسجل بالفعل. جرّب تسجيل الدخول.';
-      }
-
-      if (text.includes('invalid login credentials')) {
-        return 'بيانات الدخول غير صحيحة.';
-      }
-
-      if (text.includes('email not confirmed')) {
-        return 'البريد يحتاج إلى تأكيد. راجع إعدادات المصادقة.';
-      }
-
-      if (text.includes('invalid email')) {
-        return 'صيغة البريد الإلكتروني غير صحيحة.';
-      }
-
-      if (text.includes('phone provider is disabled') ||
-          text.includes('phone signups are disabled')) {
-        return 'تسجيل الهاتف غير مفعّل في إعدادات Supabase.';
-      }
-
-      if (text.includes('sms') || text.includes('phone')) {
-        return 'تعذّر تسجيل الهاتف. راجع إعدادات الهاتف في Supabase.';
-      }
-
-      if (text.includes('fetch')) {
-        return 'تعذّر الاتصال بالخدمة. تحقق من الإنترنت.';
-      }
-
-      if (text.includes('rate limit')) {
-        return 'محاولات كثيرة. انتظر قليلًا ثم حاول مجددًا.';
-      }
-
-      return 'تعذّر إكمال العملية: ' + error.message;
-    }
-
-    form.addEventListener('submit', async function(event) {
-      event.preventDefault();
-      clearMessage();
-
-      if (!client) {
-        showMessage('الاتصال بالخدمة غير جاهز.', false);
-        return;
-      }
-
-      const value = identity.value.trim();
-      const pass = password.value;
-
-      if (!value || !pass) {
-        showMessage('أدخل البيانات المطلوبة.', false);
-        return;
-      }
-
-      if (pass.length < 6) {
-        showMessage('كلمة المرور يجب ألا تقل عن 6 أحرف.', false);
-        return;
-      }
-
-      if (method === 'phone' &&
-          !/^\+[1-9]\d{7,14}$/.test(value)) {
-        showMessage(
-          'اكتب رقم الهاتف مع مفتاح الدولة، مثل +201xxxxxxxxx.',
-          false
-        );
-        return;
-      }
-
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'جارٍ التنفيذ...';
-
-      try {
-        let result;
-
-        if (mode === 'register' && method === 'email') {
-          result = await client.auth.signUp({
-            email: value,
-            password: pass
-          });
-        } else if (mode === 'login' && method === 'email') {
-          result = await client.auth.signInWithPassword({
-            email: value,
-            password: pass
-          });
-        } else if (mode === 'register' && method === 'phone') {
-          result = await client.auth.signUp({
-            phone: value,
-            password: pass
-          });
-        } else {
-          result = await client.auth.signInWithPassword({
-            phone: value,
-            password: pass
-          });
-        }
-
-        if (result.error) {
-          throw result.error;
-        }
-
-        if (mode === 'register' && !result.data.session) {
-          showMessage(
-            'تم إرسال طلب التسجيل، لكن تسجيل الدخول لم يكتمل. راجع إعدادات المصادقة في Supabase.',
-            true
-          );
-        } else {
-          showMessage(
-            mode === 'register'
-              ? 'تم إنشاء الحساب وتسجيل الدخول بنجاح.'
-              : 'تم تسجيل الدخول بنجاح.',
-            true
-          );
-        }
-      } catch (error) {
-        console.error('Supabase Auth error:', error);
-        showMessage(translateError(error), false);
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = mode === 'register'
-          ? 'إنشاء حساب جديد' : 'تسجيل الدخول';
-      }
-    });
-
-    updateInterface();
-  </script>
+  }catch(err){
+    console.error("Supabase auth error:",err);
+    let t=err.message||"حدث خطأ غير معروف.";
+    if(/invalid login credentials/i.test(t)) t="رقم الهاتف أو كلمة المرور غير صحيحة.";
+    else if(/user already registered/i.test(t)) t="الحساب مسجل من قبل. جرّب تسجيل الدخول.";
+    else if(/failed to fetch/i.test(t)) t="تعذّر الاتصال. تحقق من الإنترنت ورابط المشروع.";
+    say("تعذّر إكمال العملية: "+t,"error");
+  }finally{
+    submit.disabled=false;
+    submit.textContent=mode==="register"?"إنشاء حساب":"تسجيل الدخول";
+  }
+});
+</script>
 </body>
 </html>
