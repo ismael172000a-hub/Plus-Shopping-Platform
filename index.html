@@ -16,6 +16,7 @@
             --neon-green-gradient: linear-gradient(135deg, #00ff88, #10b981);
             --text-main: #ffffff;
             --text-muted: #94a3b8;
+            --accent: #f59e0b;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
@@ -72,92 +73,57 @@
         /* App Container */
         #appContainer { display: none; flex-direction: column; width: 100%; max-width: 500px; margin: 0 auto; }
 
-        /* Header Logo */
         .app-header-title {
             text-align: center; font-size: 20px; font-weight: 900; letter-spacing: 2px;
             color: #ffffff; padding: 15px 0 10px 0; text-transform: uppercase;
         }
 
-        /* Banner Slider */
-        .banner-slider {
-            width: 100%; height: 160px; border-radius: 18px; overflow: hidden;
-            position: relative; margin-bottom: 15px; border: 1px solid var(--card-border);
+        /* Notification Banner */
+        .deposit-alert-box {
+            background: rgba(0, 255, 136, 0.15); border: 1px solid var(--neon-green);
+            color: var(--neon-green); border-radius: 12px; padding: 12px; margin: 10px 15px;
+            font-size: 12px; text-align: center; display: none; font-weight: 700;
         }
-        .banner-slider img { width: 100%; height: 100%; object-fit: cover; }
-        .slider-dots {
-            position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
-            display: flex; gap: 6px;
-        }
-        .dot { width: 8px; height: 8px; background: rgba(255,255,255,0.4); border-radius: 50%; }
-        .dot.active { width: 22px; background: #fff; border-radius: 10px; }
 
-        /* User Profile Card (Matching Design) */
-        .user-profile-card {
+        /* Wallet Hero Card */
+        .wallet-card {
             background: var(--card-bg); border: 1px solid var(--card-border);
-            border-radius: 20px; padding: 15px 18px; margin-bottom: 15px;
-            display: flex; align-items: center; justify-content: space-between;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            border-radius: 20px; padding: 20px; margin: 15px; text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        .wallet-balance-amount { font-size: 28px; font-weight: 900; color: #fff; margin: 5px 0; }
+        .wallet-deposit { font-size: 13px; color: var(--neon-green); font-weight: 700; }
+
+        /* Divider Bar (Profits Today) */
+        .profit-divider-bar {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            border-radius: 14px; padding: 14px 18px; margin: 0 15px 15px 15px;
+            display: flex; justify-content: space-between; align-items: center; color: #fff;
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
         }
 
-        .profile-left { display: flex; align-items: center; gap: 12px; }
-        .profile-avatar {
-            width: 55px; height: 55px; border-radius: 50%;
-            background: #2563eb; display: flex; justify-content: center; align-items: center;
-            overflow: hidden; border: 2px solid #3b82f6;
+        /* Ticker Moving Bar */
+        .ticker-container {
+            background: var(--card-bg); border-y: 1px solid var(--card-border); padding: 8px 15px;
+            overflow: hidden; white-space: nowrap; font-size: 12px; color: var(--accent); margin-bottom: 15px;
         }
-        .profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .ticker-text { display: inline-block; animation: marquee 20s linear infinite; }
+        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        .profile-info .phone { font-size: 16px; font-weight: 800; color: #fff; }
-        .profile-info .id-box { font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 5px; margin: 2px 0; }
-        .profile-info .balance { font-size: 18px; font-weight: 800; color: var(--neon-green); margin-top: 4px; }
+        /* Egypt Flag Emblem */
+        .egypt-badge-container { text-align: center; margin: 5px 0 15px 0; }
+        .egypt-flag-icon { width: 45px; height: 30px; border-radius: 4px; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.4); border: 1px solid #fff; }
 
-        /* Credit Rating Ring */
-        .credit-ring-box {
-            position: relative; width: 60px; height: 60px;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        /* Packages List */
+        .packages-list { display: flex; flex-direction: column; gap: 12px; padding: 0 15px; }
+        .package-item {
+            background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px;
+            padding: 15px; display: flex; justify-content: space-between; align-items: center;
         }
-        .credit-circle {
-            width: 54px; height: 54px; border-radius: 50%;
-            border: 4px solid var(--neon-green); display: flex;
-            justify-content: center; align-items: center; font-size: 14px; font-weight: 800; color: #fff;
-        }
-        .credit-label { font-size: 10px; color: #ec4899; margin-top: 4px; font-weight: 700; }
-
-        /* Action Buttons (Deposit / Withdraw) */
-        .actions-row { display: flex; gap: 12px; margin-bottom: 20px; }
-        .btn-action-deposit {
-            flex: 1; background: var(--neon-green-gradient); color: #000;
-            border: none; padding: 14px; border-radius: 14px; font-size: 16px; font-weight: 800;
-            display: flex; justify-content: center; align-items: center; gap: 8px; cursor: pointer;
-        }
-        .btn-action-withdraw {
-            flex: 1; background: transparent; border: 2px solid var(--neon-green); color: #fff;
-            padding: 14px; border-radius: 14px; font-size: 16px; font-weight: 800;
-            display: flex; justify-content: center; align-items: center; gap: 8px; cursor: pointer;
-        }
-
-        /* Section Title */
-        .section-header {
-            font-size: 15px; font-weight: 800; margin-bottom: 12px;
-            display: flex; align-items: center; gap: 8px; color: #fff;
-        }
-        .section-header::before {
-            content: ''; width: 4px; height: 16px; background: var(--neon-green); border-radius: 2px;
-        }
-
-        /* Product Cards */
-        .products-list { display: flex; flex-direction: column; gap: 12px; }
-        .product-card {
-            background: var(--card-bg); border: 1px solid var(--card-border);
-            border-radius: 16px; padding: 12px; display: flex; gap: 15px; align-items: center;
-        }
-        .product-card img { width: 85px; height: 85px; border-radius: 12px; object-fit: cover; }
-        .product-details { flex: 1; }
-        .product-title { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 8px; }
-        .product-info-row { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); margin-bottom: 3px; }
-        .product-price { font-size: 15px; font-weight: 800; color: #fff; }
-        .val-red { color: #ef4444; font-weight: 700; }
-        .val-orange { color: #f97316; font-weight: 700; }
+        .package-info h4 { font-size: 15px; color: #fff; margin-bottom: 3px; }
+        .package-info p { font-size: 12px; color: var(--neon-green); font-weight: 700; }
+        .package-price-action .price { font-size: 16px; font-weight: 800; color: var(--accent); margin-bottom: 5px; text-align: left; }
+        .package-price-action button { background: var(--neon-green-gradient); color: #000; border: none; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 800; cursor: pointer; }
 
         /* Bottom Navigation Bar */
         .bottom-nav {
@@ -172,9 +138,7 @@
         .nav-item.active { color: var(--neon-green); }
         .nav-item i { font-size: 18px; }
 
-        /* Modals */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 4000; justify-content: center; align-items: center; padding: 15px; }
-        .modal-content { background: var(--card-bg); border-radius: 16px; padding: 20px; width: 100%; max-width: 400px; position: relative; border: 1px solid var(--card-border); }
+        .floating-support { position: fixed; bottom: 70px; left: 15px; background: #0088cc; color: #fff; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; box-shadow: 0 4px 12px rgba(0, 136, 204, 0.4); z-index: 99; text-decoration: none; }
     </style>
 </head>
 <body>
@@ -186,7 +150,7 @@
             <button onclick="closeAdminPanel()" style="background:#dc2626; color:#fff; border:none; padding:8px 15px; border-radius:8px; font-weight:700; cursor:pointer;">إغلاق والعودة</button>
         </div>
 
-        <h3 style="font-size:14px; margin-bottom:10px;">📋 جميع بيانات المستخدمين:</h3>
+        <h3 style="font-size:14px; margin-bottom:10px;">📋 جميع بيانات المستخدمين وأرصدتهم والباقات المشتركين بها:</h3>
         <div style="overflow-x: auto;">
             <table class="admin-table">
                 <thead>
@@ -194,8 +158,9 @@
                         <th>الاسم</th>
                         <th>الهاتف</th>
                         <th>الرصيد</th>
-                        <th>الباقة</th>
-                        <th>الإجراء</th>
+                        <th>الوديعة</th>
+                        <th>الباقة المشترك بها</th>
+                        <th>شحن الرصيد</th>
                     </tr>
                 </thead>
                 <tbody id="adminUsersTableBody"></tbody>
@@ -232,108 +197,133 @@
         </div>
     </div>
 
-    <!-- 4. MAIN DASHBOARD (EXACT UI MATCH) -->
+    <!-- 4. MAIN USER DASHBOARD -->
     <div id="appContainer">
         
-        <!-- App Title Header -->
-        <div class="app-header-title">
-            CENTRO COMERCIAL
+        <div class="app-header-title">CENTRO COMERCIAL</div>
+
+        <!-- Deposit Success Alert Notification -->
+        <div id="depositAlert" class="deposit-alert-box">
+            🎉 مبروك! تم شحن الحساب بنجاح. يمكنك الآن اختيار باقة الاستثمار المتوفرة حسب رصيدك!
         </div>
 
-        <div style="padding: 0 15px;">
-            
-            <!-- Banner Slider -->
-            <div class="banner-slider">
-                <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1000&auto=format&fit=crop" alt="SHEIN Center">
-                <div class="slider-dots">
-                    <div class="dot"></div>
-                    <div class="dot active"></div>
-                    <div class="dot"></div>
-                    <div class="dot"></div>
-                </div>
-            </div>
-
-            <!-- User Profile Card -->
-            <div class="user-profile-card">
-                <div class="profile-left">
-                    <div class="profile-avatar">
-                        <img src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png" alt="User 3D Avatar">
-                    </div>
-                    <div class="profile-info">
-                        <div class="phone" id="userPhoneDisplay">01014344956</div>
-                        <div class="id-box">
-                            <span>ID</span> <span id="userIdDisplay">70522459</span>
-                            <i class="fa-regular fa-copy" style="cursor:pointer; color:var(--neon-green);" onclick="copyID()"></i>
-                        </div>
-                        <div class="balance">EGP <span id="balanceDisplay">180.01</span></div>
-                    </div>
-                </div>
-
-                <div class="credit-ring-box">
-                    <div class="credit-circle">100</div>
-                    <div class="credit-label">درجة الائتمان</div>
-                </div>
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="actions-row">
-                <button class="btn-action-deposit" onclick="openModal('depositModal')">
-                    <i class="fa-solid fa-wallet"></i> إيداع
-                </button>
-                <button class="btn-action-withdraw" onclick="openModal('withdrawModal')">
-                    <i class="fa-solid fa-credit-card"></i> سحب
-                </button>
-            </div>
-
-            <!-- Section Title -->
-            <div class="section-header">
-                المنتجات الأكثر مبيعاً اليوم
-            </div>
-
-            <!-- Products List -->
-            <div class="products-list">
-                <!-- Product 1 -->
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1630019852942-f89202989a59?w=300" alt="Earrings">
-                    <div class="product-details">
-                        <div class="product-title">أقراط أذن نسائية</div>
-                        <div class="product-info-row">
-                            <span>السعر:</span>
-                            <span class="product-price">EGP 95.7</span>
-                        </div>
-                        <div class="product-info-row">
-                            <span>المبيعات اليومية:</span>
-                            <span class="val-red">114</span>
-                        </div>
-                        <div class="product-info-row">
-                            <span>معدل نمو المبيعات:</span>
-                            <span class="val-orange">114%</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Product 2 -->
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=300" alt="Keychains">
-                    <div class="product-details">
-                        <div class="product-title">مجموعة علامات مفاتيح ملونة</div>
-                        <div class="product-info-row">
-                            <span>السعر:</span>
-                            <span class="product-price">EGP 150.00</span>
-                        </div>
-                        <div class="product-info-row">
-                            <span>المبيعات اليومية:</span>
-                            <span class="val-red">230</span>
-                        </div>
-                        <div class="product-info-row">
-                            <span>معدل نمو المبيعات:</span>
-                            <span class="val-orange">145%</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+        <!-- Wallet Card -->
+        <div class="wallet-card">
+            <div style="font-size: 12px; color: var(--text-muted);">إجمالي رصيد المحفظة</div>
+            <div class="wallet-balance-amount"><span id="balanceDisplay">50</span> EGP</div>
+            <div class="wallet-deposit">الوديعة المتاحة: <span id="depositDisplay">0</span> EGP</div>
         </div>
+
+        <!-- Egypt Flag Emblem -->
+        <div class="egypt-badge-container">
+            <img src="https://flagcdn.com/w80/eg.png" class="egypt-flag-icon" alt="مصر">
+            <div style="font-size:11px; color:var(--text-muted); margin-top:3px; font-weight:700;">الفرع الرسمي المعتمد في جمهورية مصر العربية 🇪🇬</div>
+        </div>
+
+        <!-- Divider Bar (Profits Today) -->
+        <div class="profit-divider-bar">
+            <div>
+                <i class="fa-solid fa-chart-line"></i> 
+                <span>أرباح اليوم التقديرية</span>
+            </div>
+            <div style="font-size:18px; font-weight:900;" id="todayProfitsDisplay">0 EGP</div>
+        </div>
+
+        <!-- Moving Ticker Notifications Bar -->
+        <div class="ticker-container">
+            <div class="ticker-text" id="tickerText">
+                🚀 تم انضمام مستخدم جديد برقم: 010****5821 | 🎉 ألف مبروك للمستخدم 012****3091 حصوله على جائزة السحب اليومي! | 💎 انضمام مستخدم جديد للباقة الفضية برقم: 015****8824
+            </div>
+        </div>
+
+        <!-- Packages List -->
+        <div style="font-size:15px; font-weight:800; padding: 0 15px; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+            <i class="fa-solid fa-crown" style="color: var(--accent);"></i>
+            <span>باقات الاستثمار المتاحة (عائد يومي 10%)</span>
+        </div>
+
+        <div class="packages-list">
+            <div class="package-item">
+                <div class="package-info">
+                    <h4>باقة المبتدئين (VIP 1)</h4>
+                    <p>العائد اليومي: 30 EGP</p>
+                </div>
+                <div class="package-price-action">
+                    <div class="price">300 EGP</div>
+                    <button onclick="subscribeUserPackage(300, 'VIP 1')">اشتراك</button>
+                </div>
+            </div>
+
+            <div class="package-item">
+                <div class="package-info">
+                    <h4>الباقة الفضية (VIP 2)</h4>
+                    <p>العائد اليومي: 100 EGP</p>
+                </div>
+                <div class="package-price-action">
+                    <div class="price">1,000 EGP</div>
+                    <button onclick="subscribeUserPackage(1000, 'VIP 2')">اشتراك</button>
+                </div>
+            </div>
+
+            <div class="package-item">
+                <div class="package-info">
+                    <h4>الباقة الذهبية (VIP 3)</h4>
+                    <p>العائد اليومي: 250 EGP</p>
+                </div>
+                <div class="package-price-action">
+                    <div class="price">2,500 EGP</div>
+                    <button onclick="subscribeUserPackage(2500, 'VIP 3')">اشتراك</button>
+                </div>
+            </div>
+
+            <div class="package-item">
+                <div class="package-info">
+                    <h4>الباقة الماسّية (VIP 4)</h4>
+                    <p>العائد اليومي: 400 EGP</p>
+                </div>
+                <div class="package-price-action">
+                    <div class="price">4,000 EGP</div>
+                    <button onclick="subscribeUserPackage(4000, 'VIP 4')">اشتراك</button>
+                </div>
+            </div>
+
+            <div class="package-item">
+                <div class="package-info">
+                    <h4>باقة كبار المستثمرين (VIP 5)</h4>
+                    <p>العائد اليومي: 600 EGP</p>
+                </div>
+                <div class="package-price-action">
+                    <div class="price">6,000 EGP</div>
+                    <button onclick="subscribeUserPackage(6000, 'VIP 5')">اشتراك</button>
+                </div>
+            </div>
+
+            <div class="package-item">
+                <div class="package-info">
+                    <h4>الباقة النخبوية (VIP 6)</h4>
+                    <p>العائد اليومي: 900 EGP</p>
+                </div>
+                <div class="package-price-action">
+                    <div class="price">9,000 EGP</div>
+                    <button onclick="subscribeUserPackage(9000, 'VIP 6')">اشتراك</button>
+                </div>
+            </div>
+
+            <div class="package-item">
+                <div class="package-info">
+                    <h4>الباقة الملكية (VIP 7)</h4>
+                    <p>العائد اليومي: 1,200 EGP</p>
+                </div>
+                <div class="package-price-action">
+                    <div class="price">12,000 EGP</div>
+                    <button onclick="subscribeUserPackage(12000, 'VIP 7')">اشتراك</button>
+                </div>
+            </div>
+        </div>
+
+        <a href="https://t.me/tasawwoq_plus" target="_blank" class="floating-support">
+            <i class="fa-brands fa-telegram"></i>
+        </a>
 
         <!-- Bottom Navigation Bar -->
         <nav class="bottom-nav">
@@ -341,19 +331,19 @@
                 <i class="fa-solid fa-house"></i>
                 <span>الرئيسية</span>
             </div>
-            <div class="nav-item" onclick="alert('قسم المهمات قيد التحديث')">
+            <div class="nav-item" onclick="alert('قسم المهمات')">
                 <i class="fa-solid fa-crown"></i>
                 <span>مهمة</span>
             </div>
-            <div class="nav-item" onclick="alert('قسم المعاملات قيد التحديث')">
+            <div class="nav-item" onclick="alert('قسم المعاملات')">
                 <i class="fa-solid fa-list-check"></i>
                 <span>المعاملات</span>
             </div>
-            <div class="nav-item" onclick="alert('قسم الطلبات قيد التحديث')">
+            <div class="nav-item" onclick="alert('قسم الطلبات')">
                 <i class="fa-solid fa-clipboard-list"></i>
                 <span>الطلبات</span>
             </div>
-            <div class="nav-item" id="adminMenuTrigger" onclick="checkAdminAccess()">
+            <div class="nav-item" onclick="checkAdminAccess()">
                 <i class="fa-solid fa-user"></i>
                 <span>حسابي</span>
             </div>
@@ -361,33 +351,12 @@
 
     </div>
 
-    <!-- MODAL: DEPOSIT -->
-    <div id="depositModal" class="modal">
-        <div class="modal-content">
-            <span style="position:absolute; top:12px; left:12px; cursor:pointer;" onclick="closeModal('depositModal')">&times;</span>
-            <h3 style="font-size:16px; margin-bottom:12px; color:var(--neon-green);"><i class="fa-solid fa-wallet"></i> طلب إيداع جديد</h3>
-            <p style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">لشحن رصيدك عبر فودافون كاش، يرجى التواصل مع الدعم الفني لإتمام التحويل:</p>
-            <button class="btn-main" onclick="window.open('https://t.me/tasawwoq_plus', '_blank')">تواصل مع الدعم عبر تليجرام</button>
-        </div>
-    </div>
-
-    <!-- MODAL: WITHDRAW -->
-    <div id="withdrawModal" class="modal">
-        <div class="modal-content">
-            <span style="position:absolute; top:12px; left:12px; cursor:pointer;" onclick="closeModal('withdrawModal')">&times;</span>
-            <h3 style="font-size:16px; margin-bottom:12px; color:var(--neon-green);"><i class="fa-solid fa-credit-card"></i> طلب سحب الأرباح</h3>
-            <input type="text" id="withdrawPhoneInput" placeholder="رقم المحفظة (فودافون كاش)">
-            <input type="number" id="withdrawAmountInput" placeholder="المبلغ المراد سحبه (EGP)">
-            <button class="btn-main" onclick="alert('تم إرسال طلب السحب للإدارة بنجاح!'); closeModal('withdrawModal');">تأكيد السحب</button>
-        </div>
-    </div>
-
     <!-- Script Logic -->
     <script>
         const ADMIN_PHONE = "01032315526";
 
         let dbUsers = JSON.parse(localStorage.getItem('tasawwoq_users')) || {
-            [ADMIN_PHONE]: { name: "صاحب الشركة (الأدمن)", balance: 10000, role: "admin", id: "70522459" }
+            [ADMIN_PHONE]: { name: "صاحب الشركة (الأدمن)", balance: 10000, deposit: 10000, package: "VIP 7", role: "admin", notified: false }
         };
 
         let currentPhone = "";
@@ -405,9 +374,11 @@
             if(!dbUsers[phone]) {
                 dbUsers[phone] = {
                     name: (phone === ADMIN_PHONE) ? "صاحب الشركة" : "مستخدم " + phone.slice(-4),
-                    balance: 180.01,
+                    balance: 50,
+                    deposit: 0,
+                    package: "غير مشترك",
                     role: (phone === ADMIN_PHONE) ? "admin" : "user",
-                    id: Math.floor(10000000 + Math.random() * 90000000)
+                    notified: false
                 };
                 localStorage.setItem('tasawwoq_users', JSON.stringify(dbUsers));
             }
@@ -423,9 +394,11 @@
 
             dbUsers[phone] = {
                 name: name,
-                balance: 50.00,
+                balance: 50,
+                deposit: 0,
+                package: "غير مشترك",
                 role: (phone === ADMIN_PHONE) ? "admin" : "user",
-                id: Math.floor(10000000 + Math.random() * 90000000)
+                notified: false
             };
 
             localStorage.setItem('tasawwoq_users', JSON.stringify(dbUsers));
@@ -444,9 +417,22 @@
             const user = dbUsers[currentPhone];
             if(!user) return;
 
-            document.getElementById('userPhoneDisplay').innerText = currentPhone;
-            document.getElementById('userIdDisplay').innerText = user.id;
             document.getElementById('balanceDisplay').innerText = user.balance;
+            document.getElementById('depositDisplay').innerText = user.deposit;
+
+            // Show Deposit Success Notification
+            if(user.notified) {
+                document.getElementById('depositAlert').style.display = 'block';
+            } else {
+                document.getElementById('depositAlert').style.display = 'none';
+            }
+
+            // Calculate Today Profit
+            if(user.package && user.package !== "غير مشترك") {
+                document.getElementById('todayProfitsDisplay').innerText = (user.deposit * 0.10) + " EGP";
+            } else {
+                document.getElementById('todayProfitsDisplay').innerText = "0 EGP";
+            }
         }
 
         function checkAdminAccess() {
@@ -454,12 +440,13 @@
                 renderAdminTable();
                 document.getElementById('adminScreen').style.display = 'flex';
             } else {
-                alert('حساب المستخدم الخاص بك');
+                alert('حساب المستخدم الخاص بك نشط وموثق.');
             }
         }
 
         function closeAdminPanel() {
             document.getElementById('adminScreen').style.display = 'none';
+            updateUI();
         }
 
         function renderAdminTable() {
@@ -471,33 +458,43 @@
                     <td><b>${u.name}</b></td>
                     <td>${ph}</td>
                     <td>${u.balance} EGP</td>
-                    <td>نشط</td>
+                    <td>${u.deposit} EGP</td>
+                    <td><span style="background:var(--accent); color:#000; padding:2px 6px; border-radius:4px; font-weight:bold;">${u.package || 'غير مشترك'}</span></td>
                     <td>
-                        <button onclick="adminAddBalance('${ph}')" style="background:var(--neon-green); color:#000; border:none; padding:4px 8px; border-radius:6px; font-weight:bold; cursor:pointer;">تعديل الرصيد 💳</button>
+                        <button onclick="adminChargeUser('${ph}')" style="background:var(--neon-green); color:#000; border:none; padding:4px 8px; border-radius:6px; font-weight:bold; cursor:pointer;">شحن 💳</button>
                     </td>
                 </tr>`;
             }
             tbody.innerHTML = html;
         }
 
-        function adminAddBalance(ph) {
-            const amount = prompt(`أدخل المبلغ المراد إضافته لرصيد ${ph}:`, "100");
+        function adminChargeUser(ph) {
+            const amount = prompt(`أدخل مبلغ الوديعة المراد شحنه للمستخدم ${ph}:`, "300");
             if(amount !== null && !isNaN(parseFloat(amount))) {
+                dbUsers[ph].deposit += parseFloat(amount);
                 dbUsers[ph].balance += parseFloat(amount);
+                dbUsers[ph].notified = true; // تفعيل إشعار النجاح للمستخدم
                 localStorage.setItem('tasawwoq_users', JSON.stringify(dbUsers));
                 renderAdminTable();
-                if(ph === currentPhone) updateUI();
-                alert('تم تحديث الرصيد بنجاح!');
+                alert(`تم شحن الوديعة والحساب للمستخدم ${ph} بنجاح!`);
             }
         }
 
-        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        function subscribeUserPackage(price, packageName) {
+            const user = dbUsers[currentPhone];
 
-        function copyID() {
-            const idText = document.getElementById('userIdDisplay').innerText;
-            navigator.clipboard.writeText(idText);
-            alert('تم نسخ الـ ID بنجاح: ' + idText);
+            if(user.deposit < price) {
+                alert(`عذراً! رصيد الوديعة لديك (${user.deposit} EGP) غير كافٍ للاشتراك في ${packageName} بقيمة ${price} EGP.`);
+                return;
+            }
+
+            user.deposit -= price;
+            user.package = packageName;
+            user.notified = false; // إخفاء التنبيه
+
+            localStorage.setItem('tasawwoq_users', JSON.stringify(dbUsers));
+            updateUI();
+            alert(`🎉 مبروك! تم اشتراكك بنجاح في ${packageName}. تم تسجيل اشتراكك في بيانات الشركة وتفعيل العائد اليومي!`);
         }
     </script>
 </body>
