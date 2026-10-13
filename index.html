@@ -35,7 +35,6 @@
             flex-direction: column;
         }
 
-        /* Fullscreen Screens */
         .fullscreen-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100vh;
@@ -61,20 +60,10 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
         }
 
-        .auth-card h2 {
-            color: #60a5fa;
-            font-size: 24px;
-            margin-bottom: 8px;
-        }
+        .auth-card h2 { color: #60a5fa; font-size: 24px; margin-bottom: 8px; }
+        .auth-card p { font-size: 13px; color: var(--text-muted); margin-bottom: 15px; line-height: 1.5; }
 
-        .auth-card p {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-bottom: 15px;
-            line-height: 1.5;
-        }
-
-        input, select {
+        input {
             width: 100%;
             padding: 12px;
             margin: 8px 0;
@@ -100,7 +89,6 @@
             margin-top: 10px;
             transition: 0.2s;
         }
-
         .btn-main:hover { background: var(--primary-dark); }
 
         .switch-text {
@@ -149,7 +137,6 @@
             border: 1px solid var(--primary);
         }
 
-        /* Tab Content */
         .tab-content { display: none; padding: 15px; flex: 1; }
         .tab-content.active { display: block; }
 
@@ -181,12 +168,7 @@
             gap: 8px;
         }
 
-        /* Packages List */
-        .packages-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+        .packages-list { display: flex; flex-direction: column; gap: 12px; }
 
         .package-item {
             background: #1e293b;
@@ -204,105 +186,61 @@
         .package-price-action { text-align: left; }
         .package-price-action .price { font-size: 16px; font-weight: 800; color: var(--accent); margin-bottom: 5px; }
         .package-price-action button {
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
+            background: var(--primary); color: #fff; border: none; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer;
         }
 
-        /* Tasks List */
         .task-card {
             background: #1e293b;
             border: 1px solid #334155;
             border-radius: 14px;
-            padding: 15px;
+            padding: 12px;
             margin-bottom: 12px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 12px;
+        }
+
+        .task-card img {
+            width: 60px; height: 60px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 1px solid #334155;
         }
 
         .task-card.completed { opacity: 0.6; border-color: var(--secondary); }
 
         .task-btn {
-            background: var(--secondary);
-            color: #fff;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 12px;
-            cursor: pointer;
+            background: var(--secondary); color: #fff; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 11px; cursor: pointer; margin-top: 5px;
         }
 
-        /* Bottom Navigation Bar */
+        .avatar-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .avatar-option {
+            width: 50px; height: 50px; border-radius: 50%; object-fit: cover; cursor: pointer; border: 2px solid transparent;
+        }
+        .avatar-option.selected { border-color: var(--primary); transform: scale(1.1); }
+
         .bottom-nav {
-            position: fixed;
-            bottom: 0; left: 0; width: 100%;
-            background: #1e293b;
-            border-top: 1px solid #334155;
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            z-index: 100;
+            position: fixed; bottom: 0; left: 0; width: 100%; background: #1e293b; border-top: 1px solid #334155; display: flex; justify-content: space-around; padding: 10px 0; z-index: 100;
         }
 
-        .nav-link {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            cursor: pointer;
-        }
-
+        .nav-link { color: var(--text-muted); text-decoration: none; font-size: 12px; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
         .nav-link.active { color: var(--primary); }
         .nav-link i { font-size: 18px; }
 
-        /* Floating Support */
         .floating-support {
-            position: fixed;
-            bottom: 65px;
-            left: 15px;
-            background: #0088cc;
-            color: #fff;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            box-shadow: 0 4px 12px rgba(0, 136, 204, 0.4);
-            z-index: 99;
-            text-decoration: none;
+            position: fixed; bottom: 65px; left: 15px; background: #0088cc; color: #fff; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; box-shadow: 0 4px 12px rgba(0, 136, 204, 0.4); z-index: 99; text-decoration: none;
         }
 
-        /* Modal */
         .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 3000;
-            justify-content: center;
-            align-items: center;
-            padding: 15px;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 3000; justify-content: center; align-items: center; padding: 15px;
         }
         .modal-content {
-            background: #1e293b;
-            border-radius: 16px;
-            padding: 20px;
-            width: 100%;
-            max-width: 400px;
-            position: relative;
-            border: 1px solid #334155;
+            background: #1e293b; border-radius: 16px; padding: 20px; width: 100%; max-width: 400px; position: relative; border: 1px solid #334155; max-height: 85vh; overflow-y: auto;
         }
     </style>
 </head>
@@ -312,13 +250,10 @@
     <div id="loginScreen" class="fullscreen-screen">
         <div class="auth-card">
             <h2>تسجيل الدخول</h2>
-            <p>أدخل بيانات حسابك للمتابعة وإدارة استثماراتك بأمان تضاهي أكبر المنصات العالمية.</p>
-            
-            <input type="tel" id="loginPhone" placeholder="رقم الهاتف">
+            <p>أدخل رقم هاتفك للإدارة أو متابعة استثماراتك بأمان.</p>
+            <input type="tel" id="loginPhone" placeholder="رقم الهاتف (مثال: رقمك الأدمن)">
             <input type="password" id="loginPass" placeholder="كلمة السر">
-            
             <button class="btn-main" onclick="processLogin()">دخول</button>
-            
             <div class="switch-text" onclick="showScreen('registerScreen')">
                 ليس لديك حساب؟ <span>إنشاء حساب جديد</span>
             </div>
@@ -330,13 +265,10 @@
         <div class="auth-card">
             <h2>إنشاء حساب جديد</h2>
             <p>انضم إلينا الآن واحصل على <strong>50 ج.م هدية ترحيبية</strong> فوراً في رصيدك!</p>
-            
             <input type="text" id="regName" placeholder="الاسم الكامل">
             <input type="tel" id="regPhone" placeholder="رقم الهاتف">
             <input type="password" id="regPass" placeholder="كلمة السر">
-            
             <button class="btn-main" onclick="processRegister()">تسجيل حساب جديد</button>
-            
             <div class="switch-text" onclick="showScreen('loginScreen')">
                 لديك حساب بالفعل؟ <span>تسجيل الدخول</span>
             </div>
@@ -346,20 +278,24 @@
     <!-- 3. MAIN APP DASHBOARD -->
     <div id="appContainer">
         
-        <!-- Header -->
         <header>
             <div style="font-size:18px; font-weight:800; color:var(--primary);">
                 <i class="fa-solid fa-cart-shopping"></i> تسوق بلس
             </div>
-            <div class="user-profile-btn" onclick="openModal('profileModal')">
-                <img id="headerUserImg" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" alt="Profile">
-                <span id="headerUserName" style="font-size:13px; font-weight:700;">المستخدم</span>
+            <div style="display: flex; gap: 8px; align-items: center;">
+                <!-- ADMIN BUTTON (Visible only to Admin) -->
+                <button id="adminPanelBtn" style="display:none; background:var(--accent); color:#000; border:none; padding:6px 10px; border-radius:8px; font-weight:700; font-size:11px; cursor:pointer;" onclick="openModal('adminModal')">
+                    <i class="fa-solid fa-shield-halved"></i> لوحة الأدمن
+                </button>
+                <div class="user-profile-btn" onclick="openModal('profileModal')">
+                    <img id="headerUserImg" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" alt="Profile">
+                    <span id="headerUserName" style="font-size:13px; font-weight:700;">المستخدم</span>
+                </div>
             </div>
         </header>
 
-        <!-- TAB 1: HOME (Packages & Balance) -->
+        <!-- TAB 1: HOME -->
         <div id="tabHome" class="tab-content active">
-            
             <div class="hero-card">
                 <h2>مرحباً بك في تسوق بلس 🚀</h2>
                 <p style="font-size:12px; opacity:0.9;">الفرع الرسمي المعتمد لشركة Tasawwoq Plus (تكساس، الولايات المتحدة الأمريكية - تأسست 2018)</p>
@@ -455,71 +391,68 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
-        <!-- TAB 2: TASKS (5 Daily Tasks) -->
+        <!-- TAB 2: TASKS -->
         <div id="tabTasks" class="tab-content">
             <div class="section-title">
                 <i class="fa-solid fa-list-check" style="color: var(--secondary);"></i>
                 <span>المهام اليومية التسوقية (5 مهام متجددة)</span>
             </div>
-            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">اضغط على إنجاز المهمة لتقييم المنتج التسويقي وإضافة العمولات لرصيدك.</p>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">قيم المنتجات أدناه لإضافة العمولات الفورية إلى رصيدك.</p>
 
             <div id="tasksContainer">
-                <!-- Task 1 -->
                 <div class="task-card" id="task1">
-                    <div>
-                        <h4 style="font-size:14px; margin-bottom:3px;"><i class="fa-solid fa-mobile-screen"></i> تقييم هاتف ذكي حديث</h4>
-                        <p style="font-size:11px; color:var(--text-muted);">المكافأة: +10 ج.م</p>
+                    <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=150" alt="Phone">
+                    <div style="flex:1;">
+                        <h4 style="font-size:13px; margin-bottom:2px;">تقييم هاتف ذكي حديث</h4>
+                        <p style="font-size:11px; color:var(--secondary);">المكافأة: +10 ج.م</p>
+                        <button class="task-btn" onclick="completeTask(1, 10)">إنجاز المهمة</button>
                     </div>
-                    <button class="task-btn" onclick="completeTask(1, 10)">إنجاز المهمة</button>
                 </div>
 
-                <!-- Task 2 -->
                 <div class="task-card" id="task2">
-                    <div>
-                        <h4 style="font-size:14px; margin-bottom:3px;"><i class="fa-solid fa-bolt"></i> تقييم شاحن متنقل سريع</h4>
-                        <p style="font-size:11px; color:var(--text-muted);">المكافأة: +10 ج.م</p>
+                    <img src="https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=150" alt="Charger">
+                    <div style="flex:1;">
+                        <h4 style="font-size:13px; margin-bottom:2px;">تقييم شاحن متنقل سريع</h4>
+                        <p style="font-size:11px; color:var(--secondary);">المكافأة: +10 ج.م</p>
+                        <button class="task-btn" onclick="completeTask(2, 10)">إنجاز المهمة</button>
                     </div>
-                    <button class="task-btn" onclick="completeTask(2, 10)">إنجاز المهمة</button>
                 </div>
 
-                <!-- Task 3 -->
                 <div class="task-card" id="task3">
-                    <div>
-                        <h4 style="font-size:14px; margin-bottom:3px;"><i class="fa-solid fa-headphones"></i> تقييم سماعات لاسلكية</h4>
-                        <p style="font-size:11px; color:var(--text-muted);">المكافأة: +15 ج.م</p>
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=150" alt="Headphones">
+                    <div style="flex:1;">
+                        <h4 style="font-size:13px; margin-bottom:2px;">تقييم سماعات لاسلكية</h4>
+                        <p style="font-size:11px; color:var(--secondary);">المكافأة: +15 ج.م</p>
+                        <button class="task-btn" onclick="completeTask(3, 15)">إنجاز المهمة</button>
                     </div>
-                    <button class="task-btn" onclick="completeTask(3, 15)">إنجاز المهمة</button>
                 </div>
 
-                <!-- Task 4 -->
                 <div class="task-card" id="task4">
-                    <div>
-                        <h4 style="font-size:14px; margin-bottom:3px;"><i class="fa-solid fa-laptop"></i> تقييم جهاز لوحي محمول</h4>
-                        <p style="font-size:11px; color:var(--text-muted);">المكافأة: +20 ج.م</p>
+                    <img src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=150" alt="Tablet">
+                    <div style="flex:1;">
+                        <h4 style="font-size:13px; margin-bottom:2px;">تقييم جهاز لوحي محمول</h4>
+                        <p style="font-size:11px; color:var(--secondary);">المكافأة: +20 ج.م</p>
+                        <button class="task-btn" onclick="completeTask(4, 20)">إنجاز المهمة</button>
                     </div>
-                    <button class="task-btn" onclick="completeTask(4, 20)">إنجاز المهمة</button>
                 </div>
 
-                <!-- Task 5 -->
                 <div class="task-card" id="task5">
-                    <div>
-                        <h4 style="font-size:14px; margin-bottom:3px;"><i class="fa-solid fa-clock"></i> تقييم ساعة ذكية رياضية</h4>
-                        <p style="font-size:11px; color:var(--text-muted);">المكافأة: +15 ج.م</p>
+                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=150" alt="Watch">
+                    <div style="flex:1;">
+                        <h4 style="font-size:13px; margin-bottom:2px;">تقييم ساعة ذكية رياضية</h4>
+                        <p style="font-size:11px; color:var(--secondary);">المكافأة: +15 ج.م</p>
+                        <button class="task-btn" onclick="completeTask(5, 15)">إنجاز المهمة</button>
                     </div>
-                    <button class="task-btn" onclick="completeTask(5, 15)">إنجاز المهمة</button>
                 </div>
             </div>
         </div>
 
-        <!-- Floating Telegram Support Button -->
         <a href="https://t.me/tasawwoq_plus" target="_blank" class="floating-support">
             <i class="fa-brands fa-telegram"></i>
         </a>
 
-        <!-- Bottom Navigation -->
         <nav class="bottom-nav">
             <div class="nav-link active" onclick="switchTab('tabHome', this)">
                 <i class="fa-solid fa-house"></i>
@@ -530,20 +463,48 @@
                 <span>المهام اليومية</span>
             </div>
         </nav>
-
     </div>
 
-    <!-- MODAL: Profile Settings (Change Name & Image) -->
+    <!-- MODAL: ADMIN PANEL (Company Owner Control) -->
+    <div id="adminModal" class="modal">
+        <div class="modal-content">
+            <span style="position:absolute; top:12px; left:12px; cursor:pointer;" onclick="closeModal('adminModal')">&times;</span>
+            <h3 style="font-size:16px; margin-bottom:12px; color:var(--accent);"><i class="fa-solid fa-shield-halved"></i> لوحة تحكم صاحب الشركة (الأدمن)</h3>
+            
+            <p style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">قم بإدارة أرصدة المستخدمين أو شحن رصيد لهم مباشرة:</p>
+            
+            <label style="font-size:12px;">رقم هاتف المستخدم المراد تعديل رصيده:</label>
+            <input type="tel" id="adminTargetPhone" placeholder="010XXXXXXXX">
+            
+            <label style="font-size:12px;">المبلغ المراد إضافته (أو خصمه):</label>
+            <input type="number" id="adminAddBalance" placeholder="مثال: 500 أو -100">
+            
+            <button class="btn-main" onclick="adminUpdateBalance()">تحديث رصيد المستخدم</button>
+            
+            <hr style="border:0; border-top:1px solid #334155; margin:15px 0;">
+            <h4 style="font-size:14px; margin-bottom:8px;">طلبات السحب المعلقة:</h4>
+            <div id="adminWithdrawList" style="font-size:12px; color:var(--text-muted);">
+                لا توجد طلبات سحب حالياً.
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: Profile Settings -->
     <div id="profileModal" class="modal">
         <div class="modal-content">
             <span style="position:absolute; top:12px; left:12px; cursor:pointer;" onclick="closeModal('profileModal')">&times;</span>
-            <h3 style="font-size:16px; margin-bottom:12px;"><i class="fa-solid fa-user-gear"></i> إعدادات الحساب الشخصي</h3>
+            <h3 style="font-size:16px; margin-bottom:12px;"><i class="fa-solid fa-user-gear"></i> تعديل الحساب الشخصي</h3>
             
             <label style="font-size:12px;">تعديل الاسم:</label>
             <input type="text" id="editNameInput" placeholder="اكتب اسمك الجديد">
             
-            <label style="font-size:12px; margin-top:10px; display:block;">رابط صورة الحساب الشخصي (URL):</label>
-            <input type="text" id="editImgInput" placeholder="ضع رابط صورة جديدة هنا">
+            <label style="font-size:12px; margin-top:10px; display:block;">اختر صورة الحساب:</label>
+            <div class="avatar-grid">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" class="avatar-option selected" onclick="selectAvatar(this)">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100" class="avatar-option" onclick="selectAvatar(this)">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100" class="avatar-option" onclick="selectAvatar(this)">
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100" class="avatar-option" onclick="selectAvatar(this)">
+            </div>
             
             <button class="btn-main" onclick="saveProfile()">حفظ التعديلات</button>
         </div>
@@ -553,21 +514,25 @@
     <div id="withdrawModal" class="modal">
         <div class="modal-content">
             <span style="position:absolute; top:12px; left:12px; cursor:pointer;" onclick="closeModal('withdrawModal')">&times;</span>
-            <h3 style="font-size:16px; margin-bottom:12px;"><i class="fa-solid fa-money-bill-transfer"></i> سحب الأرباح</h3>
-            <input type="text" placeholder="رقم المحفظة (فودافون كاش)">
-            <input type="number" placeholder="المبلغ المراد سحبه">
-            <button class="btn-main" onclick="alert('تم إرسال طلب السحب بنجاح!'); closeModal('withdrawModal');">تأكيد السحب</button>
+            <h3 style="font-size:16px; margin-bottom:12px;"><i class="fa-solid fa-money-bill-transfer"></i> طلب سحب الأرباح</h3>
+            <input type="text" id="withdrawPhoneInput" placeholder="رقم المحفظة (فودافون كاش)">
+            <input type="number" id="withdrawAmountInput" placeholder="المبلغ المراد سحبه">
+            <button class="btn-main" onclick="submitWithdrawRequest()">تأكيد السحب للإدارة</button>
         </div>
     </div>
 
-    <!-- Script Logic -->
     <script>
-        let currentUser = {
-            name: "المستخدم",
-            phone: "",
-            balance: 50,
-            image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100"
+        // رقم الهاتف الخاص بك كصاحب الشركة (الأدمن) - يمكنك تغليطه برقمك الفعلي
+        const ADMIN_PHONE = "01032315526"; 
+
+        // تخزين محلي لجميع المستخدمين (أو يتم ربطه بـ Supabase لاحقاً)
+        let dbUsers = JSON.parse(localStorage.getItem('tasawwoq_users')) || {
+            [ADMIN_PHONE]: { name: "صاحب الشركة (الأدمن)", balance: 10000, image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100", role: "admin" }
         };
+
+        let currentPhone = "";
+        let selectedAvatarUrl = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100";
+        let withdrawRequests = JSON.parse(localStorage.getItem('tasawwoq_withdraws')) || [];
 
         function showScreen(screenId) {
             document.getElementById('loginScreen').style.display = 'none';
@@ -578,8 +543,13 @@
         function processLogin() {
             const phone = document.getElementById('loginPhone').value.trim();
             if(!phone) { alert('يرجى إدخال رقم الهاتف'); return; }
-            currentUser.phone = phone;
-            currentUser.name = "مستخدم " + phone.slice(-4);
+            
+            if(!dbUsers[phone]) {
+                alert('رقم الهاتف غير مسجل! يرجى إنشاء حساب جديد أولاً.');
+                return;
+            }
+
+            currentPhone = phone;
             startApp();
         }
 
@@ -587,9 +557,21 @@
             const name = document.getElementById('regName').value.trim();
             const phone = document.getElementById('regPhone').value.trim();
             if(!name || !phone) { alert('يرجى ملء جميع البيانات'); return; }
-            currentUser.name = name;
-            currentUser.phone = phone;
-            currentUser.balance = 50; // Welcome Bonus
+
+            if(dbUsers[phone]) {
+                alert('هذا الرقم مسجل بالفعل، قم بتسجيل الدخول مباشرة!');
+                return;
+            }
+
+            dbUsers[phone] = {
+                name: name,
+                balance: 50, // 50 ج.م هدية ترحيبية
+                image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100",
+                role: (phone === ADMIN_PHONE) ? "admin" : "user"
+            };
+
+            localStorage.setItem('tasawwoq_users', JSON.stringify(dbUsers));
+            currentPhone = phone;
             startApp();
         }
 
@@ -597,15 +579,25 @@
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('registerScreen').style.display = 'none';
             document.getElementById('appContainer').style.display = 'flex';
+
+            // Check if Admin
+            if(currentPhone === ADMIN_PHONE || dbUsers[currentPhone]?.role === 'admin') {
+                document.getElementById('adminPanelBtn').style.display = 'block';
+                renderAdminWithdraws();
+            } else {
+                document.getElementById('adminPanelBtn').style.display = 'none';
+            }
+
             updateUI();
         }
 
         function updateUI() {
-            document.getElementById('balanceDisplay').innerText = currentUser.balance;
-            document.getElementById('headerUserName').innerText = currentUser.name;
-            document.getElementById('headerUserImg').src = currentUser.image;
-            document.getElementById('editNameInput').value = currentUser.name;
-            document.getElementById('editImgInput').value = currentUser.image;
+            const user = dbUsers[currentPhone];
+            if(!user) return;
+            document.getElementById('balanceDisplay').innerText = user.balance;
+            document.getElementById('headerUserName').innerText = user.name;
+            document.getElementById('headerUserImg').src = user.image;
+            document.getElementById('editNameInput').value = user.name;
         }
 
         function switchTab(tabId, element) {
@@ -618,33 +610,103 @@
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
+        function selectAvatar(imgElement) {
+            document.querySelectorAll('.avatar-option').forEach(img => img.classList.remove('selected'));
+            imgElement.classList.add('selected');
+            selectedAvatarUrl = imgElement.src;
+        }
+
         function saveProfile() {
             const newName = document.getElementById('editNameInput').value.trim();
-            const newImg = document.getElementById('editImgInput').value.trim();
-            if(newName) currentUser.name = newName;
-            if(newImg) currentUser.image = newImg;
+            if(newName) dbUsers[currentPhone].name = newName;
+            dbUsers[currentPhone].image = selectedAvatarUrl;
+            localStorage.setItem('tasawwoq_users', JSON.stringify(dbUsers));
             updateUI();
             closeModal('profileModal');
             alert('تم تحديث بيانات الحساب بنجاح!');
         }
 
         function subscribePackage(price, name) {
-            alert(`طلب الاشتراك في ${name} بقيمة ${price} ج.م قيد المراجعة. تواصل مع خدمة العملاء عبر تليجرام للتفعيل.`);
+            alert(`طلب الاشتراك في ${name} بقيمة ${price} ج.م قيد المراجعة. تواصل مع خدمة العملاء عبر تليجرام لإتمام الإيداع.`);
             window.open('https://t.me/tasawwoq_plus', '_blank');
         }
 
         function completeTask(taskId, reward) {
-            const taskCard = document.getElementById('task*'.replace('*', taskId));
+            const taskCard = document.getElementById('task' + taskId);
             if(taskCard.classList.contains('completed')) {
                 alert('لقد قمت بإنجاز هذه المهمة مسبقاً اليوم!');
                 return;
             }
-            currentUser.balance += reward;
+            dbUsers[currentPhone].balance += reward;
+            localStorage.setItem('tasawwoq_users', JSON.stringify(dbUsers));
             taskCard.classList.add('completed');
             taskCard.querySelector('.task-btn').innerText = 'تم الإنجاز ✓';
             taskCard.querySelector('.task-btn').style.background = '#64748b';
             updateUI();
             alert(`🎉 مبروك! تمت إنجاز المهمة بنجاح وتمت إضافة ${reward} ج.م لرصيدك.`);
+        }
+
+        function submitWithdrawRequest() {
+            const phone = document.getElementById('withdrawPhoneInput').value.trim();
+            const amount = parseFloat(document.getElementById('withdrawAmountInput').value);
+
+            if(!phone || !amount) { alert('يرجى إدخال بيانات السحب'); return; }
+            if(amount > dbUsers[currentPhone].balance) { alert('رصيدك غير كافٍ!'); return; }
+
+            withdrawRequests.push({
+                userPhone: currentPhone,
+                userName: dbUsers[currentPhone].name,
+                walletPhone: phone,
+                amount: amount,
+                time: new Date().toLocaleString()
+            });
+
+            localStorage.setItem('tasawwoq_withdraws', JSON.stringify(withdrawRequests));
+            dbUsers[currentPhone].balance -= amount;
+            localStorage.setItem('tasawwoq_users', JSON.stringify(dbUsers));
+            updateUI();
+            closeModal('withdrawModal');
+            alert('تم إرسال طلب السحب إلى إدارة الشركة بنجاح وسيتم التحويل قريباً!');
+        }
+
+        // Admin Functions
+        function adminUpdateBalance() {
+            const targetPhone = document.getElementById('adminTargetPhone').value.trim();
+            const addAmount = parseFloat(document.getElementById('adminAddBalance').value);
+
+            if(!targetPhone || isNaN(addAmount)) { alert('يرجى إدخال الرقم والمبلغ بشكل صحيح'); return; }
+            if(!dbUsers[targetPhone]) { alert('المستخدم غير موجود!'); return; }
+
+            dbUsers[targetPhone].balance += addAmount;
+            localStorage.setItem('tasawwoq_users', JSON.stringify(dbUsers));
+            alert(`تم تعديل رصيد المستخدم ${targetPhone} بنجاح! الرصيد الجديد: ${dbUsers[targetPhone].balance} ج.م`);
+            document.getElementById('adminTargetPhone').value = '';
+            document.getElementById('adminAddBalance').value = '';
+        }
+
+        function renderAdminWithdraws() {
+            const listDiv = document.getElementById('adminWithdrawList');
+            if(withdrawRequests.length === 0) {
+                listDiv.innerHTML = "لا توجد طلبات سحب حالياً.";
+                return;
+            }
+
+            let html = "";
+            withdrawRequests.forEach((req, idx) => {
+                html += `<div style="background:#0f172a; padding:8px; border-radius:8px; margin-bottom:6px;">
+                    <b>الاسم:</b> ${req.userName} (${req.userPhone})<br>
+                    <b>المحفظة:</b> ${req.walletPhone} | <b>المبلغ:</b> ${req.amount} ج.م<br>
+                    <button onclick="resolveWithdraw(${idx})" style="background:var(--secondary); color:#fff; border:none; padding:4px 8px; border-radius:4px; margin-top:4px; cursor:pointer;">تم التحويل ✓</button>
+                </div>`;
+            });
+            listDiv.innerHTML = html;
+        }
+
+        function resolveWithdraw(index) {
+            withdrawRequests.splice(index, 1);
+            localStorage.setItem('tasawwoq_withdraws', JSON.stringify(withdrawRequests));
+            renderAdminWithdraws();
+            alert('تم تأكيد وتحويل طلب السحب بنجاح!');
         }
     </script>
 </body>
