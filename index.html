@@ -315,7 +315,8 @@ footer{
 </section>
 
 <main>
-<section class="card">
+<!-- قسم تسجيل الدخول / إنشاء الحساب -->
+<section class="card" id="auth-section">
   <h2 id="title">أنشئ حسابك</h2>
   <div class="sub" id="subtitle">
     انضم إلى تسوق بلس وابدأ رحلتك
@@ -357,6 +358,18 @@ footer{
   </form>
 </section>
 
+<!-- واجهة لوحة التحكم التي تظهر بعد تسجيل الدخول -->
+<section class="card" id="dashboard-section" style="display: none; text-align: center;">
+  <h2 style="color: var(--g);">أهلاً بك في منصة تسوق بلس 🎉</h2>
+  <div class="sub" id="user-welcome-msg" style="margin: 15px 0; font-size: 15px; font-weight: bold;"></div>
+  <p style="color: #52645a; font-size: 14px; line-height: 1.8;">
+    لقد تم تسجيل دخولك بنجاح. يمكنك الآن البدء في تصفح المهام والمنتجات ومتابعة عمولاتك.
+  </p>
+  <button class="mainbtn" id="logout-btn" style="background: #a52c1d; margin-top: 20px;" type="button">
+    تسجيل الخروج
+  </button>
+</section>
+
 <section class="features">
   <div class="feature">
     <div>🛍️</div>
@@ -394,6 +407,11 @@ const submit=document.getElementById("submit");
 const message=document.getElementById("message");
 const regtab=document.getElementById("regtab");
 const logtab=document.getElementById("logtab");
+const authSection=document.getElementById("auth-section");
+const dashboardSection=document.getElementById("dashboard-section");
+const userWelcomeMsg=document.getElementById("user-welcome-msg");
+const logoutBtn=document.getElementById("logout-btn");
+
 let mode="register";
 let client=null;
 
@@ -431,6 +449,13 @@ function getClient(){
   return client;
 }
 
+// دالة لإظهار لوحة التحكم وإخفاء نموذج الدخول
+function showDashboard(userName, userPhone) {
+  authSection.style.display = "none";
+  dashboardSection.style.display = "block";
+  userWelcomeMsg.textContent = `مرحباً بك، ${userName || 'عضو تسوق بلس'} (${userPhone})`;
+}
+
 form.addEventListener("submit",async function(e){
   e.preventDefault();
   submit.disabled=true;
@@ -447,7 +472,6 @@ form.addEventListener("submit",async function(e){
     if(password.value.length<8)
       throw new Error("كلمة المرور يجب أن تكون 8 أحرف أو أرقام على الأقل.");
 
-    // تحويل رقم الهاتف إلى بريد إلكتروني مجاني خلف الكواليس لتجاوز قيود SMS
     const cleanPhone = rawPhone.replace(/[^\d]/g, '');
     const generatedEmail = cleanPhone + "@tasawwoq.com";
 
@@ -476,11 +500,11 @@ form.addEventListener("submit",async function(e){
 
     if(result.error) throw result.error;
 
-    if(mode==="register"){
-      say("تم إنشاء الحساب بنجاح! يمكنك الآن استخدام منصة تسوق بلس.","success");
-    }else{
-      say("تم تسجيل الدخول بنجاح! أهلاً بك في حسابك.","success");
-    }
+    // جلب اسم المستخدم لعرضه في الواجهة
+    const userMeta = result.data.user?.user_metadata;
+    const displayName = userMeta?.username || nick.value.trim() || "صديق تسوق بلس";
+
+    showDashboard(displayName, rawPhone);
 
   }catch(err){
     console.error("Supabase auth error:",err);
@@ -499,6 +523,16 @@ form.addEventListener("submit",async function(e){
     submit.disabled=false;
     submit.textContent=mode==="register"?"إنشاء حساب":"تسجيل الدخول";
   }
+});
+
+// زر تسجيل الخروج
+logoutBtn.addEventListener("click", async function() {
+  const db = getClient();
+  await db.auth.signOut();
+  dashboardSection.style.display = "none";
+  authSection.style.display = "block";
+  form.reset();
+  message.className = "msg";
 });
 </script>
 </body>
