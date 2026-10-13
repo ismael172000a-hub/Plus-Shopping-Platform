@@ -1,780 +1,506 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#073d2b">
-<title>تسوق بلس | فرصتك تبدأ هنا</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسوق بلس | Tasawwoq Plus</title>
+    <!-- FontAwesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+        }
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script async defer src="https://assets.pinterest.com/js/pinit.js"></script>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
 
-<style>
-:root{
-  --g:#073d2b;
-  --g2:#0d6747;
-  --gold:#e8bd61;
-  --bg:#fffaf0;
-  --card-bg:#ffffff;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Tahoma,Arial,sans-serif;
-  background:var(--bg);
-  color:#17392b;
-}
-header{
-  padding:17px 6%;
-  background:var(--g);
-  color:white;
-  border-bottom:3px solid var(--gold);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-}
-.brand{font-size:23px;font-weight:bold}
-.brand span{color:var(--gold)}
-header small{color:#f5dfaa}
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            padding-bottom: 80px;
+        }
 
-.hero{
-  background:
-    radial-gradient(ellipse at 85% 15%,#19724e,transparent 45%),
-    linear-gradient(135deg,#062f22,#0c6042);
-  color:white;
-  padding:40px 6%;
-  display:grid;
-  grid-template-columns:1.1fr .9fr;
-  align-items:center;
-  gap:28px;
-  overflow:hidden;
-}
-.hero h1{
-  font-size:clamp(28px,5vw,44px);
-  line-height:1.65;
-  margin:16px 0;
-}
-.hero h1 span{color:var(--gold)}
-.hero p{
-  line-height:2.1;
-  color:#e0ece5;
-  font-size:15px;
-}
-.pill{
-  display:inline-block;
-  border:1px solid var(--gold);
-  color:var(--gold);
-  padding:8px 14px;
-  border-radius:30px;
-  font-size:12px;
-}
-.hero-buttons{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-top:22px;
-}
-.hero-btn{
-  display:inline-block;
-  text-decoration:none;
-  border:1px solid var(--gold);
-  border-radius:10px;
-  padding:12px 20px;
-  font: bold 14px Tahoma,Arial,sans-serif;
-  cursor:pointer;
-}
-.hero-btn.primary{background:var(--gold);color:#17392b}
-.hero-btn.secondary{background:transparent;color:white}
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #334155;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-.art{
-  min-width:0;
-  min-height:300px;
-  padding:16px;
-  border:1px solid #ffffff35;
-  border-radius:22px;
-  background:linear-gradient(145deg,#ffffff12,#ffffff05);
-  box-shadow:0 18px 45px #001a102e;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-}
-.art-heading{
-  color:var(--gold);
-  font-size:14px;
-  font-weight:bold;
-  margin-bottom:15px;
-}
-.pin-image{
-  width:100%;
-  min-width:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-  border-radius:14px;
-  background:#fff;
-  min-height:220px;
-}
-.pin-image a{
-  display:block;
-  max-width:100%;
-}
-.pin-image img{
-  max-width:100%;
-  height:auto;
-}
-.art-note{
-  color:#f5dfaa;
-  font-size:12px;
-  text-align:center;
-  line-height:1.9;
-  margin-top:12px;
-}
+        .logo {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-main{
-  width:min(100% - 28px,950px);
-  margin:-20px auto 30px;
-  position:relative;
-}
-.card{
-  max-width:460px;
-  margin:auto;
-  background:white;
-  border:1px solid #eee8d9;
-  border-radius:20px;
-  padding:24px;
-  box-shadow:0 12px 40px #103c2514;
-}
-h2{text-align:center;color:var(--g);margin:0 0 8px}
-.sub{
-  text-align:center;
-  color:#718078;
-  font-size:13px;
-  line-height:1.8;
-  margin-bottom:20px;
-}
-.tabs{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  background:#f0f4ef;
-  border-radius:11px;
-  padding:4px;
-  margin-bottom:20px;
-}
-button{font-family:inherit;cursor:pointer}
-.tabs button{
-  padding:12px 5px;
-  border:0;
-  border-radius:9px;
-  background:transparent;
-  font-weight:bold;
-  color:#52645a;
-}
-.tabs button.active{background:var(--g);color:white}
-.field{margin-bottom:15px}
-label{
-  display:block;
-  font-size:13px;
-  font-weight:bold;
-  margin-bottom:7px;
-}
-input{
-  display:block;
-  width:100%;
-  padding:13px;
-  border:1px solid #dce4dc;
-  border-radius:10px;
-  background:#fcfdfb;
-  font-family:inherit;
-  font-size:15px;
-  direction:ltr;
-  text-align:left;
-}
-input:focus{outline:2px solid #0d674733;border-color:var(--g2)}
-.hint{font-size:11px;color:#718078;line-height:1.8;margin-top:6px}
-.mainbtn{
-  width:100%;
-  padding:14px;
-  border:0;
-  border-radius:11px;
-  background:var(--g);
-  color:white;
-  font-size:15px;
-  font-weight:bold;
-  margin-top:5px;
-}
-.mainbtn:disabled{opacity:.6}
-.msg{
-  display:none;
-  padding:12px;
-  border-radius:9px;
-  font-size:13px;
-  line-height:1.8;
-  margin-top:14px;
-  overflow-wrap:anywhere;
-}
-.msg.show{display:block}
-.error{background:#fff0ed;color:#a52c1d}
-.success{background:#e9f8ed;color:#176438}
+        .user-badge {
+            background: rgba(37, 99, 235, 0.2);
+            border: 1px solid var(--primary);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
 
-/* أنماط لوحة التحكم */
-.dashboard-container{
-  background:white;
-  border-radius:20px;
-  padding:25px;
-  border:1px solid #eee8d9;
-  box-shadow:0 12px 40px #103c2514;
-}
-.dash-header{
-  background:linear-gradient(135deg, var(--g), var(--g2));
-  color:white;
-  padding:20px;
-  border-radius:16px;
-  margin-bottom:25px;
-}
-.gift-badge{
-  background:var(--gold);
-  color:#17392b;
-  padding:6px 12px;
-  border-radius:20px;
-  font-size:12px;
-  font-weight:bold;
-  display:inline-block;
-  margin-top:8px;
-}
-.stats-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));
-  gap:12px;
-  margin-top:15px;
-}
-.stat-box{
-  background:rgba(255,255,255,0.12);
-  padding:12px;
-  border-radius:12px;
-  text-align:center;
-}
-.stat-box small{font-size:11px; color:#f5dfaa;}
-.stat-box div{font-size:18px; font-weight:bold; margin-top:4px;}
+        .container {
+            padding: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
 
-/* أنماط لوحة الأدمن */
-.admin-card{
-  background:#fff8e7;
-  border:2px dashed var(--gold);
-  border-radius:16px;
-  padding:20px;
-  margin-bottom:25px;
-}
-.admin-card h3{
-  margin:0 0 10px;
-  color:var(--g);
-  font-size:16px;
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
+        /* Banner Card */
+        .hero-card {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
 
-.section-title{
-  color:var(--g);
-  font-size:18px;
-  font-weight:bold;
-  margin:25px 0 15px;
-  border-right:4px solid var(--gold);
-  padding-right:10px;
-}
+        .hero-card h2 { font-size: 22px; margin-bottom: 5px; }
+        .hero-card p { font-size: 14px; opacity: 0.9; }
 
-/* الباقات والودائع */
-.packages-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
-  gap:15px;
-}
-.pkg-card{
-  border:1px solid #e0ece5;
-  border-radius:14px;
-  padding:18px;
-  background:#fcfdfb;
-  text-align:center;
-  transition:0.3s;
-}
-.pkg-card:hover{border-color:var(--gold); transform:translateY(-3px);}
-.pkg-title{font-weight:bold; color:var(--g); font-size:16px;}
-.pkg-price{font-size:20px; font-weight:bold; color:var(--g2); margin:10px 0;}
-.pkg-btn{
-  background:var(--g);
-  color:white;
-  border:0;
-  width:100%;
-  padding:10px;
-  border-radius:8px;
-  font-weight:bold;
-  margin-top:10px;
-}
+        .balance-box {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-/* قائمة المهام */
-.tasks-list{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-.task-item{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:14px 18px;
-  border:1px solid #eee8d9;
-  border-radius:12px;
-  background:#fff;
-}
-.task-info b{display:block; color:#17392b; font-size:14px;}
-.task-info small{color:#718078; font-size:12px;}
-.task-reward{color:#176438; font-weight:bold; font-size:14px;}
-.task-btn{
-  background:var(--gold);
-  color:#17392b;
-  border:0;
-  padding:8px 16px;
-  border-radius:8px;
-  font-weight:bold;
-  font-size:12px;
-}
-.task-btn:disabled{
-  background:#ccc;
-  color:#666;
-}
+        .balance-amount {
+            font-size: 24px;
+            font-weight: 800;
+            color: #fff;
+        }
 
-footer{
-  background:var(--g);
-  color:#dce9e0;
-  text-align:center;
-  padding:20px;
-  font-size:12px;
-  line-height:2;
-}
+        /* Action Buttons */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
 
-@media(max-width:600px){
-  header{padding:15px 5%}
-  .hero{grid-template-columns:1fr; padding:28px 5% 38px;}
-  .task-item{flex-direction:column; gap:10px; text-align:center;}
-}
-</style>
+        .action-btn {
+            background: var(--card-bg);
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 12px 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+            color: var(--text);
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+        }
+
+        .action-btn i {
+            font-size: 20px;
+            color: var(--primary);
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 20px 0 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Packages Grid */
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .package-card {
+            background: var(--card-bg);
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 18px;
+            position: relative;
+            transition: transform 0.2s;
+        }
+
+        .package-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary);
+        }
+
+        .package-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--accent);
+            color: #000;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+        }
+
+        .package-price {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--secondary);
+            margin: 8px 0;
+        }
+
+        .btn-buy {
+            width: 100%;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            width: 100%;
+            max-width: 450px;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            border: 1px solid #334155;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0 15px 0;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #fff;
+        }
+
+        /* Floating Support Button */
+        .floating-support {
+            position: fixed;
+            bottom: 75px;
+            left: 15px;
+            background: #0088cc;
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 5px 15px rgba(0, 136, 204, 0.4);
+            z-index: 99;
+            text-decoration: none;
+        }
+
+        /* Bottom Nav */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0; left: 0; width: 100%;
+            background: #1e293b;
+            border-top: 1px solid #334155;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 100;
+        }
+
+        .nav-item {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 11px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+    </style>
 </head>
-
 <body>
-<header>
-  <div class="brand">تسوق <span>بلس</span></div>
-  <small>التسويق والمهام والعمولات</small>
-</header>
 
-<section class="hero" id="hero-section">
-  <div>
-    <span class="pill">مرحبًا بك في تسوق بلس</span>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span>تسوق بلس</span>
+        </div>
+        <div class="user-badge">
+            <i class="fa-solid fa-wallet"></i>
+            <span id="userPhoneDisplay">تسجيل الدخول</span>
+        </div>
+    </header>
 
-    <h1>
-      سوّق المنتجات،<br>
-      <span>أنجز المهام واكسب العمولات</span>
-    </h1>
+    <div class="container">
 
-    <p>
-      اكتشف تجربة جديدة في التسويق بالعمولة وتنفيذ المهام.
-      تابع نشاطك وعمولاتك من مكانك، وابدأ بخطوات بسيطة
-      نحو فرص جديدة لتنمية دخلك.
-    </p>
+        <!-- Hero Card -->
+        <div class="hero-card">
+            <h2>منصة تسوق بلس الموثوقة 🚀</h2>
+            <p>الفرع الرسمي المعتمد في الشرق الأوسط ومصر</p>
+            <div class="balance-box">
+                <div>
+                    <span style="font-size: 12px; opacity: 0.8;">رصيدك الحالي</span>
+                    <div class="balance-amount"><span id="balanceDisplay">50</span> ج.م</div>
+                </div>
+                <button onclick="openModal('withdrawModal')" style="background: #fff; color: var(--primary); border:none; padding: 8px 15px; border-radius: 8px; font-weight:700; cursor:pointer;">سحب الأرباح</button>
+            </div>
+        </div>
 
-    <div class="hero-buttons">
-      <button class="hero-btn primary" type="button"
-        onclick="document.getElementById('nickname').focus();document.getElementById('authform').scrollIntoView({behavior:'smooth',block:'center'});setMode('register')">
-        ابدأ الآن
-      </button>
-      <button class="hero-btn secondary" type="button"
-        onclick="document.getElementById('authform').scrollIntoView({behavior:'smooth',block:'center'});setMode('login')">
-        تسجيل الدخول
-      </button>
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <div class="action-btn" onclick="claimDailyBonus()">
+                <i class="fa-solid fa-gift" style="color: #f59e0b;"></i>
+                <span>مكافأة يومية</span>
+            </div>
+            <div class="action-btn" onclick="openModal('referralModal')">
+                <i class="fa-solid fa-users" style="color: #10b981;"></i>
+                <span>دعوة أصدقاء</span>
+            </div>
+            <div class="action-btn" onclick="openModal('aboutModal')">
+                <i class="fa-solid fa-shield-halved" style="color: #3b82f6;"></i>
+                <span>عن المنصة</span>
+            </div>
+            <a href="https://t.me/tasawwoq_plus" target="_blank" class="action-btn">
+                <i class="fa-brands fa-telegram" style="color: #0088cc;"></i>
+                <span>خدمة العملاء</span>
+            </a>
+        </div>
+
+        <!-- Investment VIP Packages -->
+        <div class="section-title">
+            <i class="fa-solid fa-crown" style="color: var(--accent);"></i>
+            <span>باقات الاستثمار والمهام (VIP)</span>
+        </div>
+
+        <div class="packages-grid">
+            <!-- VIP 1 -->
+            <div class="package-card">
+                <span class="package-badge">VIP 1</span>
+                <h3>باقة المبتدئين</h3>
+                <div class="package-price">300 <small style="font-size:14px;">ج.م</small></div>
+                <p style="font-size:13px; color:var(--text-muted);">عائد يومي: 30 ج.م | 5 مهام يومية</p>
+                <button class="btn-buy" onclick="buyPackage(300, 'VIP 1')">اشترك الآن</button>
+            </div>
+
+            <!-- VIP 2 -->
+            <div class="package-card">
+                <span class="package-badge">VIP 2</span>
+                <h3>الباقة الفضية</h3>
+                <div class="package-price">1,000 <small style="font-size:14px;">ج.م</small></div>
+                <p style="font-size:13px; color:var(--text-muted);">عائد يومي: 110 ج.م | 8 مهام يومية</p>
+                <button class="btn-buy" onclick="buyPackage(1000, 'VIP 2')">اشترك الآن</button>
+            </div>
+
+            <!-- VIP 3 -->
+            <div class="package-card">
+                <span class="package-badge">VIP 3</span>
+                <h3>الباقة الذهبية</h3>
+                <div class="package-price">2,500 <small style="font-size:14px;">ج.م</small></div>
+                <p style="font-size:13px; color:var(--text-muted);">عائد يومي: 290 ج.م | 12 مهمة يومية</p>
+                <button class="btn-buy" onclick="buyPackage(2500, 'VIP 3')">اشترك الآن</button>
+            </div>
+
+            <!-- VIP 4 -->
+            <div class="package-card">
+                <span class="package-badge">VIP 4</span>
+                <h3>الباقة الماسّية</h3>
+                <div class="package-price">4,000 <small style="font-size:14px;">ج.م</small></div>
+                <p style="font-size:13px; color:var(--text-muted);">عائد يومي: 500 ج.م | 15 مهمة يومية</p>
+                <button class="btn-buy" onclick="buyPackage(4000, 'VIP 4')">اشترك الآن</button>
+            </div>
+
+            <!-- VIP 5 -->
+            <div class="package-card">
+                <span class="package-badge">VIP 5</span>
+                <h3>باقة كبار المستثمرين</h3>
+                <div class="package-price">6,000 <small style="font-size:14px;">ج.م</small></div>
+                <p style="font-size:13px; color:var(--text-muted);">عائد يومي: 800 ج.م | 20 مهمة يومية</p>
+                <button class="btn-buy" onclick="buyPackage(6000, 'VIP 5')">اشترك الآن</button>
+            </div>
+
+            <!-- VIP 6 -->
+            <div class="package-card">
+                <span class="package-badge">VIP 6</span>
+                <h3>الباقة النخبوية</h3>
+                <div class="package-price">9,000 <small style="font-size:14px;">ج.م</small></div>
+                <p style="font-size:13px; color:var(--text-muted);">عائد يومي: 1,300 ج.م | 25 مهمة يومية</p>
+                <button class="btn-buy" onclick="buyPackage(9000, 'VIP 6')">اشترك الآن</button>
+            </div>
+
+            <!-- VIP 7 -->
+            <div class="package-card">
+                <span class="package-badge">VIP 7</span>
+                <h3>الباقة الملكية</h3>
+                <div class="package-price">12,000 <small style="font-size:14px;">ج.م</small></div>
+                <p style="font-size:13px; color:var(--text-muted);">عائد يومي: 1,800 ج.م | 30 مهمة يومية</p>
+                <button class="btn-buy" onclick="buyPackage(12000, 'VIP 7')">اشترك الآن</button>
+            </div>
+        </div>
+
     </div>
-  </div>
 
-  <div class="art">
-    <div class="art-heading">تسوق بلس — فرصتك تبدأ هنا</div>
-    <div class="pin-image">
-      <a data-pin-do="embedPin" data-pin-width="medium" href="https://www.pinterest.com/pin/948922584285137564/"></a>
-    </div>
-    <div class="art-note">تسويق المنتجات • تنفيذ المهام • كسب العمولات</div>
-  </div>
-</section>
+    <!-- Floating Telegram Support Button -->
+    <a href="https://t.me/tasawwoq_plus" target="_blank" class="floating-support">
+        <i class="fa-brands fa-telegram"></i>
+    </a>
 
-<main>
-<!-- قسم تسجيل الدخول / إنشاء الحساب -->
-<section class="card" id="auth-section">
-  <h2 id="title">أنشئ حسابك</h2>
-  <div class="sub" id="subtitle">انضم إلى تسوق بلس وابدأ رحلتك</div>
-
-  <div class="tabs">
-    <button type="button" id="regtab" class="active">إنشاء حساب</button>
-    <button type="button" id="logtab">تسجيل الدخول</button>
-  </div>
-
-  <form id="authform">
-    <div class="field" id="nickfield">
-      <label for="nickname">الاسم المستعار</label>
-      <input id="nickname" type="text" maxlength="40" placeholder="اكتب اسمك" required>
+    <!-- Modal: About Us -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('aboutModal')">&times;</span>
+            <h3 style="margin-bottom: 12px; color: var(--primary);"><i class="fa-solid fa-shield-halved"></i> عن منصة تسوق بلس</h3>
+            <p style="font-size:14px; line-height: 1.7; color: var(--text-muted);">
+                تأسست شركة <strong>Tasawwoq Plus LLC</strong> العالمية في ولاية تكساس، الولايات المتحدة الأمريكية عام <strong>2018</strong> كواحدة من أكبر المنصات المتخصصة في التسويق الإكتروني وتقييم المنتجات برأس مال يتجاوز 10 ملايين دولار.<br><br>
+                وفي إطار التوسع العالمي، تم إطلاق <strong>فرع مصر والشرق الأوسط</strong> لتقديم أسهل وأرقى وأفضل أنظمة العمل الذاتي والاستثماري السريع.<br><br>
+                🔒 **الأمان والضمان:** تتميز منصتنا بتشفير بيانات من الدرجة العسكرية وضمان كلي لعمليات السحب والإيداع السريعة عبر المحافظ الإلكترونية.
+            </p>
+        </div>
     </div>
 
-    <div class="field">
-      <label for="phone">رقم الهاتف</label>
-      <input id="phone" type="tel" placeholder="+201xxxxxxxxx" required>
-      <div class="hint">اكتب رقمك مع رمز الدولة، مثل +20 للأرقام المصرية.</div>
+    <!-- Modal: Withdraw Request -->
+    <div id="withdrawModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('withdrawModal')">&times;</span>
+            <h3><i class="fa-solid fa-money-bill-transfer"></i> طلب سحب الأرباح</h3>
+            <br>
+            <label>رقم محفظة فودافون كاش / أورنج / اتصالات:</label>
+            <input type="text" id="withdrawPhone" placeholder="010XXXXXXXX">
+            
+            <label>المبلغ المراد سحبه (ج.م):</label>
+            <input type="number" id="withdrawAmount" placeholder="الحد الأدنى 100 ج.م">
+            
+            <button class="btn-buy" onclick="processWithdraw()">تأكيد طلب السحب</button>
+        </div>
     </div>
 
-    <div class="field">
-      <label for="password">كلمة المرور</label>
-      <input id="password" type="password" minlength="8" placeholder="8 أحرف أو أرقام على الأقل" required>
+    <!-- Modal: Referral -->
+    <div id="referralModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('referralModal')">&times;</span>
+            <h3><i class="fa-solid fa-user-plus"></i> نظام الإحالة ودعوة الأصدقاء</h3>
+            <br>
+            <p style="font-size:14px; color:var(--text-muted); margin-bottom:10px;">احصل على 10 ج.م مكافأة فورية عن كل صديق يسجل من خلال رابطك!</p>
+            <input type="text" id="referralLink" readonly value="https://ismael172000a-hub.github.io/tasawwoq-plus/?ref=user">
+            <button class="btn-buy" onclick="copyReferralLink()">نسخ رابط الدعوة</button>
+        </div>
     </div>
 
-    <button class="mainbtn" id="submit" type="submit">إنشاء حساب</button>
-    <div id="message" class="msg" role="status" aria-live="polite"></div>
-  </form>
-</section>
+    <!-- Script -->
+    <script>
+        let currentBalance = 50;
 
-<!-- لوحة التحكم المحترفة (Dashboard) -->
-<section class="dashboard-container" id="dashboard-section" style="display: none;">
-  
-  <!-- لوحة الأدمن -->
-  <div class="admin-card" id="admin-panel" style="display: none;">
-    <h3>👑 لوحة تحكم إدارة المنصة (Admin)</h3>
-    <p style="font-size:12px; color:#52645a; margin-bottom:15px;">يمكنك إضافة أو تعديل رصيد أي مستخدم عبر رقم هاتفه مباشرة:</p>
-    <div style="display:grid; grid-template-columns:1fr 1fr auto; gap:10px; align-items:center;">
-      <input type="tel" id="admin-target-phone" placeholder="رقم هاتف المستخدم (+201...)" style="font-size:13px; padding:10px;">
-      <input type="number" id="admin-amount" placeholder="المبلغ (مثال: 100)" style="font-size:13px; padding:10px;">
-      <button type="button" class="mainbtn" onclick="adminAddBalance()" style="margin:0; padding:10px 18px; font-size:13px; background:var(--g2);">تحديث الرصيد</button>
-    </div>
-  </div>
+        function openModal(id) {
+            document.getElementById(id).style.display = 'flex';
+        }
 
-  <div class="dash-header">
-    <h2 style="color: white; margin:0; text-align:right;" id="user-welcome-name">أهلاً بك!</h2>
-    <div class="gift-badge">🎁 هدية التسجيل: +50 ج.م في حسابك</div>
-    
-    <div class="stats-grid">
-      <div class="stat-box">
-        <small>الرصيد الحالي</small>
-        <div id="user-balance">50 ج.م</div>
-      </div>
-      <div class="stat-box">
-        <small>إجمالي الأرباح</small>
-        <div id="user-earnings">50 ج.م</div>
-      </div>
-      <div class="stat-box">
-        <small>المهام المكتملة</small>
-        <div id="user-tasks">0 / 10</div>
-      </div>
-    </div>
-  </div>
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
 
-  <!-- باقات الاستثمار / الودائع -->
-  <div class="section-title">💼 باقات الاستثمار والودائع المتاحة</div>
-  <div class="packages-grid">
-    <div class="pkg-card">
-      <div class="pkg-title">باقة المبتدئ VIP 1</div>
-      <div class="pkg-price">300 ج.م</div>
-      <small style="color:#718078;">ربح يومي: 35 ج.م (مدتها 30 يوم)</small>
-      <button class="pkg-btn" onclick="subscribePkg('VIP 1', 300)">اشتراك الآن</button>
-    </div>
-    <div class="pkg-card">
-      <div class="pkg-title">الباقة الفضية VIP 2</div>
-      <div class="pkg-price">800 ج.م</div>
-      <small style="color:#718078;">ربح يومي: 100 ج.م (مدتها 30 يوم)</small>
-      <button class="pkg-btn" onclick="subscribePkg('VIP 2', 800)">اشتراك الآن</button>
-    </div>
-    <div class="pkg-card">
-      <div class="pkg-title">الباقة الذهبية VIP 3</div>
-      <div class="pkg-price">2000 ج.م</div>
-      <small style="color:#718078;">ربح يومي: 270 ج.م (مدتها 30 يوم)</small>
-      <button class="pkg-btn" onclick="subscribePkg('VIP 3', 2000)">اشتراك الآن</button>
-    </div>
-  </div>
+        function claimDailyBonus() {
+            currentBalance += 5;
+            document.getElementById('balanceDisplay').innerText = currentBalance;
+            alert('🎉 مبروك! حصلت على مكافأة الحضور اليومي بقيمة 5 ج.م');
+        }
 
-  <!-- قائمة الـ 10 مهام -->
-  <div class="section-title">📋 المهام التسويقية اليومية (10 مهام)</div>
-  <div class="tasks-list" id="tasks-container"></div>
+        function buyPackage(price, name) {
+            alert(`طلب الاشتراك في ${name} بقيمة ${price} ج.م قيد المراجعة. يرجى التواصل مع خدمة العملاء عبر تليجرام لإتمام الإيداع.`);
+            window.open('https://t.me/tasawwoq_plus', '_blank');
+        }
 
-  <button class="mainbtn" id="logout-btn" style="background: #a52c1d; margin-top: 30px;" type="button">
-    تسجيل الخروج
-  </button>
-</section>
-</main>
+        function processWithdraw() {
+            const phone = document.getElementById('withdrawPhone').value;
+            const amount = parseFloat(document.getElementById('withdrawAmount').value);
 
-<footer>
-  تسوق بلس © 2026<br>
-  منصة تسوق ومهام تسويقية قيد التطوير
-</footer>
+            if(!phone || !amount) {
+                alert('يرجى ملء جميع البيانات بشكل صحيح');
+                return;
+            }
 
-<script>
-const SUPABASE_URL="https://valzgpkozmjiqiyhordx.supabase.co";
-const SUPABASE_ANON_KEY="sb_publishable__124XkEekFg5DRceAlhXhQ_r2pf7PnM";
+            if(amount > currentBalance) {
+                alert('رصيدك غير كافٍ لإتمام طلب السحب!');
+                return;
+            }
 
-const ADMIN_PHONE = "+201032315526";
+            alert(`تم إرسال طلب سحب ${amount} ج.م إلى الرقم ${phone} بنجاح! سيتم التحويل خلال 24 ساعة.`);
+            currentBalance -= amount;
+            document.getElementById('balanceDisplay').innerText = currentBalance;
+            closeModal('withdrawModal');
+        }
 
-const form=document.getElementById("authform");
-const nick=document.getElementById("nickname");
-const phone=document.getElementById("phone");
-const password=document.getElementById("password");
-const nickfield=document.getElementById("nickfield");
-const submit=document.getElementById("submit");
-const message=document.getElementById("message");
-const regtab=document.getElementById("regtab");
-const logtab=document.getElementById("logtab");
-
-const authSection=document.getElementById("auth-section");
-const dashboardSection=document.getElementById("dashboard-section");
-const heroSection=document.getElementById("hero-section");
-const logoutBtn=document.getElementById("logout-btn");
-const adminPanel=document.getElementById("admin-panel");
-
-let mode="register";
-let client=null;
-let currentUser = null;
-let currentBalance = 50;
-let completedTaskIds = [];
-
-const tasksData = [
-  { id: 1, title: "مشاركة منتج الساعات الذهبية على فيسبوك", reward: 5 },
-  { id: 2, title: "تقييم تطبيق تسوق بلس بـ 5 نجوم", reward: 10 },
-  { id: 3, title: "متابعة حساب المنصة على إنستغرام", reward: 5 },
-  { id: 4, title: "دعوة صديق جديد للتسجيل برابطك", reward: 15 },
-  { id: 5, title: "مشاهدة فيديو شرح المنصة بالكامل", reward: 8 },
-  { id: 6, title: "مشاركة عروض الجمعة البيضاء في واتساب", reward: 6 },
-  { id: 7, title: "الاشتراك في قناة التليجرام الرسمية", reward: 5 },
-  { id: 8, title: "إضافة 3 منتجات إلى قائمة المفضلة", reward: 7 },
-  { id: 9, title: "كتابة مراجعة إيجابية عن منتج إلكتروني", reward: 12 },
-  { id: 10, title: "إكمال استبيان جودة الخدمات التسويقية", reward: 10 }
-];
-
-function say(text,type){
-  message.textContent=text;
-  message.className="msg show "+type;
-}
-
-function setMode(next){
-  mode=next;
-  const registering=mode==="register";
-  regtab.classList.toggle("active",registering);
-  logtab.classList.toggle("active",!registering);
-  nickfield.style.display=registering?"block":"none";
-  nick.required=registering;
-  document.getElementById("title").textContent=registering?"أنشئ حسابك":"مرحبًا بعودتك";
-  document.getElementById("subtitle").textContent=registering?"انضم إلى تسوق بلس وابدأ رحلتك":"سجّل الدخول إلى حسابك";
-  submit.textContent=registering?"إنشاء حساب":"تسجيل الدخول";
-  message.className="msg";
-}
-
-regtab.addEventListener("click",()=>setMode("register"));
-logtab.addEventListener("click",()=>setMode("login"));
-
-function getClient(){
-  if(!window.supabase) throw new Error("تعذّر تحميل مكتبة الاتصال.");
-  if(!client) client=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
-  return client;
-}
-
-function renderTasks() {
-  const container = document.getElementById("tasks-container");
-  container.innerHTML = "";
-  
-  tasksData.forEach(task => {
-    const isDone = completedTaskIds.includes(task.id);
-    const item = document.createElement("div");
-    item.className = "task-item";
-    item.innerHTML = `
-      <div class="task-info">
-        <b>${task.title}</b>
-        <small>مهمة تسويقية بسيطة ومباشرة</small>
-      </div>
-      <div class="task-reward">+${task.reward} ج.م</div>
-      <button class="task-btn" id="task-btn-${task.id}" ${isDone ? 'disabled' : ''} onclick="doTask(${task.id}, ${task.reward})">
-        ${isDone ? 'تم الإنجاز ✓' : 'إنجاز المهمة'}
-      </button>
-    `;
-    container.appendChild(item);
-  });
-}
-
-async function doTask(taskId, reward) {
-  if(completedTaskIds.includes(taskId)) return;
-
-  const btn = document.getElementById(`task-btn-${taskId}`);
-  btn.disabled = true;
-  btn.textContent = "تم الإنجاز ✓";
-  
-  currentBalance += reward;
-  completedTaskIds.push(taskId);
-  
-  updateBalanceUI();
-  
-  // حفظ الرصيد والمهام المكتملة في Supabase فوراً
-  await saveUserDataToSupabase();
-  
-  alert(`مبروك! تم إنجاز المهمة وإضافة ${reward} ج.م لرصيدك وتثبيته بنجاح.`);
-}
-
-function updateBalanceUI() {
-  document.getElementById("user-balance").textContent = `${currentBalance} ج.م`;
-  document.getElementById("user-earnings").textContent = `${currentBalance} ج.م`;
-  document.getElementById("user-tasks").textContent = `${completedTaskIds.length} / 10`;
-}
-
-async function saveUserDataToSupabase() {
-  if(!currentUser) return;
-  try {
-    const db = getClient();
-    await db.from('profiles').update({
-      balance: currentBalance,
-      completed_tasks: completedTaskIds.join(',')
-    }).eq('id', currentUser.id);
-  } catch(e) {
-    console.error("خطأ أثناء حفظ بيانات المستخدم:", e);
-  }
-}
-
-function subscribePkg(pkgName, price) {
-  alert(`طلب الاشتراك في ${pkgName} بقيمة ${price} ج.م قيد المراجعة. يرجى التنسيق مع الإدارة لإتمام الإيداع.`);
-}
-
-async function adminAddBalance() {
-  const targetPhone = document.getElementById("admin-target-phone").value.trim();
-  const amount = parseFloat(document.getElementById("admin-amount").value);
-
-  if(!targetPhone || isNaN(amount)) {
-    alert("يرجى إدخال رقم هاتف الصحيح والمبلغ المطلوب.");
-    return;
-  }
-
-  try {
-    const db = getClient();
-    const { error } = await db
-      .from('profiles')
-      .update({ balance: amount })
-      .eq('phone', targetPhone);
-
-    if (error) throw error;
-
-    alert(`تم تعديل رصيد المستخدم (${targetPhone}) إلى ${amount} ج.م بنجاح!`);
-    
-    if(currentUser && currentUser.user_metadata?.phone === targetPhone) {
-      currentBalance = amount;
-      updateBalanceUI();
-    }
-  } catch(err) {
-    alert("حدث خطأ أثناء التحديث: " + err.message);
-  }
-}
-
-async function fetchUserData(userId) {
-  try {
-    const db = getClient();
-    const { data, error } = await db
-      .from('profiles')
-      .select('balance, completed_tasks')
-      .eq('id', userId)
-      .single();
-
-    if(data) {
-      if(data.balance !== null && data.balance !== undefined) {
-        currentBalance = parseFloat(data.balance);
-      }
-      if(data.completed_tasks) {
-        completedTaskIds = data.completed_tasks.split(',').map(id => parseInt(id)).filter(id => !isNaN(id));
-      } else {
-        completedTaskIds = [];
-      }
-    }
-  } catch(e) {
-    console.log("تعذر جلب البيانات بشكل كامل، سيتم استخدام البيانات المبدئية.");
-  }
-  updateBalanceUI();
-}
-
-async function showDashboard(user) {
-  currentUser = user;
-  authSection.style.display = "none";
-  heroSection.style.display = "none";
-  dashboardSection.style.display = "block";
-  
-  const userName = user.user_metadata?.username || "عضو تسوق بلس";
-  document.getElementById("user-welcome-name").textContent = `مرحباً بك، ${userName}!`;
-
-  if (user.user_metadata?.phone === ADMIN_PHONE) {
-    adminPanel.style.display = "block";
-  } else {
-    adminPanel.style.display = "none";
-  }
-
-  await fetchUserData(user.id);
-  renderTasks();
-}
-
-form.addEventListener("submit",async function(e){
-  e.preventDefault();
-  submit.disabled=true;
-  submit.textContent="جارٍ التنفيذ...";
-  message.className="msg";
-
-  try{
-    const db=getClient();
-    const rawPhone=phone.value.trim();
-
-    if(!/^\+[1-9]\d{7,14}$/.test(rawPhone))
-      throw new Error("اكتب رقم الهاتف مع رمز الدولة، مثل +201xxxxxxxxx.");
-
-    if(password.value.length<8)
-      throw new Error("كلمة المرور يجب أن تكون 8 أحرف أو أرقام على الأقل.");
-
-    const cleanPhone = rawPhone.replace(/[^\d]/g, '');
-    const generatedEmail = cleanPhone + "@tasawwoq.com";
-
-    let result;
-
-    if(mode==="register"){
-      if(!nick.value.trim()) throw new Error("اكتب الاسم المستعار.");
-
-      result=await db.auth.signUp({
-        email: generatedEmail,
-        password: password.value,
-        options: { data: { username: nick.value.trim(), phone: rawPhone } }
-      });
-    }else{
-      result=await db.auth.signInWithPassword({
-        email: generatedEmail,
-        password: password.value
-      });
-    }
-
-    if(result.error) throw result.error;
-
-    showDashboard(result.data.user);
-
-  }catch(err){
-    console.error("Supabase auth error:",err);
-    let t=err.message||"حدث خطأ غير معروف.";
-    if(/invalid login credentials/i.test(t)) t="رقم الهاتف أو كلمة المرور غير صحيحة.";
-    else if(/user already registered/i.test(t)) t="الحساب مسجل من قبل. جرّب تسجيل الدخول.";
-    
-    say("تعذّر إكمال العملية: "+t,"error");
-  }finally{
-    submit.disabled=false;
-    submit.textContent=mode==="register"?"إنشاء حساب":"تسجيل الدخول";
-  }
-});
-
-logoutBtn.addEventListener("click", async function() {
-  const db = getClient();
-  await db.auth.signOut();
-  dashboardSection.style.display = "none";
-  heroSection.style.display = "grid";
-  authSection.style.display = "block";
-  form.reset();
-  message.className = "msg";
-});
-</script>
+        function copyReferralLink() {
+            const copyText = document.getElementById("referralLink");
+            copyText.select();
+            document.execCommand("copy");
+            alert("تم نسخ رابط الإحالة الخاص بك بنجاح!");
+        }
+    </script>
 </body>
 </html>
