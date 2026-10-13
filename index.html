@@ -100,6 +100,17 @@
             border-radius: 20px; font-size: 11px; cursor: pointer; font-weight: 700;
         }
 
+        /* Quick Actions Grid (Bonus & Referrals) */
+        .quick-actions-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 0 15px 15px 15px;
+        }
+        .quick-action-btn {
+            background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px;
+            padding: 12px; text-align: center; cursor: pointer; font-size: 12px; font-weight: 700;
+            color: #fff; display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .quick-action-btn i { color: var(--neon-green); font-size: 16px; }
+
         /* Divider Bar (Profits Today) */
         .profit-divider-bar {
             background: linear-gradient(135deg, #2563eb, #1d4ed8);
@@ -135,7 +146,16 @@
         .package-price-action .price { font-size: 16px; font-weight: 800; color: var(--accent); margin-bottom: 5px; text-align: left; }
         .package-price-action button { background: var(--neon-green-gradient); color: #000; border: none; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 800; cursor: pointer; }
 
-        /* Orders / Withdrawals List Card */
+        /* Task Cards */
+        .task-card {
+            background: var(--card-bg); border: 1px solid var(--card-border);
+            border-radius: 16px; padding: 12px; margin-bottom: 12px; display: flex; align-items: center; gap: 12px;
+        }
+        .task-card img { width: 65px; height: 65px; border-radius: 10px; object-fit: cover; border: 1px solid var(--card-border); }
+        .task-card.completed { opacity: 0.6; border-color: var(--neon-green); }
+        .task-btn { background: var(--neon-green); color: #000; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 800; font-size: 11px; cursor: pointer; margin-top: 5px; }
+
+        /* Orders / Transactions List Card */
         .order-item-card {
             background: var(--card-bg); border: 1px solid var(--card-border);
             border-radius: 14px; padding: 14px; margin-bottom: 10px; font-size: 12px; line-height: 1.7;
@@ -236,6 +256,18 @@
                 <div style="font-size: 12px; color: var(--text-muted); margin-top:10px;">إجمالي رصيد المحفظة</div>
                 <div class="wallet-balance-amount"><span id="balanceDisplay">50</span> EGP</div>
                 <div class="wallet-deposit">الوديعة المتاحة: <span id="depositDisplay">0</span> EGP</div>
+            </div>
+
+            <!-- Quick Actions Grid (Daily Bonus & Referrals) -->
+            <div class="quick-actions-grid">
+                <div class="quick-action-btn" onclick="claimDailyBonus()">
+                    <i class="fa-solid fa-gift"></i>
+                    <span>مكافأة الحضور اليومي</span>
+                </div>
+                <div class="quick-action-btn" onclick="openModal('referralModal')">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <span>دعوة الأصدقاء (+10 EGP)</span>
+                </div>
             </div>
 
             <!-- Egypt Flag Emblem -->
@@ -346,16 +378,70 @@
             </div>
         </div>
 
-        <!-- PAGE 2: ORDERS TAB (قسم الطلبات المطور) -->
+        <!-- PAGE 2: TASKS TAB (مركز المهمات الحقيقي) -->
+        <div id="tabTasks" class="page-tab">
+            <div style="font-size:16px; font-weight:800; margin-bottom:8px; color:var(--neon-green); display:flex; align-items:center; gap:8px;">
+                <i class="fa-solid fa-list-check"></i>
+                <span>المهام اليومية لتقييم المنتجات</span>
+            </div>
+            <p style="font-size:12px; color:var(--text-muted); margin-bottom:15px;">أتمم مهامك اليومية (5 مهام) لإضافة عمولات الأرباح الفورية إلى رصيدك.</p>
+
+            <div id="tasksContainer">
+                <div class="task-card" id="task1">
+                    <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=150" alt="Phone">
+                    <div style="flex:1;">
+                        <h4 style="font-size:13px; margin-bottom:2px;">تقييم هاتف ذكي حديث</h4>
+                        <p style="font-size:11px; color:var(--neon-green);">المكافأة: +10 EGP</p>
+                        <button class="task-btn" onclick="completeTask(1, 10)">إنجاز المهمة</button>
+                    </div>
+                </div>
+
+                <div class="task-card" id="task2">
+                    <img src="https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=150" alt="Charger">
+                    <div style="flex:1;">
+                        <h4 style="font-size:13px; margin-bottom:2px;">تقييم شاحن متنقل سريع</h4>
+                        <p style="font-size:11px; color:var(--neon-green);">المكافأة: +10 EGP</p>
+                        <button class="task-btn" onclick="completeTask(2, 10)">إنجاز المهمة</button>
+                    </div>
+                </div>
+
+                <div class="task-card" id="task3">
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=150" alt="Headphones">
+                    <div style="flex:1;">
+                        <h4 style="font-size:13px; margin-bottom:2px;">تقييم سماعات لاسلكية</h4>
+                        <p style="font-size:11px; color:var(--neon-green);">المكافأة: +15 EGP</p>
+                        <button class="task-btn" onclick="completeTask(3, 15)">إنجاز المهمة</button>
+                    </div>
+                </div>
+
+                <div class="task-card" id="task4">
+                    <img src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=150" alt="Tablet">
+                    <div style="flex:1;">
+                        <h4 style="font-size:13px; margin-bottom:2px;">تقييم جهاز لوحي محمول</h4>
+                        <p style="font-size:11px; color:var(--neon-green);">المكافأة: +20 EGP</p>
+                        <button class="task-btn" onclick="completeTask(4, 20)">إنجاز المهمة</button>
+                    </div>
+                </div>
+
+                <div class="task-card" id="task5">
+                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=150" alt="Watch">
+                    <div style="flex:1;">
+                        <h4 style="font-size:13px; margin-bottom:2px;">تقييم ساعة ذكية رياضية</h4>
+                        <p style="font-size:11px; color:var(--neon-green);">المكافأة: +15 EGP</p>
+                        <button class="task-btn" onclick="completeTask(5, 15)">إنجاز المهمة</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 3: ORDERS TAB (سجل المعاملات والطلبات) -->
         <div id="tabOrders" class="page-tab">
             <div style="font-size:16px; font-weight:800; margin-bottom:12px; color:var(--neon-green); display:flex; align-items:center; gap:8px;">
                 <i class="fa-solid fa-clipboard-list"></i>
-                <span>سجل الطلبات والسحوبات الخاص بك</span>
+                <span>سجل المعاملات والطلبات المالي</span>
             </div>
             
-            <div id="userOrdersList">
-                <!-- Orders will be rendered here dynamically -->
-            </div>
+            <div id="userOrdersList"></div>
         </div>
 
         <a href="https://t.me/tasawwoq_plus" target="_blank" class="floating-support">
@@ -368,7 +454,7 @@
                 <i class="fa-solid fa-house"></i>
                 <span>الرئيسية</span>
             </div>
-            <div class="nav-item" onclick="alert('قسم المهمات اليومية متوفر في الباقات المشترك بها')">
+            <div class="nav-item" onclick="switchMainTab('tabTasks', this)">
                 <i class="fa-solid fa-crown"></i>
                 <span>مهمة</span>
             </div>
@@ -389,19 +475,25 @@
         <div class="modal-content">
             <span style="position:absolute; top:12px; left:12px; cursor:pointer;" onclick="closeModal('aboutModal')">&times;</span>
             <h3 style="font-size:16px; color:var(--neon-green); margin-bottom:10px;"><i class="fa-solid fa-shield-halved"></i> توثيق واعتمادات المنصة الرسمية</h3>
-            
             <p style="font-size:12px; color:var(--text-muted); line-height:1.7;">
                 🏛️ **التأسيس والمقر الرئيسي:**<br>
-                تأسست شركة <strong>Tasawwoq Plus LLC</strong> العالمية بفرعها الرئيسي في ولاية تكساس، الولايات المتحدة الأمريكية في عام <strong>2018</strong> كواحدة من أكبر المؤسسات المالية المتخصصة في الاستثمار الإلكتروني وتقييم المنتجات برأس مال يتجاوز <strong>10 ملايين دولار</strong>.<br><br>
-
-                🇪🇬 **فرع جمهورية مصر العربية والشرق الأوسط:**<br>
-                تم تفعيل الفرع المعتمد رسمياً لخدمة المستخدمين والمستثمرين في الشرق الأوسط بتسهيل عمليات الشحن والسحب الفوري عبر المحافظ الإلكترونية المحلية (فودافون كاش، أورنج، اتصالات).<br><br>
-
-                🔒 **شهادات الأمان والتشفير:**<br>
-                تتمتع جميع المعاملات المالية بتشفير بنكي عالي الأمان `SSL 256-bit` وضمان كامل لكافة أيداعات وأرباح الشركاء والمستثمرين.
+                تأسست شركة <strong>Tasawwoq Plus LLC</strong> بفرعها الرئيسي في ولاية تكساس، الولايات المتحدة الأمريكية عام <strong>2018</strong> برأس مال يتجاوز 10 ملايين دولار.<br><br>
+                🇪🇬 **فرع جمهورية مصر العربية:**<br>
+                فرع معتمد رسمياً لتقديم خدمات التسويق وتقييم المنتجات الرقمية مع تسهيل السحب والإيداع الفوري عبر المحافظ الإلكترونية.<br><br>
+                🔒 **الأمان والضمان:** تشفير بنكي `SSL 256-bit` لضمان حماية جميع المعاملات.
             </p>
-            
             <button class="btn-main" onclick="closeModal('aboutModal')">تم الاطلاع والقبول</button>
+        </div>
+    </div>
+
+    <!-- MODAL: REFERRAL SYSTEM -->
+    <div id="referralModal" class="modal">
+        <div class="modal-content">
+            <span style="position:absolute; top:12px; left:12px; cursor:pointer;" onclick="closeModal('referralModal')">&times;</span>
+            <h3 style="font-size:16px; color:var(--neon-green); margin-bottom:10px;"><i class="fa-solid fa-user-plus"></i> نظام دعوة الأصدقاء</h3>
+            <p style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">شارك رابط الإحالة الخاص بك مع أصدقائك واحصل على 10 EGP فور تسجيلهم:</p>
+            <input type="text" id="referralLinkInput" readonly style="font-size:11px;">
+            <button class="btn-main" onclick="copyReferralLink()">نسخ رابط الدعوة</button>
         </div>
     </div>
 
@@ -410,11 +502,10 @@
         const ADMIN_PHONE = "01032315526";
 
         let dbUsers = JSON.parse(localStorage.getItem('tasawwoq_users')) || {
-            [ADMIN_PHONE]: { name: "صاحب الشركة (الأدمن)", balance: 10000, deposit: 10000, package: "VIP 7", role: "admin", notified: false }
+            [ADMIN_PHONE]: { name: "صاحب الشركة (الأدمن)", balance: 10000, deposit: 10000, package: "VIP 7", role: "admin", notified: false, lastBonusDate: "" }
         };
 
         let dbOrders = JSON.parse(localStorage.getItem('tasawwoq_orders')) || [];
-
         let currentPhone = "";
 
         function showScreen(screenId) {
@@ -434,7 +525,8 @@
                     deposit: 0,
                     package: "غير مشترك",
                     role: (phone === ADMIN_PHONE) ? "admin" : "user",
-                    notified: false
+                    notified: false,
+                    lastBonusDate: ""
                 };
                 localStorage.setItem('tasawwoq_users', JSON.stringify(dbUsers));
             }
@@ -454,7 +546,8 @@
                 deposit: 0,
                 package: "غير مشترك",
                 role: (phone === ADMIN_PHONE) ? "admin" : "user",
-                notified: false
+                notified: false,
+                lastBonusDate: ""
             };
 
             localStorage.setItem('tasawwoq_users', JSON.stringify(dbUsers));
@@ -466,6 +559,8 @@
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('registerScreen').style.display = 'none';
             document.getElementById('appContainer').style.display = 'flex';
+            
+            document.getElementById('referralLinkInput').value = window.location.origin + window.location.pathname + "?ref=" + currentPhone;
             updateUI();
         }
 
@@ -476,14 +571,12 @@
             document.getElementById('balanceDisplay').innerText = user.balance;
             document.getElementById('depositDisplay').innerText = user.deposit;
 
-            // Show Deposit Success Notification
             if(user.notified) {
                 document.getElementById('depositAlert').style.display = 'block';
             } else {
                 document.getElementById('depositAlert').style.display = 'none';
             }
 
-            // Calculate Today Profit
             if(user.package && user.package !== "غير مشترك") {
                 document.getElementById('todayProfitsDisplay').innerText = (user.deposit * 0.10) + " EGP";
             } else {
@@ -540,19 +633,18 @@
                 dbUsers[ph].balance += parseFloat(amount);
                 dbUsers[ph].notified = true;
 
-                // Add Order Record
                 dbOrders.push({
                     userPhone: ph,
-                    type: "شحن وديعة وفتح باقة",
+                    type: "شحن وديعة إداري",
                     amount: parseFloat(amount),
-                    status: "تم بنجاح ✓",
+                    status: "مكتمـل ✓",
                     time: new Date().toLocaleString()
                 });
 
                 localStorage.setItem('tasawwoq_users', JSON.stringify(dbUsers));
                 localStorage.setItem('tasawwoq_orders', JSON.stringify(dbOrders));
                 renderAdminTable();
-                alert(`تم شحن الوديعة والحساب للمستخدم ${ph} بنجاح!`);
+                alert(`تم شحن الوديعة للمستخدم ${ph} بنجاح!`);
             }
         }
 
@@ -579,7 +671,66 @@
             localStorage.setItem('tasawwoq_users', JSON.stringify(dbUsers));
             localStorage.setItem('tasawwoq_orders', JSON.stringify(dbOrders));
             updateUI();
-            alert(`🎉 مبروك! تم اشتراكك بنجاح في ${packageName}. تم تسجيل اشتراكك في بيانات الشركة وتفعيل العائد اليومي!`);
+            alert(`🎉 مبروك! تم اشتراكك بنجاح في ${packageName}.`);
+        }
+
+        function claimDailyBonus() {
+            const user = dbUsers[currentPhone];
+            const today = new Date().toDateString();
+
+            if(user.lastBonusDate === today) {
+                alert('لقد استلمت مكافأة الحضور اليومي بالفعل! عُد غداً للمزيد.');
+                return;
+            }
+
+            user.balance += 10;
+            user.lastBonusDate = today;
+
+            dbOrders.push({
+                userPhone: currentPhone,
+                type: "مكافأة الحضور اليومي",
+                amount: 10,
+                status: "مكتمـل ✓",
+                time: new Date().toLocaleString()
+            });
+
+            localStorage.setItem('tasawwoq_users', JSON.stringify(dbUsers));
+            localStorage.setItem('tasawwoq_orders', JSON.stringify(dbOrders));
+            updateUI();
+            alert('🎉 مبروك! حصلت على هدية الحضور اليومي بقيمة 10 EGP.');
+        }
+
+        function completeTask(taskId, reward) {
+            const taskCard = document.getElementById('task' + taskId);
+            if(taskCard.classList.contains('completed')) {
+                alert('لقد أنجزت هذه المهمة اليوم مسبقاً!');
+                return;
+            }
+
+            dbUsers[currentPhone].balance += reward;
+            taskCard.classList.add('completed');
+            taskCard.querySelector('.task-btn').innerText = 'تم الإنجاز ✓';
+            taskCard.querySelector('.task-btn').style.background = '#64748b';
+
+            dbOrders.push({
+                userPhone: currentPhone,
+                type: "إنجاز مهمة تسوق رقمية #" + taskId,
+                amount: reward,
+                status: "مكتمـل ✓",
+                time: new Date().toLocaleString()
+            });
+
+            localStorage.setItem('tasawwoq_users', JSON.stringify(dbUsers));
+            localStorage.setItem('tasawwoq_orders', JSON.stringify(dbOrders));
+            updateUI();
+            alert(`🎉 مبروك! تمت المهمة بنجاح وأُضيف مبلغ ${reward} EGP لرصيدك.`);
+        }
+
+        function copyReferralLink() {
+            const input = document.getElementById("referralLinkInput");
+            input.select();
+            document.execCommand("copy");
+            alert("تم نسخ رابط الدعوة بنجاح!");
         }
 
         function renderUserOrders() {
@@ -587,18 +738,16 @@
             const myOrders = dbOrders.filter(o => o.userPhone === currentPhone);
 
             if(myOrders.length === 0) {
-                ordersDiv.innerHTML = `<div style="text-align:center; padding:30px; color:var(--text-muted); font-size:13px;">
-                    لا توجد طلبات أو معاملات مسجلة حالياً.
-                </div>`;
+                ordersDiv.innerHTML = `<div style="text-align:center; padding:30px; color:var(--text-muted); font-size:13px;">لا توجد معاملات مسجلة حتى الآن.</div>`;
                 return;
             }
 
             let html = "";
             myOrders.reverse().forEach(o => {
                 html += `<div class="order-item-card">
-                    <b>نوع الطلب:</b> ${o.type}<br>
+                    <b>العملية:</b> ${o.type}<br>
                     <b>المبلغ:</b> <span style="color:var(--neon-green); font-weight:bold;">${o.amount} EGP</span><br>
-                    <b>حالة الطلب:</b> <span style="color:var(--accent); font-weight:bold;">${o.status}</span><br>
+                    <b>الحالة:</b> <span style="color:var(--accent); font-weight:bold;">${o.status}</span><br>
                     <span style="font-size:10px; color:var(--text-muted);">${o.time}</span>
                 </div>`;
             });
