@@ -219,7 +219,7 @@ input:focus{outline:2px solid #0d674733;border-color:var(--g2)}
 .error{background:#fff0ed;color:#a52c1d}
 .success{background:#e9f8ed;color:#176438}
 
-/* أنماط لوحة التحكم الجديدة (Dashboard) */
+/* أنماط لوحة التحكم (Dashboard) */
 .dashboard-container{
   background:white;
   border-radius:20px;
@@ -258,6 +258,23 @@ input:focus{outline:2px solid #0d674733;border-color:var(--g2)}
 }
 .stat-box small{font-size:11px; color:#f5dfaa;}
 .stat-box div{font-size:18px; font-weight:bold; margin-top:4px;}
+
+/* أنماط لوحة الأدمن */
+.admin-card{
+  background:#fff8e7;
+  border:2px dashed var(--gold);
+  border-radius:16px;
+  padding:20px;
+  margin-bottom:25px;
+}
+.admin-card h3{
+  margin:0 0 10px;
+  color:var(--g);
+  font-size:16px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
 
 .section-title{
   color:var(--g);
@@ -422,6 +439,18 @@ footer{
 
 <!-- لوحة التحكم المحترفة (Dashboard) -->
 <section class="dashboard-container" id="dashboard-section" style="display: none;">
+  
+  <!-- لوحة تحكم صاحب المنصة / الأدمن (تظهر للأدمن فقط) -->
+  <div class="admin-card" id="admin-panel" style="display: none;">
+    <h3>👑 لوحة تحكم إدارة المنصة (Admin)</h3>
+    <p style="font-size:12px; color:#52645a; margin-bottom:15px;">يمكنك إضافة أو تعديل رصيد أي مستخدم عبر رقم هاتفه مباشرة:</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr auto; gap:10px; align-items:center;">
+      <input type="tel" id="admin-target-phone" placeholder="رقم هاتف المستخدم (+201...)" style="font-size:13px; padding:10px;">
+      <input type="number" id="admin-amount" placeholder="المبلغ (مثال: 100)" style="font-size:13px; padding:10px;">
+      <button type="button" class="mainbtn" onclick="adminAddBalance()" style="margin:0; padding:10px 18px; font-size:13px; background:var(--g2);">تحديث الرصيد</button>
+    </div>
+  </div>
+
   <div class="dash-header">
     <h2 style="color: white; margin:0; text-align:right;" id="user-welcome-name">أهلاً بك!</h2>
     <div class="gift-badge">🎁 هدية التسجيل: +50 ج.م في حسابك</div>
@@ -467,9 +496,7 @@ footer{
 
   <!-- قائمة الـ 10 مهام -->
   <div class="section-title">📋 المهام التسويقية اليومية (10 مهام)</div>
-  <div class="tasks-list" id="tasks-container">
-    <!-- سيتم توليد الـ 10 مهام عبر الجافاسكريبت تلقائياً -->
-  </div>
+  <div class="tasks-list" id="tasks-container"></div>
 
   <button class="mainbtn" id="logout-btn" style="background: #a52c1d; margin-top: 30px;" type="button">
     تسجيل الخروج
@@ -486,6 +513,9 @@ footer{
 const SUPABASE_URL="https://valzgpkozmjiqiyhordx.supabase.co";
 const SUPABASE_ANON_KEY="sb_publishable__124XkEekFg5DRceAlhXhQ_r2pf7PnM";
 
+// رقم هاتف الأدمن الرئيسي لتفعيل لوحة الإدارة تلقائياً عند دخوله
+const ADMIN_PHONE = "+201032315526";
+
 const form=document.getElementById("authform");
 const nick=document.getElementById("nickname");
 const phone=document.getElementById("phone");
@@ -500,13 +530,14 @@ const authSection=document.getElementById("auth-section");
 const dashboardSection=document.getElementById("dashboard-section");
 const heroSection=document.getElementById("hero-section");
 const logoutBtn=document.getElementById("logout-btn");
+const adminPanel=document.getElementById("admin-panel");
 
 let mode="register";
 let client=null;
-let currentBalance = 50; // هدية 50 جنيه تلقائياً
+let currentUser = null;
+let currentBalance = 50;
 let completedTasksCount = 0;
 
-// قائمة الـ 10 مهام
 const tasksData = [
   { id: 1, title: "مشاركة منتج الساعات الذهبية على فيسبوك", reward: 5 },
   { id: 2, title: "تقييم تطبيق تسوق بلس بـ 5 نجوم", reward: 10 },
@@ -574,22 +605,85 @@ function doTask(taskId, reward) {
   currentBalance += reward;
   completedTasksCount++;
   
+  updateBalanceUI();
+  alert(`مبروك! تم إنجاز المهمة وإضافة ${reward} ج.م لرصيدك بنجاح.`);
+}
+
+function updateBalanceUI() {
   document.getElementById("user-balance").textContent = `${currentBalance} ج.م`;
   document.getElementById("user-earnings").textContent = `${currentBalance} ج.م`;
   document.getElementById("user-tasks").textContent = `${completedTasksCount} / 10`;
-  
-  alert(`مبروك! تم إنجاز المهمة وإضافة ${reward} ج.م لرصيدك بنجاح.`);
 }
 
 function subscribePkg(pkgName, price) {
   alert(`طلب الاشتراك في ${pkgName} بقيمة ${price} ج.م قيد المراجعة. يرجى التنسيق مع الإدارة لإتمام الإيداع.`);
 }
 
-function showDashboard(userName) {
+// دالة الأدمن لتعديل رصيد أي عميل
+async function adminAddBalance() {
+  const targetPhone = document.getElementById("admin-target-phone").value.trim();
+  const amount = parseFloat(document.getElementById("admin-amount").value);
+
+  if(!targetPhone || isNaN(amount)) {
+    alert("يرجى إدخال رقم هاتف الصحيح والمبلغ المطلوب.");
+    return;
+  }
+
+  try {
+    const db = getClient();
+    const { data, error } = await db
+      .from('profiles')
+      .update({ balance: amount })
+      .eq('phone', targetPhone);
+
+    if (error) throw error;
+
+    alert(`تم تعديل رصيد المستخدم (${targetPhone}) إلى ${amount} ج.م بنجاح!`);
+    
+    if(currentUser && currentUser.phone === targetPhone) {
+      currentBalance = amount;
+      updateBalanceUI();
+    }
+  } catch(err) {
+    alert("حدث خطأ أثناء التحديث: " + err.message);
+  }
+}
+
+async function fetchUserBalance(userId) {
+  try {
+    const db = getClient();
+    const { data, error } = await db
+      .from('profiles')
+      .select('balance')
+      .eq('id', userId)
+      .single();
+
+    if(data && data.balance !== null) {
+      currentBalance = parseFloat(data.balance);
+    }
+  } catch(e) {
+    console.log("استخدام الرصيد المبدئي 50 ج.م");
+  }
+  updateBalanceUI();
+}
+
+async function showDashboard(user) {
+  currentUser = user;
   authSection.style.display = "none";
   heroSection.style.display = "none";
   dashboardSection.style.display = "block";
+  
+  const userName = user.user_metadata?.username || "عضو تسوق بلس";
   document.getElementById("user-welcome-name").textContent = `مرحباً بك، ${userName}!`;
+
+  // التثبت إذا كان المستخدم هو الأدمن
+  if (user.user_metadata?.phone === ADMIN_PHONE) {
+    adminPanel.style.display = "block";
+  } else {
+    adminPanel.style.display = "none";
+  }
+
+  await fetchUserBalance(user.id);
   renderTasks();
 }
 
@@ -631,10 +725,7 @@ form.addEventListener("submit",async function(e){
 
     if(result.error) throw result.error;
 
-    const userMeta = result.data.user?.user_metadata;
-    const displayName = userMeta?.username || nick.value.trim() || "عضو تسوق بلس";
-
-    showDashboard(displayName);
+    showDashboard(result.data.user);
 
   }catch(err){
     console.error("Supabase auth error:",err);
