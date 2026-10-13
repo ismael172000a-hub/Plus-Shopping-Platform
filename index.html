@@ -219,7 +219,7 @@ input:focus{outline:2px solid #0d674733;border-color:var(--g2)}
 .error{background:#fff0ed;color:#a52c1d}
 .success{background:#e9f8ed;color:#176438}
 
-/* أنماط لوحة التحكم (Dashboard) */
+/* أنماط لوحة التحكم */
 .dashboard-container{
   background:white;
   border-radius:20px;
@@ -313,7 +313,7 @@ input:focus{outline:2px solid #0d674733;border-color:var(--g2)}
   margin-top:10px;
 }
 
-/* قائمة المهام (10 مهام) */
+/* قائمة المهام */
 .tasks-list{
   display:flex;
   flex-direction:column;
@@ -440,7 +440,7 @@ footer{
 <!-- لوحة التحكم المحترفة (Dashboard) -->
 <section class="dashboard-container" id="dashboard-section" style="display: none;">
   
-  <!-- لوحة تحكم صاحب المنصة / الأدمن (تظهر للأدمن فقط) -->
+  <!-- لوحة الأدمن -->
   <div class="admin-card" id="admin-panel" style="display: none;">
     <h3>👑 لوحة تحكم إدارة المنصة (Admin)</h3>
     <p style="font-size:12px; color:#52645a; margin-bottom:15px;">يمكنك إضافة أو تعديل رصيد أي مستخدم عبر رقم هاتفه مباشرة:</p>
@@ -513,7 +513,6 @@ footer{
 const SUPABASE_URL="https://valzgpkozmjiqiyhordx.supabase.co";
 const SUPABASE_ANON_KEY="sb_publishable__124XkEekFg5DRceAlhXhQ_r2pf7PnM";
 
-// رقم هاتف الأدمن الرئيسي لتفعيل لوحة الإدارة تلقائياً عند دخوله
 const ADMIN_PHONE = "+201032315526";
 
 const form=document.getElementById("authform");
@@ -536,7 +535,7 @@ let mode="register";
 let client=null;
 let currentUser = null;
 let currentBalance = 50;
-let completedTasksCount = 0;
+let completedTaskIds = [];
 
 const tasksData = [
   { id: 1, title: "مشاركة منتج الساعات الذهبية على فيسبوك", reward: 5 },
@@ -583,6 +582,7 @@ function renderTasks() {
   container.innerHTML = "";
   
   tasksData.forEach(task => {
+    const isDone = completedTaskIds.includes(task.id);
     const item = document.createElement("div");
     item.className = "task-item";
     item.innerHTML = `
@@ -591,35 +591,55 @@ function renderTasks() {
         <small>مهمة تسويقية بسيطة ومباشرة</small>
       </div>
       <div class="task-reward">+${task.reward} ج.م</div>
-      <button class="task-btn" id="task-btn-${task.id}" onclick="doTask(${task.id}, ${task.reward})">إنجاز المهمة</button>
+      <button class="task-btn" id="task-btn-${task.id}" ${isDone ? 'disabled' : ''} onclick="doTask(${task.id}, ${task.reward})">
+        ${isDone ? 'تم الإنجاز ✓' : 'إنجاز المهمة'}
+      </button>
     `;
     container.appendChild(item);
   });
 }
 
-function doTask(taskId, reward) {
+async function doTask(taskId, reward) {
+  if(completedTaskIds.includes(taskId)) return;
+
   const btn = document.getElementById(`task-btn-${taskId}`);
   btn.disabled = true;
   btn.textContent = "تم الإنجاز ✓";
   
   currentBalance += reward;
-  completedTasksCount++;
+  completedTaskIds.push(taskId);
   
   updateBalanceUI();
-  alert(`مبروك! تم إنجاز المهمة وإضافة ${reward} ج.م لرصيدك بنجاح.`);
+  
+  // حفظ الرصيد والمهام المكتملة في Supabase فوراً
+  await saveUserDataToSupabase();
+  
+  alert(`مبروك! تم إنجاز المهمة وإضافة ${reward} ج.م لرصيدك وتثبيته بنجاح.`);
 }
 
 function updateBalanceUI() {
   document.getElementById("user-balance").textContent = `${currentBalance} ج.م`;
   document.getElementById("user-earnings").textContent = `${currentBalance} ج.م`;
-  document.getElementById("user-tasks").textContent = `${completedTasksCount} / 10`;
+  document.getElementById("user-tasks").textContent = `${completedTaskIds.length} / 10`;
+}
+
+async function saveUserDataToSupabase() {
+  if(!currentUser) return;
+  try {
+    const db = getClient();
+    await db.from('profiles').update({
+      balance: currentBalance,
+      completed_tasks: completedTaskIds.join(',')
+    }).eq('id', currentUser.id);
+  } catch(e) {
+    console.error("خطأ أثناء حفظ بيانات المستخدم:", e);
+  }
 }
 
 function subscribePkg(pkgName, price) {
   alert(`طلب الاشتراك في ${pkgName} بقيمة ${price} ج.م قيد المراجعة. يرجى التنسيق مع الإدارة لإتمام الإيداع.`);
 }
 
-// دالة الأدمن لتعديل رصيد أي عميل
 async function adminAddBalance() {
   const targetPhone = document.getElementById("admin-target-phone").value.trim();
   const amount = parseFloat(document.getElementById("admin-amount").value);
@@ -631,7 +651,7 @@ async function adminAddBalance() {
 
   try {
     const db = getClient();
-    const { data, error } = await db
+    const { error } = await db
       .from('profiles')
       .update({ balance: amount })
       .eq('phone', targetPhone);
@@ -640,7 +660,7 @@ async function adminAddBalance() {
 
     alert(`تم تعديل رصيد المستخدم (${targetPhone}) إلى ${amount} ج.م بنجاح!`);
     
-    if(currentUser && currentUser.phone === targetPhone) {
+    if(currentUser && currentUser.user_metadata?.phone === targetPhone) {
       currentBalance = amount;
       updateBalanceUI();
     }
@@ -649,20 +669,27 @@ async function adminAddBalance() {
   }
 }
 
-async function fetchUserBalance(userId) {
+async function fetchUserData(userId) {
   try {
     const db = getClient();
     const { data, error } = await db
       .from('profiles')
-      .select('balance')
+      .select('balance, completed_tasks')
       .eq('id', userId)
       .single();
 
-    if(data && data.balance !== null) {
-      currentBalance = parseFloat(data.balance);
+    if(data) {
+      if(data.balance !== null && data.balance !== undefined) {
+        currentBalance = parseFloat(data.balance);
+      }
+      if(data.completed_tasks) {
+        completedTaskIds = data.completed_tasks.split(',').map(id => parseInt(id)).filter(id => !isNaN(id));
+      } else {
+        completedTaskIds = [];
+      }
     }
   } catch(e) {
-    console.log("استخدام الرصيد المبدئي 50 ج.م");
+    console.log("تعذر جلب البيانات بشكل كامل، سيتم استخدام البيانات المبدئية.");
   }
   updateBalanceUI();
 }
@@ -676,14 +703,13 @@ async function showDashboard(user) {
   const userName = user.user_metadata?.username || "عضو تسوق بلس";
   document.getElementById("user-welcome-name").textContent = `مرحباً بك، ${userName}!`;
 
-  // التثبت إذا كان المستخدم هو الأدمن
   if (user.user_metadata?.phone === ADMIN_PHONE) {
     adminPanel.style.display = "block";
   } else {
     adminPanel.style.display = "none";
   }
 
-  await fetchUserBalance(user.id);
+  await fetchUserData(user.id);
   renderTasks();
 }
 
