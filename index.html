@@ -14,7 +14,7 @@
             --secondary: #10b981;
             --accent: #f59e0b;
             --bg: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.92);
+            --card-bg: rgba(30, 41, 59, 0.95);
             --text: #f8fafc;
             --text-muted: #94a3b8;
         }
@@ -22,10 +22,10 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
         body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
 
-        /* Fullscreen Screen */
+        /* Fullscreen Screen Overlay */
         .fullscreen-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.95)), 
+            background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.95)), 
                         url('https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
             z-index: 2000; display: flex; justify-content: center; align-items: center; padding: 15px; overflow-y: auto;
         }
@@ -38,7 +38,7 @@
         }
 
         .auth-card h2 { color: #60a5fa; font-size: 24px; margin-bottom: 8px; }
-        .auth-card p { font-size: 13px; color: var(--text-muted); margin-bottom: 15px; line-height: 1.5; }
+        .auth-card p { font-size: 13px; color: var(--text-muted); margin-bottom: 15px; }
 
         input {
             width: 100%; padding: 12px; margin: 8px 0; background: #0f172a;
@@ -55,6 +55,25 @@
         .switch-text { margin-top: 15px; font-size: 13px; color: var(--text-muted); cursor: pointer; }
         .switch-text span { color: #60a5fa; font-weight: 700; text-decoration: underline; }
 
+        /* Fullscreen Admin Panel */
+        #adminScreen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: #0f172a; z-index: 3000; display: none; flex-direction: column; padding: 20px; overflow-y: auto;
+        }
+
+        .admin-header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid #334155; padding-bottom: 15px; margin-bottom: 20px;
+        }
+
+        .admin-table {
+            width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px;
+        }
+        .admin-table th, .admin-table td {
+            border: 1px solid #334155; padding: 10px; text-align: center;
+        }
+        .admin-table th { background: #1e293b; color: var(--accent); }
+
         /* Dashboard App */
         #appContainer { display: none; flex: 1; flex-direction: column; width: 100%; max-width: 600px; margin: 0 auto; padding-bottom: 70px; }
 
@@ -62,71 +81,95 @@
             background: #1e293b; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155;
         }
 
-        .user-profile-btn {
-            display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05);
-            border: 1px solid #334155; padding: 5px 12px; border-radius: 30px; cursor: pointer;
+        /* Wallet Hero Card */
+        .wallet-card {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border: 1px solid #334155; border-radius: 18px; padding: 20px; margin: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4); text-align: center; position: relative;
         }
 
-        .user-profile-btn img { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; border: 1px solid var(--primary); }
+        .wallet-balance-title { font-size: 12px; color: var(--text-muted); }
+        .wallet-balance-amount { font-size: 28px; font-weight: 800; color: #fff; margin: 5px 0; }
+        .wallet-deposit { font-size: 13px; color: var(--secondary); font-weight: 700; }
 
-        .tab-content { display: none; padding: 15px; flex: 1; }
-        .tab-content.active { display: block; }
-
-        .hero-card {
-            background: linear-gradient(135deg, #2563eb, #1d4ed8); border-radius: 16px;
-            padding: 18px; margin-bottom: 15px; box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
+        /* Divider Bar (Middle Profits) */
+        .profit-divider-bar {
+            background: linear-gradient(90deg, #2563eb, #1d4ed8);
+            border-radius: 12px; padding: 12px; margin: 0 15px 15px 15px;
+            display: flex; justify-content: space-between; align-items: center; color: #fff;
         }
 
-        .balance-box {
-            background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(8px);
-            border-radius: 12px; padding: 12px; margin-top: 12px;
-            display: flex; justify-content: space-between; align-items: center;
+        /* Ticker Moving Bar */
+        .ticker-container {
+            background: #1e293b; border-y: 1px solid #334155; padding: 8px 15px;
+            overflow: hidden; white-space: nowrap; font-size: 12px; color: var(--accent); margin-bottom: 15px;
+        }
+        .ticker-text {
+            display: inline-block; animation: marquee 18s linear infinite;
+        }
+        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        /* Egypt Flag Emblem */
+        .egypt-badge-container {
+            text-align: center; margin: 10px 0 15px 0;
+        }
+        .egypt-flag-icon {
+            width: 45px; height: 30px; border-radius: 4px; display: inline-block;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4); border: 1px solid #fff;
         }
 
-        .section-title { font-size: 16px; font-weight: 700; margin: 15px 0 10px 0; display: flex; align-items: center; gap: 8px; }
+        /* Notification Banner */
+        .deposit-alert-box {
+            background: rgba(16, 185, 129, 0.2); border: 1px solid var(--secondary);
+            color: var(--secondary); border-radius: 12px; padding: 12px; margin: 0 15px 15px 15px;
+            font-size: 12px; text-align: center; display: none; font-weight: 700;
+        }
 
-        .packages-list { display: flex; flex-direction: column; gap: 12px; }
-
+        /* Packages */
+        .packages-list { display: flex; flex-direction: column; gap: 12px; padding: 0 15px; }
         .package-item {
             background: #1e293b; border: 1px solid #334155; border-radius: 14px;
             padding: 15px; display: flex; justify-content: space-between; align-items: center;
         }
-
         .package-info h4 { font-size: 15px; color: #fff; margin-bottom: 3px; }
         .package-info p { font-size: 12px; color: var(--secondary); font-weight: 700; }
-
-        .package-price-action { text-align: left; }
-        .package-price-action .price { font-size: 16px; font-weight: 800; color: var(--accent); margin-bottom: 5px; }
+        .package-price-action .price { font-size: 16px; font-weight: 800; color: var(--accent); margin-bottom: 5px; text-align: left; }
         .package-price-action button { background: var(--primary); color: #fff; border: none; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; }
 
-        .task-card {
-            background: #1e293b; border: 1px solid #334155; border-radius: 14px;
-            padding: 12px; margin-bottom: 12px; display: flex; align-items: center; gap: 12px;
-        }
-
-        .task-card img { width: 60px; height: 60px; border-radius: 10px; object-fit: cover; border: 1px solid #334155; }
-        .task-card.completed { opacity: 0.6; border-color: var(--secondary); }
-        .task-btn { background: var(--secondary); color: #fff; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 11px; cursor: pointer; margin-top: 5px; }
-
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #1e293b; border-top: 1px solid #334155; display: flex; justify-content: space-around; padding: 10px 0; z-index: 100; }
-        .nav-link { color: var(--text-muted); text-decoration: none; font-size: 12px; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
-        .nav-link.active { color: var(--primary); }
-        .nav-link i { font-size: 18px; }
-
-        .floating-support { position: fixed; bottom: 65px; left: 15px; background: #0088cc; color: #fff; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; box-shadow: 0 4px 12px rgba(0, 136, 204, 0.4); z-index: 99; text-decoration: none; }
-
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 3000; justify-content: center; align-items: center; padding: 15px; }
-        .modal-content { background: #1e293b; border-radius: 16px; padding: 20px; width: 100%; max-width: 450px; position: relative; border: 1px solid #334155; max-height: 85vh; overflow-y: auto; }
-
-        /* Admin Panels Items */
-        .admin-item-card { background: #0f172a; border: 1px solid #334155; padding: 10px; border-radius: 10px; margin-bottom: 8px; font-size: 12px; line-height: 1.6; }
-        .badge-vip { background: var(--accent); color: #000; padding: 2px 6px; border-radius: 6px; font-weight: 700; font-size: 10px; }
-        .badge-free { background: #64748b; color: #fff; padding: 2px 6px; border-radius: 6px; font-weight: 700; font-size: 10px; }
+        .floating-support { position: fixed; bottom: 20px; left: 15px; background: #0088cc; color: #fff; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; box-shadow: 0 4px 12px rgba(0, 136, 204, 0.4); z-index: 99; text-decoration: none; }
     </style>
 </head>
 <body>
 
-    <!-- 1. LOGIN SCREEN -->
+    <!-- 1. FULLSCREEN ADMIN PANEL FOR COMPANY OWNER -->
+    <div id="adminScreen">
+        <div class="admin-header">
+            <h2 style="color: var(--accent); font-size: 20px;"><i class="fa-solid fa-user-shield"></i> لوحة تحكم صاحب الشركة (الأدمن)</h2>
+            <button onclick="closeAdminPanel()" style="background:#dc2626; color:#fff; border:none; padding:8px 15px; border-radius:8px; font-weight:700; cursor:pointer;">إغلاق والعودة</button>
+        </div>
+
+        <h3 style="font-size:15px; margin-bottom:10px;">📋 جميع بيانات المستخدمين المسجلين:</h3>
+        <div style="overflow-x: auto;">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>الاسم</th>
+                        <th>رقم الهاتف</th>
+                        <th>الرصيد (ج.م)</th>
+                        <th>الوديعة</th>
+                        <th>الباقة الاشتراكية</th>
+                        <th>الإجراء الشحن</th>
+                    </tr>
+                </thead>
+                <tbody id="adminUsersTableBody"></tbody>
+            </table>
+        </div>
+
+        <h3 style="font-size:15px; margin:25px 0 10px 0;">💸 طلبات السحب المعلقة:</h3>
+        <div id="adminWithdrawRequests"></div>
+    </div>
+
+    <!-- 2. LOGIN SCREEN -->
     <div id="loginScreen" class="fullscreen-screen">
         <div class="auth-card">
             <h2>تسجيل الدخول</h2>
@@ -140,7 +183,7 @@
         </div>
     </div>
 
-    <!-- 2. REGISTER SCREEN -->
+    <!-- 3. REGISTER SCREEN -->
     <div id="registerScreen" class="fullscreen-screen" style="display: none;">
         <div class="auth-card">
             <h2>إنشاء حساب جديد</h2>
@@ -155,7 +198,7 @@
         </div>
     </div>
 
-    <!-- 3. MAIN DASHBOARD -->
+    <!-- 4. MAIN USER DASHBOARD -->
     <div id="appContainer">
         
         <header>
@@ -163,167 +206,128 @@
                 <i class="fa-solid fa-cart-shopping"></i> تسوق بلس
             </div>
             <div style="display: flex; gap: 8px; align-items: center;">
-                <button id="adminPanelBtn" style="display:none; background:var(--accent); color:#000; border:none; padding:6px 10px; border-radius:8px; font-weight:700; font-size:11px; cursor:pointer;" onclick="openAdminModal()">
-                    <i class="fa-solid fa-shield-halved"></i> لوحة الأدمن
+                <button id="adminPanelBtn" style="display:none; background:var(--accent); color:#000; border:none; padding:6px 10px; border-radius:8px; font-weight:700; font-size:11px; cursor:pointer;" onclick="openAdminPanel()">
+                    <i class="fa-solid fa-shield-halved"></i> لوحة الأدمن الكبيرة
                 </button>
-                <div class="user-profile-btn" onclick="openModal('profileModal')">
-                    <img id="headerUserImg" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" alt="Profile">
-                    <span id="headerUserName" style="font-size:12px; font-weight:700;">المستخدم</span>
-                </div>
+                <div style="font-size:12px; font-weight:700;" id="headerUserName">المستخدم</div>
             </div>
         </header>
 
-        <!-- TAB 1: HOME -->
-        <div id="tabHome" class="tab-content active">
-            <div class="hero-card">
-                <h2>مرحباً بك في تسوق بلس 🚀</h2>
-                <p style="font-size:12px; opacity:0.9;">الفرع الرسمي المعتمد لشركة Tasawwoq Plus</p>
-                <div class="balance-box">
-                    <div>
-                        <span style="font-size: 11px; opacity: 0.8;">رصيدك الحالي</span>
-                        <div style="font-size: 22px; font-weight: 800; color: #fff;"><span id="balanceDisplay">50</span> ج.م</div>
-                    </div>
-                    <button onclick="openModal('withdrawModal')" style="background: #fff; color: var(--primary); border:none; padding: 6px 12px; border-radius: 8px; font-weight:700; cursor:pointer; font-size: 12px;">سحب أرباح</button>
-                </div>
+        <!-- Deposit Success Alert Notification -->
+        <div id="depositAlert" class="deposit-alert-box">
+            🎉 مبروك! تم شحن حسابك بنجاح. يمكنك الآن اختيار باقة الاستثمار المتوفرة حسب رصيدك!
+        </div>
+
+        <!-- Wallet Card -->
+        <div class="wallet-card">
+            <span class="wallet-balance-title">إجمالي رصيد المحفظة</span>
+            <div class="wallet-balance-amount"><span id="balanceDisplay">50</span> ج.م</div>
+            <div class="wallet-deposit">الوديعة المتاحة: <span id="depositDisplay">0</span> ج.م</div>
+        </div>
+
+        <!-- Egypt Flag Badge in Middle -->
+        <div class="egypt-badge-container">
+            <img src="https://flagcdn.com/w80/eg.png" class="egypt-flag-icon" alt="مصر">
+            <div style="font-size:11px; color:var(--text-muted); margin-top:3px; font-weight:700;">الفرع الرسمي المعتمد في جمهورية مصر العربية 🇪🇬</div>
+        </div>
+
+        <!-- Divider Bar (Profits Today) -->
+        <div class="profit-divider-bar">
+            <div>
+                <i class="fa-solid fa-chart-line"></i> 
+                <span>أرباح اليوم التقديرية</span>
             </div>
+            <div style="font-size:18px; font-weight:800;" id="todayProfitsDisplay">0 ج.م</div>
+        </div>
 
-            <div class="section-title">
-                <i class="fa-solid fa-crown" style="color: var(--accent);"></i>
-                <span>باقات الاستثمار (عائد يومي 10%)</span>
-            </div>
-
-            <div class="packages-list">
-                <div class="package-item">
-                    <div class="package-info">
-                        <h4>باقة المبتدئين (VIP 1)</h4>
-                        <p>عائد يومي: 30 ج.م</p>
-                    </div>
-                    <div class="package-price-action">
-                        <div class="price">300 ج.م</div>
-                        <button onclick="subscribePackage(300, 'VIP 1')">اشتراك</button>
-                    </div>
-                </div>
-
-                <div class="package-item">
-                    <div class="package-info">
-                        <h4>الباقة الفضية (VIP 2)</h4>
-                        <p>عائد يومي: 100 ج.م</p>
-                    </div>
-                    <div class="package-price-action">
-                        <div class="price">1,000 ج.م</div>
-                        <button onclick="subscribePackage(1000, 'VIP 2')">اشتراك</button>
-                    </div>
-                </div>
-
-                <div class="package-item">
-                    <div class="package-info">
-                        <h4>الباقة الذهبية (VIP 3)</h4>
-                        <p>عائد يومي: 250 ج.م</p>
-                    </div>
-                    <div class="package-price-action">
-                        <div class="price">2,500 ج.م</div>
-                        <button onclick="subscribePackage(2500, 'VIP 3')">اشتراك</button>
-                    </div>
-                </div>
-
-                <div class="package-item">
-                    <div class="package-info">
-                        <h4>الباقة الماسّية (VIP 4)</h4>
-                        <p>عائد يومي: 400 ج.م</p>
-                    </div>
-                    <div class="package-price-action">
-                        <div class="price">4,000 ج.م</div>
-                        <button onclick="subscribePackage(4000, 'VIP 4')">اشتراك</button>
-                    </div>
-                </div>
-
-                <div class="package-item">
-                    <div class="package-info">
-                        <h4>باقة كبار المستثمرين (VIP 5)</h4>
-                        <p>عائد يومي: 600 ج.م</p>
-                    </div>
-                    <div class="package-price-action">
-                        <div class="price">6,000 ج.م</div>
-                        <button onclick="subscribePackage(6000, 'VIP 5')">اشتراك</button>
-                    </div>
-                </div>
-
-                <div class="package-item">
-                    <div class="package-info">
-                        <h4>الباقة النخبوية (VIP 6)</h4>
-                        <p>عائد يومي: 900 ج.م</p>
-                    </div>
-                    <div class="package-price-action">
-                        <div class="price">9,000 ج.م</div>
-                        <button onclick="subscribePackage(9000, 'VIP 6')">اشتراك</button>
-                    </div>
-                </div>
-
-                <div class="package-item">
-                    <div class="package-info">
-                        <h4>الباقة الملكية (VIP 7)</h4>
-                        <p>عائد يومي: 1,200 ج.م</p>
-                    </div>
-                    <div class="package-price-action">
-                        <div class="price">12,000 ج.م</div>
-                        <button onclick="subscribePackage(12000, 'VIP 7')">اشتراك</button>
-                    </div>
-                </div>
+        <!-- Moving Ticker Notifications Bar -->
+        <div class="ticker-container">
+            <div class="ticker-text" id="tickerText">
+                🚀 تم انضمام مستخدم جديد برقم: 010****5821 | 🎉 ألف مبروك للمستخدم 012****3091 حصوله على جائزة السحب اليومي بقيمة 200 ج.م! | 💎 انضمام مستخدم جديد للباقة الفضية برقم: 015****8824
             </div>
         </div>
 
-        <!-- TAB 2: TASKS -->
-        <div id="tabTasks" class="tab-content">
-            <div class="section-title">
-                <i class="fa-solid fa-list-check" style="color: var(--secondary);"></i>
-                <span>المهام اليومية التسوقية (5 مهام)</span>
+        <!-- Packages List -->
+        <div style="font-size:15px; font-weight:700; padding: 0 15px; margin-bottom:10px;">
+            <i class="fa-solid fa-crown" style="color: var(--accent);"></i>
+            <span>باقات الاستثمار المتاحة (عائد يومي 10%)</span>
+        </div>
+
+        <div class="packages-list">
+            <div class="package-item">
+                <div class="package-info">
+                    <h4>باقة المبتدئين (VIP 1)</h4>
+                    <p>العائد اليومي: 30 ج.م</p>
+                </div>
+                <div class="package-price-action">
+                    <div class="price">300 ج.م</div>
+                    <button onclick="subscribeUserPackage(300, 'VIP 1')">اشتراك بالباقة</button>
+                </div>
             </div>
-            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">قيم المنتجات لإضافة العمولات إلى رصيدك.</p>
 
-            <div id="tasksContainer">
-                <div class="task-card" id="task1">
-                    <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=150" alt="Phone">
-                    <div style="flex:1;">
-                        <h4 style="font-size:13px; margin-bottom:2px;">تقييم هاتف ذكي حديث</h4>
-                        <p style="font-size:11px; color:var(--secondary);">المكافأة: +10 ج.م</p>
-                        <button class="task-btn" onclick="completeTask(1, 10)">إنجاز المهمة</button>
-                    </div>
+            <div class="package-item">
+                <div class="package-info">
+                    <h4>الباقة الفضية (VIP 2)</h4>
+                    <p>العائد اليومي: 100 ج.م</p>
                 </div>
-
-                <div class="task-card" id="task2">
-                    <img src="https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=150" alt="Charger">
-                    <div style="flex:1;">
-                        <h4 style="font-size:13px; margin-bottom:2px;">تقييم شاحن متنقل سريع</h4>
-                        <p style="font-size:11px; color:var(--secondary);">المكافأة: +10 ج.م</p>
-                        <button class="task-btn" onclick="completeTask(2, 10)">إنجاز المهمة</button>
-                    </div>
+                <div class="package-price-action">
+                    <div class="price">1,000 ج.م</div>
+                    <button onclick="subscribeUserPackage(1000, 'VIP 2')">اشتراك بالباقة</button>
                 </div>
+            </div>
 
-                <div class="task-card" id="task3">
-                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=150" alt="Headphones">
-                    <div style="flex:1;">
-                        <h4 style="font-size:13px; margin-bottom:2px;">تقييم سماعات لاسلكية</h4>
-                        <p style="font-size:11px; color:var(--secondary);">المكافأة: +15 ج.م</p>
-                        <button class="task-btn" onclick="completeTask(3, 15)">إنجاز المهمة</button>
-                    </div>
+            <div class="package-item">
+                <div class="package-info">
+                    <h4>الباقة الذهبية (VIP 3)</h4>
+                    <p>العائد اليومي: 250 ج.م</p>
                 </div>
-
-                <div class="task-card" id="task4">
-                    <img src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=150" alt="Tablet">
-                    <div style="flex:1;">
-                        <h4 style="font-size:13px; margin-bottom:2px;">تقييم جهاز لوحي محمول</h4>
-                        <p style="font-size:11px; color:var(--secondary);">المكافأة: +20 ج.م</p>
-                        <button class="task-btn" onclick="completeTask(4, 20)">إنجاز المهمة</button>
-                    </div>
+                <div class="package-price-action">
+                    <div class="price">2,500 ج.م</div>
+                    <button onclick="subscribeUserPackage(2500, 'VIP 3')">اشتراك بالباقة</button>
                 </div>
+            </div>
 
-                <div class="task-card" id="task5">
-                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=150" alt="Watch">
-                    <div style="flex:1;">
-                        <h4 style="font-size:13px; margin-bottom:2px;">تقييم ساعة ذكية رياضية</h4>
-                        <p style="font-size:11px; color:var(--secondary);">المكافأة: +15 ج.م</p>
-                        <button class="task-btn" onclick="completeTask(5, 15)">إنجاز المهمة</button>
-                    </div>
+            <div class="package-item">
+                <div class="package-info">
+                    <h4>الباقة الماسّية (VIP 4)</h4>
+                    <p>العائد اليومي: 400 ج.م</p>
+                </div>
+                <div class="package-price-action">
+                    <div class="price">4,000 ج.م</div>
+                    <button onclick="subscribeUserPackage(4000, 'VIP 4')">اشتراك بالباقة</button>
+                </div>
+            </div>
+
+            <div class="package-item">
+                <div class="package-info">
+                    <h4>باقة كبار المستثمرين (VIP 5)</h4>
+                    <p>العائد اليومي: 600 ج.م</p>
+                </div>
+                <div class="package-price-action">
+                    <div class="price">6,000 ج.م</div>
+                    <button onclick="subscribeUserPackage(6000, 'VIP 5')">اشتراك بالباقة</button>
+                </div>
+            </div>
+
+            <div class="package-item">
+                <div class="package-info">
+                    <h4>الباقة النخبوية (VIP 6)</h4>
+                    <p>العائد اليومي: 900 ج.م</p>
+                </div>
+                <div class="package-price-action">
+                    <div class="price">9,000 ج.م</div>
+                    <button onclick="subscribeUserPackage(9000, 'VIP 6')">اشتراك بالباقة</button>
+                </div>
+            </div>
+
+            <div class="package-item">
+                <div class="package-info">
+                    <h4>الباقة الملكية (VIP 7)</h4>
+                    <p>العائد اليومي: 1,200 ج.م</p>
+                </div>
+                <div class="package-price-action">
+                    <div class="price">12,000 ج.م</div>
+                    <button onclick="subscribeUserPackage(12000, 'VIP 7')">اشتراك بالباقة</button>
                 </div>
             </div>
         </div>
@@ -331,67 +335,17 @@
         <a href="https://t.me/tasawwoq_plus" target="_blank" class="floating-support">
             <i class="fa-brands fa-telegram"></i>
         </a>
-
-        <nav class="bottom-nav">
-            <div class="nav-link active" onclick="switchTab('tabHome', this)">
-                <i class="fa-solid fa-house"></i>
-                <span>الرئيسية</span>
-            </div>
-            <div class="nav-link" onclick="switchTab('tabTasks', this)">
-                <i class="fa-solid fa-tasks"></i>
-                <span>المهام اليومية</span>
-            </div>
-        </nav>
     </div>
 
-    <!-- MODAL: ADMIN PANEL -->
-    <div id="adminModal" class="modal">
-        <div class="modal-content">
-            <span style="position:absolute; top:12px; left:12px; cursor:pointer;" onclick="closeModal('adminModal')">&times;</span>
-            <h3 style="font-size:16px; margin-bottom:12px; color:var(--accent);"><i class="fa-solid fa-shield-halved"></i> لوحة تحكم صاحب الشركة</h3>
-            
-            <h4 style="font-size:13px; margin-bottom:8px; color:var(--primary);">👥 قائمة المستخدمين المسجلين:</h4>
-            <div id="adminUsersList" style="max-height:180px; overflow-y:auto; margin-bottom:15px;"></div>
-
-            <hr style="border:0; border-top:1px solid #334155; margin:10px 0;">
-
-            <h4 style="font-size:13px; margin-bottom:8px; color:var(--secondary);">💸 طلبات السحب المعلقة:</h4>
-            <div id="adminWithdrawList" style="max-height:180px; overflow-y:auto;"></div>
-        </div>
-    </div>
-
-    <!-- MODAL: Profile -->
-    <div id="profileModal" class="modal">
-        <div class="modal-content">
-            <span style="position:absolute; top:12px; left:12px; cursor:pointer;" onclick="closeModal('profileModal')">&times;</span>
-            <h3 style="font-size:16px; margin-bottom:12px;"><i class="fa-solid fa-user-gear"></i> تعديل الحساب الشخصي</h3>
-            <label style="font-size:12px;">تعديل الاسم:</label>
-            <input type="text" id="editNameInput" placeholder="اكتب اسمك الجديد">
-            <button class="btn-main" onclick="saveProfile()">حفظ التعديلات</button>
-        </div>
-    </div>
-
-    <!-- MODAL: Withdraw -->
-    <div id="withdrawModal" class="modal">
-        <div class="modal-content">
-            <span style="position:absolute; top:12px; left:12px; cursor:pointer;" onclick="closeModal('withdrawModal')">&times;</span>
-            <h3 style="font-size:16px; margin-bottom:12px;"><i class="fa-solid fa-money-bill-transfer"></i> طلب سحب الأرباح</h3>
-            <p style="font-size:11px; color:var(--accent); margin-bottom:8px;">💡 شرط السحب: يجب أن تكون مشتركاً في إحدى باقات VIP الاستثمارية.</p>
-            <input type="text" id="withdrawPhoneInput" placeholder="رقم المحفظة (فودافون كاش)">
-            <input type="number" id="withdrawAmountInput" placeholder="المبلغ المراد سحبه">
-            <button class="btn-main" onclick="submitWithdrawRequest()">تأكيد السحب للإدارة</button>
-        </div>
-    </div>
-
+    <!-- Script Logic -->
     <script>
         const ADMIN_PHONE = "01032315526";
 
         let dbUsers = JSON.parse(localStorage.getItem('tasawwoq_users')) || {
-            [ADMIN_PHONE]: { name: "صاحب الشركة (الأدمن)", balance: 10000, package: "VIP 7", role: "admin", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100" }
+            [ADMIN_PHONE]: { name: "صاحب الشركة (الأدمن)", balance: 10000, deposit: 10000, package: "VIP 7", role: "admin", notified: false }
         };
 
         let currentPhone = "";
-        let withdrawRequests = JSON.parse(localStorage.getItem('tasawwoq_withdraws')) || [];
 
         function showScreen(screenId) {
             document.getElementById('loginScreen').style.display = 'none';
@@ -402,15 +356,15 @@
         function processLogin() {
             const phone = document.getElementById('loginPhone').value.trim();
             if(!phone) { alert('يرجى إدخال رقم الهاتف'); return; }
-            
-            // تسجيل تلقائي أو دخول مباشر
+
             if(!dbUsers[phone]) {
                 dbUsers[phone] = {
                     name: (phone === ADMIN_PHONE) ? "صاحب الشركة" : "مستخدم " + phone.slice(-4),
                     balance: 50,
-                    package: (phone === ADMIN_PHONE) ? "VIP 7" : "مجاني",
+                    deposit: 0,
+                    package: (phone === ADMIN_PHONE) ? "VIP 7" : "غير مشترك",
                     role: (phone === ADMIN_PHONE) ? "admin" : "user",
-                    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100"
+                    notified: false
                 };
                 localStorage.setItem('tasawwoq_users', JSON.stringify(dbUsers));
             }
@@ -427,9 +381,10 @@
             dbUsers[phone] = {
                 name: name,
                 balance: 50,
-                package: "مجاني",
+                deposit: 0,
+                package: "غير مشترك",
                 role: (phone === ADMIN_PHONE) ? "admin" : "user",
-                image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100"
+                notified: false
             };
 
             localStorage.setItem('tasawwoq_users', JSON.stringify(dbUsers));
@@ -454,142 +409,83 @@
         function updateUI() {
             const user = dbUsers[currentPhone];
             if(!user) return;
+
             document.getElementById('balanceDisplay').innerText = user.balance;
+            document.getElementById('depositDisplay').innerText = user.deposit;
             document.getElementById('headerUserName').innerText = user.name;
-            document.getElementById('headerUserImg').src = user.image;
-            document.getElementById('editNameInput').value = user.name;
-        }
 
-        function switchTab(tabId, element) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            element.classList.add('active');
-        }
-
-        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-
-        function openAdminModal() {
-            renderAdminUsers();
-            renderAdminWithdraws();
-            openModal('adminModal');
-        }
-
-        function saveProfile() {
-            const newName = document.getElementById('editNameInput').value.trim();
-            if(newName) dbUsers[currentPhone].name = newName;
-            localStorage.setItem('tasawwoq_users', JSON.stringify(dbUsers));
-            updateUI();
-            closeModal('profileModal');
-            alert('تم تحديث البيانات بنجاح!');
-        }
-
-        function subscribePackage(price, name) {
-            alert(`طلب الاشتراك في ${name} بقيمة ${price} ج.م قيد المراجعة. تواصل مع الدعم الفني عبر تليجرام لإتمام الإيداع وتفعيل الباقة.`);
-            window.open('https://t.me/tasawwoq_plus', '_blank');
-        }
-
-        function completeTask(taskId, reward) {
-            const taskCard = document.getElementById('task' + taskId);
-            if(taskCard.classList.contains('completed')) {
-                alert('لقد قمت بإنجاز هذه المهمة مسبقاً اليوم!');
-                return;
-            }
-            dbUsers[currentPhone].balance += reward;
-            localStorage.setItem('tasawwoq_users', JSON.stringify(dbUsers));
-            taskCard.classList.add('completed');
-            taskCard.querySelector('.task-btn').innerText = 'تم الإنجاز ✓';
-            taskCard.querySelector('.task-btn').style.background = '#64748b';
-            updateUI();
-            alert(`🎉 مبروك! تمت إنجاز المهمة بنجاح وتمت إضافة ${reward} ج.م لرصيدك.`);
-        }
-
-        function submitWithdrawRequest() {
-            const user = dbUsers[currentPhone];
-            
-            // شرط الاشتراك في باقة للسحب
-            if(user.package === "مجاني" || !user.package) {
-                alert('⚠️ عذراً! لا يمكن طلب السحب في الباقة المجانية. يرجى الاشتراك في إحدى باقات VIP الاستثمارية أولاً لتفعيل خاصية السحب.');
-                return;
+            // Show Deposit Success Notification if charged
+            if(user.notified) {
+                document.getElementById('depositAlert').style.display = 'block';
+            } else {
+                document.getElementById('depositAlert').style.display = 'none';
             }
 
-            const phone = document.getElementById('withdrawPhoneInput').value.trim();
-            const amount = parseFloat(document.getElementById('withdrawAmountInput').value);
-
-            if(!phone || !amount) { alert('يرجى إدخال بيانات السحب الكافية'); return; }
-            if(amount > user.balance) { alert('رصيدك غير كافٍ لإتمام عملية السحب!'); return; }
-
-            withdrawRequests.push({
-                userPhone: currentPhone,
-                userName: user.name,
-                userPackage: user.package,
-                totalBalance: user.balance,
-                walletPhone: phone,
-                withdrawAmount: amount,
-                time: new Date().toLocaleString()
-            });
-
-            localStorage.setItem('tasawwoq_withdraws', JSON.stringify(withdrawRequests));
-            user.balance -= amount;
-            localStorage.setItem('tasawwoq_users', JSON.stringify(dbUsers));
-            updateUI();
-            closeModal('withdrawModal');
-            alert('تم إرسال طلب السحب إلى إدارة المنصة بنجاح!');
+            // Calculate Today Profit
+            if(user.package && user.package !== "غير مشترك") {
+                document.getElementById('todayProfitsDisplay').innerText = (user.deposit * 0.10) + " ج.م";
+            } else {
+                document.getElementById('todayProfitsDisplay').innerText = "0 ج.م";
+            }
         }
 
-        // Admin Rendering
-        function renderAdminUsers() {
-            const listDiv = document.getElementById('adminUsersList');
+        function openAdminPanel() {
+            renderAdminTable();
+            document.getElementById('adminScreen').style.display = 'flex';
+        }
+
+        function closeAdminPanel() {
+            document.getElementById('adminScreen').style.display = 'none';
+            updateUI();
+        }
+
+        function renderAdminTable() {
+            const tbody = document.getElementById('adminUsersTableBody');
             let html = "";
             for(let ph in dbUsers) {
                 const u = dbUsers[ph];
-                const badgeClass = (u.package && u.package !== "مجاني") ? "badge-vip" : "badge-free";
-                html += `<div class="admin-item-card">
-                    <b>الاسم:</b> ${u.name} | <b>الرقم:</b> ${ph}<br>
-                    <b>الرصيد:</b> ${u.balance} ج.م | <b>الباقة:</b> <span class="${badgeClass}">${u.package || 'مجاني'}</span>
-                    <br><button onclick="quickAddBalance('${ph}')" style="background:var(--primary); color:#fff; border:none; padding:3px 8px; border-radius:4px; margin-top:4px; cursor:pointer;">تعديل الرصيد ✏️</button>
-                </div>`;
+                html += `<tr>
+                    <td><b>${u.name}</b></td>
+                    <td>${ph}</td>
+                    <td>${u.balance}</td>
+                    <td>${u.deposit}</td>
+                    <td><span style="background:var(--accent); color:#000; padding:2px 6px; border-radius:4px; font-weight:bold;">${u.package || 'غير مشترك'}</span></td>
+                    <td>
+                        <button onclick="adminChargeUser('${ph}')" style="background:var(--secondary); color:#fff; border:none; padding:4px 8px; border-radius:6px; cursor:pointer;">شحن الوديعة 💳</button>
+                    </td>
+                </tr>`;
             }
-            listDiv.innerHTML = html;
+            tbody.innerHTML = html;
         }
 
-        function renderAdminWithdraws() {
-            const listDiv = document.getElementById('adminWithdrawList');
-            if(withdrawRequests.length === 0) {
-                listDiv.innerHTML = "<p style='font-size:12px; color:var(--text-muted);'>لا توجد طلبات سحب معلقة حالياً.</p>";
+        function adminChargeUser(ph) {
+            const amount = prompt(`أدخل مبلغ الشحن للوديعة الخاص بالمستخدم ${ph}:`, "300");
+            if(amount !== null && !isNaN(parseFloat(amount))) {
+                dbUsers[ph].deposit += parseFloat(amount);
+                dbUsers[ph].balance += parseFloat(amount);
+                dbUsers[ph].notified = true; // إظهار الإشعار عند دخول المستخدم
+                localStorage.setItem('tasawwoq_users', JSON.stringify(dbUsers));
+                renderAdminTable();
+                alert(`تم شحن ${amount} ج.م للوديعة والحساب بنجاح! وستصل الرسالة للمستخدم.`);
+            }
+        }
+
+        function subscribeUserPackage(price, packageName) {
+            const user = dbUsers[currentPhone];
+
+            if(user.deposit < price) {
+                alert(`عذراً! رصيد الوديعة لديك (${user.deposit} ج.م) غير كافٍ للاشتراك في ${packageName} بقيمة ${price} ج.م. يرجى التواصل مع الدعم لطلب شحن الوديعة.`);
+                window.open('https://t.me/tasawwoq_plus', '_blank');
                 return;
             }
 
-            let html = "";
-            withdrawRequests.forEach((req, idx) => {
-                html += `<div class="admin-item-card" style="border-color:var(--accent);">
-                    <b>الاسم:</b> ${req.userName} (${req.userPhone})<br>
-                    <b>الباقة:</b> <span class="badge-vip">${req.userPackage}</span><br>
-                    <b>الرصيد الكلي:</b> ${req.totalBalance} ج.م | <b>المبلغ المطلوب:</b> <span style="color:var(--secondary); font-weight:bold;">${req.withdrawAmount} ج.م</span><br>
-                    <b>فودافون كاش:</b> ${req.walletPhone}<br>
-                    <button onclick="resolveWithdraw(${idx})" style="background:var(--secondary); color:#fff; border:none; padding:4px 8px; border-radius:4px; margin-top:5px; cursor:pointer;">تأكيد التحويل ✓</button>
-                </div>`;
-            });
-            listDiv.innerHTML = html;
-        }
+            user.deposit -= price;
+            user.package = packageName;
+            user.notified = false; // إخفاء التنبيه بعد الاشتراك
 
-        function quickAddBalance(ph) {
-            const amount = prompt(`أدخل المبلغ المراد إضافته (أو خصمه بالسالب) لرصيد ${ph}:`, "100");
-            if(amount !== null && !isNaN(parseFloat(amount))) {
-                dbUsers[ph].balance += parseFloat(amount);
-                localStorage.setItem('tasawwoq_users', JSON.stringify(dbUsers));
-                renderAdminUsers();
-                if(ph === currentPhone) updateUI();
-                alert('تم تحديث الرصيد بنجاح!');
-            }
-        }
-
-        function resolveWithdraw(index) {
-            withdrawRequests.splice(index, 1);
-            localStorage.setItem('tasawwoq_withdraws', JSON.stringify(withdrawRequests));
-            renderAdminWithdraws();
-            alert('تم تأكيد طلب السحب وإزالته من القائمة بنجاح!');
+            localStorage.setItem('tasawwoq_users', JSON.stringify(dbUsers));
+            updateUI();
+            alert(`🎉 مبروك! تم اشتراكك بنجاح في ${packageName}. تم تسجيل الاشتراك في لوحة التحكم وتفعيل العائد اليومي!`);
         }
     </script>
 </body>
