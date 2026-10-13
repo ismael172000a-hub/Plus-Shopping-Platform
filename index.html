@@ -15,9 +15,9 @@
             --secondary: #10b981;
             --accent: #f59e0b;
             --bg: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.88);
+            --card-bg: rgba(30, 41, 59, 0.92);
             --text: #f8fafc;
-            --text-muted: #cbd5e1;
+            --text-muted: #94a3b8;
         }
 
         * {
@@ -30,430 +30,488 @@
         body {
             background-color: var(--bg);
             color: var(--text);
-            padding-bottom: 80px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Fullscreen Image Login Overlay */
-        #loginScreen {
+        /* Fullscreen Screens */
+        .fullscreen-screen {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.85)), 
+            top: 0; left: 0; width: 100%; height: 100vh;
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.95)), 
                         url('https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
             z-index: 2000;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 15px;
+            overflow-y: auto;
         }
 
-        .login-card {
+        .auth-card {
             background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(14px);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 24px;
-            padding: 35px 25px;
+            border-radius: 20px;
+            padding: 25px 20px;
             width: 100%;
             max-width: 420px;
             text-align: center;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
         }
 
-        .login-card .logo-large {
-            font-size: 30px;
-            font-weight: 800;
+        .auth-card h2 {
             color: #60a5fa;
+            font-size: 24px;
             margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            text-shadow: 0 2px 10px rgba(37, 99, 235, 0.5);
         }
 
-        .login-card input {
+        .auth-card p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        input, select {
             width: 100%;
-            padding: 14px 18px;
-            margin: 10px 0;
-            background: rgba(15, 23, 42, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
+            padding: 12px;
+            margin: 8px 0;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 10px;
             color: #fff;
-            font-size: 15px;
+            font-size: 14px;
             text-align: center;
             outline: none;
-            transition: 0.3s;
         }
 
-        .login-card input:focus {
-            border-color: #3b82f6;
-            box-shadow: 0 0 12px rgba(59, 130, 246, 0.5);
-        }
-
-        .login-btn {
-            width: 100%;
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
-            color: #fff;
-            border: none;
-            padding: 14px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 12px;
-            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.4);
-            transition: 0.2s;
-        }
-
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 24px rgba(37, 99, 235, 0.6);
-        }
-
-        /* Header */
-        header {
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #334155;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .logo {
-            font-size: 20px;
-            font-weight: 800;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .user-badge {
-            background: rgba(37, 99, 235, 0.2);
-            border: 1px solid var(--primary);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .container {
-            padding: 15px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Banner Card */
-        .hero-card {
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
-        }
-
-        .hero-card h2 { font-size: 22px; margin-bottom: 5px; }
-        .hero-card p { font-size: 14px; opacity: 0.9; }
-
-        .balance-box {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            padding: 12px;
-            margin-top: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .balance-amount {
-            font-size: 24px;
-            font-weight: 800;
-            color: #fff;
-        }
-
-        /* Action Buttons */
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .action-btn {
-            background: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 12px;
-            padding: 12px 5px;
-            text-align: center;
-            cursor: pointer;
-            color: var(--text);
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-        }
-
-        .action-btn i {
-            font-size: 20px;
-            color: var(--primary);
-        }
-
-        /* Section Title */
-        .section-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin: 20px 0 12px 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* Packages Grid */
-        .packages-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-        }
-
-        .package-card {
-            background: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 16px;
-            padding: 18px;
-            position: relative;
-        }
-
-        .package-badge {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: var(--accent);
-            color: #000;
-            font-weight: 700;
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 11px;
-        }
-
-        .package-price {
-            font-size: 26px;
-            font-weight: 800;
-            color: var(--secondary);
-            margin: 8px 0;
-        }
-
-        .btn-buy {
+        .btn-main {
             width: 100%;
             background: var(--primary);
             color: #fff;
             border: none;
-            padding: 10px;
+            padding: 12px;
             border-radius: 10px;
+            font-size: 15px;
             font-weight: 700;
             cursor: pointer;
             margin-top: 10px;
+            transition: 0.2s;
         }
 
-        /* Modal Styles */
+        .btn-main:hover { background: var(--primary-dark); }
+
+        .switch-text {
+            margin-top: 15px;
+            font-size: 13px;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+        .switch-text span { color: #60a5fa; font-weight: 700; text-decoration: underline; }
+
+        /* App Dashboard */
+        #appContainer {
+            display: none;
+            flex: 1;
+            flex-direction: column;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding-bottom: 70px;
+        }
+
+        header {
+            background: #1e293b;
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #334155;
+        }
+
+        .user-profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid #334155;
+            padding: 5px 12px;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+
+        .user-profile-btn img {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--primary);
+        }
+
+        /* Tab Content */
+        .tab-content { display: none; padding: 15px; flex: 1; }
+        .tab-content.active { display: block; }
+
+        .hero-card {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 15px;
+            box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
+        }
+
+        .balance-box {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 15px 0 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Packages List */
+        .packages-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .package-item {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .package-info h4 { font-size: 15px; color: #fff; margin-bottom: 3px; }
+        .package-info p { font-size: 12px; color: var(--secondary); font-weight: 700; }
+
+        .package-price-action { text-align: left; }
+        .package-price-action .price { font-size: 16px; font-weight: 800; color: var(--accent); margin-bottom: 5px; }
+        .package-price-action button {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* Tasks List */
+        .task-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 15px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .task-card.completed { opacity: 0.6; border-color: var(--secondary); }
+
+        .task-btn {
+            background: var(--secondary);
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        /* Bottom Navigation Bar */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0; left: 0; width: 100%;
+            background: #1e293b;
+            border-top: 1px solid #334155;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 100;
+        }
+
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+        }
+
+        .nav-link.active { color: var(--primary); }
+        .nav-link i { font-size: 18px; }
+
+        /* Floating Support */
+        .floating-support {
+            position: fixed;
+            bottom: 65px;
+            left: 15px;
+            background: #0088cc;
+            color: #fff;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            box-shadow: 0 4px 12px rgba(0, 136, 204, 0.4);
+            z-index: 99;
+            text-decoration: none;
+        }
+
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
+            z-index: 3000;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 15px;
         }
-
         .modal-content {
             background: #1e293b;
             border-radius: 16px;
             padding: 20px;
             width: 100%;
-            max-width: 450px;
+            max-width: 400px;
             position: relative;
             border: 1px solid #334155;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            font-size: 20px;
-            cursor: pointer;
-            color: var(--text-muted);
-        }
-
-        /* Floating Support Button */
-        .floating-support {
-            position: fixed;
-            bottom: 20px;
-            left: 15px;
-            background: #0088cc;
-            color: #fff;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            box-shadow: 0 5px 15px rgba(0, 136, 204, 0.4);
-            z-index: 99;
-            text-decoration: none;
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. Fullscreen Image Login Overlay -->
-    <div id="loginScreen">
-        <div class="login-card">
-            <div class="logo-large">
-                <i class="fa-solid fa-cart-shopping"></i>
-                <span>تسوق بلس</span>
-            </div>
-            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">الفرع الرسمي المعتمد لشركة Tasawwoq Plus</p>
+    <!-- 1. LOGIN SCREEN -->
+    <div id="loginScreen" class="fullscreen-screen">
+        <div class="auth-card">
+            <h2>تسجيل الدخول</h2>
+            <p>أدخل بيانات حسابك للمتابعة وإدارة استثماراتك بأمان تضاهي أكبر المنصات العالمية.</p>
             
-            <input type="tel" id="loginPhone" placeholder="رقم الهاتف (مثال: 01012345678)">
+            <input type="tel" id="loginPhone" placeholder="رقم الهاتف">
             <input type="password" id="loginPass" placeholder="كلمة السر">
             
-            <button class="login-btn" onclick="handleLogin()">تسجيل الدخول / إنشاء حساب</button>
-            <p style="margin-top: 15px; font-size: 13px; color: var(--secondary); font-weight:700;">🎁 ستحصل على 50 ج.م هدية فور تسجيل الحساب</p>
+            <button class="btn-main" onclick="processLogin()">دخول</button>
+            
+            <div class="switch-text" onclick="showScreen('registerScreen')">
+                ليس لديك حساب؟ <span>إنشاء حساب جديد</span>
+            </div>
         </div>
     </div>
 
-    <!-- 2. Main Dashboard (Hidden Until Login) -->
-    <div id="mainDashboard" style="display: none;">
+    <!-- 2. REGISTER SCREEN -->
+    <div id="registerScreen" class="fullscreen-screen" style="display: none;">
+        <div class="auth-card">
+            <h2>إنشاء حساب جديد</h2>
+            <p>انضم إلينا الآن واحصل على <strong>50 ج.م هدية ترحيبية</strong> فوراً في رصيدك!</p>
+            
+            <input type="text" id="regName" placeholder="الاسم الكامل">
+            <input type="tel" id="regPhone" placeholder="رقم الهاتف">
+            <input type="password" id="regPass" placeholder="كلمة السر">
+            
+            <button class="btn-main" onclick="processRegister()">تسجيل حساب جديد</button>
+            
+            <div class="switch-text" onclick="showScreen('loginScreen')">
+                لديك حساب بالفعل؟ <span>تسجيل الدخول</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. MAIN APP DASHBOARD -->
+    <div id="appContainer">
         
         <!-- Header -->
         <header>
-            <div class="logo">
-                <i class="fa-solid fa-cart-shopping"></i>
-                <span>تسوق بلس</span>
+            <div style="font-size:18px; font-weight:800; color:var(--primary);">
+                <i class="fa-solid fa-cart-shopping"></i> تسوق بلس
             </div>
-            <div class="user-badge">
-                <i class="fa-solid fa-user"></i>
-                <span id="userPhoneDisplay">010XXXXXXX</span>
+            <div class="user-profile-btn" onclick="openModal('profileModal')">
+                <img id="headerUserImg" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" alt="Profile">
+                <span id="headerUserName" style="font-size:13px; font-weight:700;">المستخدم</span>
             </div>
         </header>
 
-        <div class="container">
-
-            <!-- Hero Card -->
+        <!-- TAB 1: HOME (Packages & Balance) -->
+        <div id="tabHome" class="tab-content active">
+            
             <div class="hero-card">
-                <h2>أهلاً بك في تسوق بلس 🚀</h2>
-                <p>الفرع الرسمي المعتمد لشركة Tasawwoq Plus</p>
+                <h2>مرحباً بك في تسوق بلس 🚀</h2>
+                <p style="font-size:12px; opacity:0.9;">الفرع الرسمي المعتمد لشركة Tasawwoq Plus (تكساس، الولايات المتحدة الأمريكية - تأسست 2018)</p>
                 <div class="balance-box">
                     <div>
-                        <span style="font-size: 12px; opacity: 0.8;">رصيدك الحالي</span>
-                        <div class="balance-amount"><span id="balanceDisplay">50</span> ج.م</div>
+                        <span style="font-size: 11px; opacity: 0.8;">رصيدك الحالي</span>
+                        <div style="font-size: 22px; font-weight: 800; color: #fff;"><span id="balanceDisplay">50</span> ج.م</div>
                     </div>
-                    <button onclick="openModal('withdrawModal')" style="background: #fff; color: var(--primary); border:none; padding: 8px 15px; border-radius: 8px; font-weight:700; cursor:pointer;">سحب الأرباح</button>
+                    <button onclick="openModal('withdrawModal')" style="background: #fff; color: var(--primary); border:none; padding: 6px 12px; border-radius: 8px; font-weight:700; cursor:pointer; font-size: 12px;">سحب أرباح</button>
                 </div>
             </div>
 
-            <!-- Quick Actions -->
-            <div class="quick-actions">
-                <div class="action-btn" onclick="claimDailyBonus()">
-                    <i class="fa-solid fa-gift" style="color: #f59e0b;"></i>
-                    <span>مكافأة يومية</span>
-                </div>
-                <div class="action-btn" onclick="openModal('referralModal')">
-                    <i class="fa-solid fa-users" style="color: #10b981;"></i>
-                    <span>دعوة أصدقاء</span>
-                </div>
-                <div class="action-btn" onclick="openModal('aboutModal')">
-                    <i class="fa-solid fa-shield-halved" style="color: #3b82f6;"></i>
-                    <span>عن المنصة</span>
-                </div>
-                <a href="https://t.me/tasawwoq_plus" target="_blank" class="action-btn">
-                    <i class="fa-brands fa-telegram" style="color: #0088cc;"></i>
-                    <span>خدمة العملاء</span>
-                </a>
-            </div>
-
-            <!-- Investment VIP Packages -->
             <div class="section-title">
                 <i class="fa-solid fa-crown" style="color: var(--accent);"></i>
-                <span>باقات الاستثمار والمهام (VIP)</span>
+                <span>شريط الباقات الاستثمارية (عائد يومي 10%)</span>
             </div>
 
-            <div class="packages-grid">
-                <!-- VIP 1 -->
-                <div class="package-card">
-                    <span class="package-badge">VIP 1</span>
-                    <h3>باقة المبتدئين</h3>
-                    <div class="package-price">300 <small style="font-size:14px;">ج.م</small></div>
-                    <p style="font-size:13px; color:var(--text-muted);">عائد يومي: 30 ج.م | 5 مهام يومية</p>
-                    <button class="btn-buy" onclick="buyPackage(300, 'VIP 1')">اشترك الآن</button>
+            <div class="packages-list">
+                <div class="package-item">
+                    <div class="package-info">
+                        <h4>باقة المبتدئين (VIP 1)</h4>
+                        <p>عائد يومي: 30 ج.م</p>
+                    </div>
+                    <div class="package-price-action">
+                        <div class="price">300 ج.م</div>
+                        <button onclick="subscribePackage(300, 'VIP 1')">اشتراك</button>
+                    </div>
                 </div>
 
-                <!-- VIP 2 -->
-                <div class="package-card">
-                    <span class="package-badge">VIP 2</span>
-                    <h3>الباقة الفضية</h3>
-                    <div class="package-price">1,000 <small style="font-size:14px;">ج.م</small></div>
-                    <p style="font-size:13px; color:var(--text-muted);">عائد يومي: 110 ج.م | 8 مهام يومية</p>
-                    <button class="btn-buy" onclick="buyPackage(1000, 'VIP 2')">اشترك الآن</button>
+                <div class="package-item">
+                    <div class="package-info">
+                        <h4>الباقة الفضية (VIP 2)</h4>
+                        <p>عائد يومي: 100 ج.م</p>
+                    </div>
+                    <div class="package-price-action">
+                        <div class="price">1,000 ج.م</div>
+                        <button onclick="subscribePackage(1000, 'VIP 2')">اشتراك</button>
+                    </div>
                 </div>
 
-                <!-- VIP 3 -->
-                <div class="package-card">
-                    <span class="package-badge">VIP 3</span>
-                    <h3>الباقة الذهبية</h3>
-                    <div class="package-price">2,500 <small style="font-size:14px;">ج.م</small></div>
-                    <p style="font-size:13px; color:var(--text-muted);">عائد يومي: 290 ج.م | 12 مهمة يومية</p>
-                    <button class="btn-buy" onclick="buyPackage(2500, 'VIP 3')">اشترك الآن</button>
+                <div class="package-item">
+                    <div class="package-info">
+                        <h4>الباقة الذهبية (VIP 3)</h4>
+                        <p>عائد يومي: 250 ج.م</p>
+                    </div>
+                    <div class="package-price-action">
+                        <div class="price">2,500 ج.م</div>
+                        <button onclick="subscribePackage(2500, 'VIP 3')">اشتراك</button>
+                    </div>
                 </div>
 
-                <!-- VIP 4 -->
-                <div class="package-card">
-                    <span class="package-badge">VIP 4</span>
-                    <h3>الباقة الماسّية</h3>
-                    <div class="package-price">4,000 <small style="font-size:14px;">ج.م</small></div>
-                    <p style="font-size:13px; color:var(--text-muted);">عائد يومي: 500 ج.م | 15 مهمة يومية</p>
-                    <button class="btn-buy" onclick="buyPackage(4000, 'VIP 4')">اشترك الآن</button>
+                <div class="package-item">
+                    <div class="package-info">
+                        <h4>الباقة الماسّية (VIP 4)</h4>
+                        <p>عائد يومي: 400 ج.م</p>
+                    </div>
+                    <div class="package-price-action">
+                        <div class="price">4,000 ج.م</div>
+                        <button onclick="subscribePackage(4000, 'VIP 4')">اشتراك</button>
+                    </div>
                 </div>
 
-                <!-- VIP 5 -->
-                <div class="package-card">
-                    <span class="package-badge">VIP 5</span>
-                    <h3>باقة كبار المستثمرين</h3>
-                    <div class="package-price">6,000 <small style="font-size:14px;">ج.م</small></div>
-                    <p style="font-size:13px; color:var(--text-muted);">عائد يومي: 800 ج.م | 20 مهمة يومية</p>
-                    <button class="btn-buy" onclick="buyPackage(6000, 'VIP 5')">اشترك الآن</button>
+                <div class="package-item">
+                    <div class="package-info">
+                        <h4>باقة كبار المستثمرين (VIP 5)</h4>
+                        <p>عائد يومي: 600 ج.م</p>
+                    </div>
+                    <div class="package-price-action">
+                        <div class="price">6,000 ج.م</div>
+                        <button onclick="subscribePackage(6000, 'VIP 5')">اشتراك</button>
+                    </div>
                 </div>
 
-                <!-- VIP 6 -->
-                <div class="package-card">
-                    <span class="package-badge">VIP 6</span>
-                    <h3>الباقة النخبوية</h3>
-                    <div class="package-price">9,000 <small style="font-size:14px;">ج.م</small></div>
-                    <p style="font-size:13px; color:var(--text-muted);">عائد يومي: 1,300 ج.م | 25 مهمة يومية</p>
-                    <button class="btn-buy" onclick="buyPackage(9000, 'VIP 6')">اشترك الآن</button>
+                <div class="package-item">
+                    <div class="package-info">
+                        <h4>الباقة النخبوية (VIP 6)</h4>
+                        <p>عائد يومي: 900 ج.م</p>
+                    </div>
+                    <div class="package-price-action">
+                        <div class="price">9,000 ج.م</div>
+                        <button onclick="subscribePackage(9000, 'VIP 6')">اشتراك</button>
+                    </div>
                 </div>
 
-                <!-- VIP 7 -->
-                <div class="package-card">
-                    <span class="package-badge">VIP 7</span>
-                    <h3>الباقة الملكية</h3>
-                    <div class="package-price">12,000 <small style="font-size:14px;">ج.م</small></div>
-                    <p style="font-size:13px; color:var(--text-muted);">عائد يومي: 1,800 ج.م | 30 مهمة يومية</p>
-                    <button class="btn-buy" onclick="buyPackage(12000, 'VIP 7')">اشترك الآن</button>
+                <div class="package-item">
+                    <div class="package-info">
+                        <h4>الباقة الملكية (VIP 7)</h4>
+                        <p>عائد يومي: 1,200 ج.م</p>
+                    </div>
+                    <div class="package-price-action">
+                        <div class="price">12,000 ج.م</div>
+                        <button onclick="subscribePackage(12000, 'VIP 7')">اشتراك</button>
+                    </div>
                 </div>
             </div>
 
+        </div>
+
+        <!-- TAB 2: TASKS (5 Daily Tasks) -->
+        <div id="tabTasks" class="tab-content">
+            <div class="section-title">
+                <i class="fa-solid fa-list-check" style="color: var(--secondary);"></i>
+                <span>المهام اليومية التسوقية (5 مهام متجددة)</span>
+            </div>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">اضغط على إنجاز المهمة لتقييم المنتج التسويقي وإضافة العمولات لرصيدك.</p>
+
+            <div id="tasksContainer">
+                <!-- Task 1 -->
+                <div class="task-card" id="task1">
+                    <div>
+                        <h4 style="font-size:14px; margin-bottom:3px;"><i class="fa-solid fa-mobile-screen"></i> تقييم هاتف ذكي حديث</h4>
+                        <p style="font-size:11px; color:var(--text-muted);">المكافأة: +10 ج.م</p>
+                    </div>
+                    <button class="task-btn" onclick="completeTask(1, 10)">إنجاز المهمة</button>
+                </div>
+
+                <!-- Task 2 -->
+                <div class="task-card" id="task2">
+                    <div>
+                        <h4 style="font-size:14px; margin-bottom:3px;"><i class="fa-solid fa-bolt"></i> تقييم شاحن متنقل سريع</h4>
+                        <p style="font-size:11px; color:var(--text-muted);">المكافأة: +10 ج.م</p>
+                    </div>
+                    <button class="task-btn" onclick="completeTask(2, 10)">إنجاز المهمة</button>
+                </div>
+
+                <!-- Task 3 -->
+                <div class="task-card" id="task3">
+                    <div>
+                        <h4 style="font-size:14px; margin-bottom:3px;"><i class="fa-solid fa-headphones"></i> تقييم سماعات لاسلكية</h4>
+                        <p style="font-size:11px; color:var(--text-muted);">المكافأة: +15 ج.م</p>
+                    </div>
+                    <button class="task-btn" onclick="completeTask(3, 15)">إنجاز المهمة</button>
+                </div>
+
+                <!-- Task 4 -->
+                <div class="task-card" id="task4">
+                    <div>
+                        <h4 style="font-size:14px; margin-bottom:3px;"><i class="fa-solid fa-laptop"></i> تقييم جهاز لوحي محمول</h4>
+                        <p style="font-size:11px; color:var(--text-muted);">المكافأة: +20 ج.م</p>
+                    </div>
+                    <button class="task-btn" onclick="completeTask(4, 20)">إنجاز المهمة</button>
+                </div>
+
+                <!-- Task 5 -->
+                <div class="task-card" id="task5">
+                    <div>
+                        <h4 style="font-size:14px; margin-bottom:3px;"><i class="fa-solid fa-clock"></i> تقييم ساعة ذكية رياضية</h4>
+                        <p style="font-size:11px; color:var(--text-muted);">المكافأة: +15 ج.م</p>
+                    </div>
+                    <button class="task-btn" onclick="completeTask(5, 15)">إنجاز المهمة</button>
+                </div>
+            </div>
         </div>
 
         <!-- Floating Telegram Support Button -->
@@ -461,112 +519,132 @@
             <i class="fa-brands fa-telegram"></i>
         </a>
 
-        <!-- Modal: About Us -->
-        <div id="aboutModal" class="modal">
-            <div class="modal-content">
-                <span class="close-btn" onclick="closeModal('aboutModal')">&times;</span>
-                <h3 style="margin-bottom: 12px; color: var(--primary);"><i class="fa-solid fa-shield-halved"></i> عن منصة تسوق بلس</h3>
-                <p style="font-size:14px; line-height: 1.7; color: var(--text-muted);">
-                    تأسست شركة <strong>Tasawwoq Plus LLC</strong> العالمية في ولاية تكساس، الولايات المتحدة الأمريكية عام <strong>2018</strong> كواحدة من أكبر المنصات المتخصصة في التسويق الإلكتروني وتقييم المنتجات برأس مال يتجاوز 10 ملايين دولار.<br><br>
-                    وفي إطار التوسع العالمي، تم إطلاق <strong>فرع مصر والشرق الأوسط</strong> لتقديم أسهل وأرقى أنظمة العمل الذاتي والاستثماري السريع.<br><br>
-                    🔒 **الأمان والضمان:** تتميز منصتنا بتشفير بيانات من الدرجة العسكرية وضمان كلي لعمليات السحب والإيداع السريعة عبر المحافظ الإلكترونية.
-                </p>
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <div class="nav-link active" onclick="switchTab('tabHome', this)">
+                <i class="fa-solid fa-house"></i>
+                <span>الرئيسية</span>
             </div>
-        </div>
-
-        <!-- Modal: Withdraw Request -->
-        <div id="withdrawModal" class="modal">
-            <div class="modal-content">
-                <span class="close-btn" onclick="closeModal('withdrawModal')">&times;</span>
-                <h3><i class="fa-solid fa-money-bill-transfer"></i> طلب سحب الأرباح</h3>
-                <br>
-                <label>رقم محفظة فودافون كاش / أورنج / اتصالات:</label>
-                <input type="text" id="withdrawPhone" placeholder="010XXXXXXXX" style="width:100%; padding:10px; margin:10px 0; background:#0f172a; border:1px solid #334155; color:#fff; border-radius:8px;">
-                
-                <label>المبلغ المراد سحبه (ج.م):</label>
-                <input type="number" id="withdrawAmount" placeholder="الحد الأدنى 100 ج.م" style="width:100%; padding:10px; margin:10px 0; background:#0f172a; border:1px solid #334155; color:#fff; border-radius:8px;">
-                
-                <button class="btn-buy" onclick="processWithdraw()">تأكيد طلب السحب</button>
+            <div class="nav-link" onclick="switchTab('tabTasks', this)">
+                <i class="fa-solid fa-tasks"></i>
+                <span>المهام اليومية</span>
             </div>
-        </div>
-
-        <!-- Modal: Referral -->
-        <div id="referralModal" class="modal">
-            <div class="modal-content">
-                <span class="close-btn" onclick="closeModal('referralModal')">&times;</span>
-                <h3><i class="fa-solid fa-user-plus"></i> نظام الإحالة ودعوة الأصدقاء</h3>
-                <br>
-                <p style="font-size:14px; color:var(--text-muted); margin-bottom:10px;">احصل على 10 ج.م مكافأة فورية عن كل صديق يسجل من خلال رابطك!</p>
-                <input type="text" id="referralLink" readonly value="https://ismael172000a-hub.github.io/tasawwoq-plus/?ref=user" style="width:100%; padding:10px; margin:10px 0; background:#0f172a; border:1px solid #334155; color:#fff; border-radius:8px;">
-                <button class="btn-buy" onclick="copyReferralLink()">نسخ رابط الدعوة</button>
-            </div>
-        </div>
+        </nav>
 
     </div>
 
-    <!-- Script -->
+    <!-- MODAL: Profile Settings (Change Name & Image) -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <span style="position:absolute; top:12px; left:12px; cursor:pointer;" onclick="closeModal('profileModal')">&times;</span>
+            <h3 style="font-size:16px; margin-bottom:12px;"><i class="fa-solid fa-user-gear"></i> إعدادات الحساب الشخصي</h3>
+            
+            <label style="font-size:12px;">تعديل الاسم:</label>
+            <input type="text" id="editNameInput" placeholder="اكتب اسمك الجديد">
+            
+            <label style="font-size:12px; margin-top:10px; display:block;">رابط صورة الحساب الشخصي (URL):</label>
+            <input type="text" id="editImgInput" placeholder="ضع رابط صورة جديدة هنا">
+            
+            <button class="btn-main" onclick="saveProfile()">حفظ التعديلات</button>
+        </div>
+    </div>
+
+    <!-- MODAL: Withdraw -->
+    <div id="withdrawModal" class="modal">
+        <div class="modal-content">
+            <span style="position:absolute; top:12px; left:12px; cursor:pointer;" onclick="closeModal('withdrawModal')">&times;</span>
+            <h3 style="font-size:16px; margin-bottom:12px;"><i class="fa-solid fa-money-bill-transfer"></i> سحب الأرباح</h3>
+            <input type="text" placeholder="رقم المحفظة (فودافون كاش)">
+            <input type="number" placeholder="المبلغ المراد سحبه">
+            <button class="btn-main" onclick="alert('تم إرسال طلب السحب بنجاح!'); closeModal('withdrawModal');">تأكيد السحب</button>
+        </div>
+    </div>
+
+    <!-- Script Logic -->
     <script>
-        let currentBalance = 50;
+        let currentUser = {
+            name: "المستخدم",
+            phone: "",
+            balance: 50,
+            image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100"
+        };
 
-        function handleLogin() {
-            const phone = document.getElementById('loginPhone').value.trim();
-            const pass = document.getElementById('loginPass').value.trim();
-
-            if (!phone || !pass) {
-                alert('يرجى إدخال رقم الهاتف وكلمة السر لدخول المنصة');
-                return;
-            }
-
-            // Hide Login Screen & Show Main Dashboard
+        function showScreen(screenId) {
             document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('mainDashboard').style.display = 'block';
-            document.getElementById('userPhoneDisplay').innerText = phone;
+            document.getElementById('registerScreen').style.display = 'none';
+            document.getElementById(screenId).style.display = 'flex';
         }
 
-        function openModal(id) {
-            document.getElementById(id).style.display = 'flex';
+        function processLogin() {
+            const phone = document.getElementById('loginPhone').value.trim();
+            if(!phone) { alert('يرجى إدخال رقم الهاتف'); return; }
+            currentUser.phone = phone;
+            currentUser.name = "مستخدم " + phone.slice(-4);
+            startApp();
         }
 
-        function closeModal(id) {
-            document.getElementById(id).style.display = 'none';
+        function processRegister() {
+            const name = document.getElementById('regName').value.trim();
+            const phone = document.getElementById('regPhone').value.trim();
+            if(!name || !phone) { alert('يرجى ملء جميع البيانات'); return; }
+            currentUser.name = name;
+            currentUser.phone = phone;
+            currentUser.balance = 50; // Welcome Bonus
+            startApp();
         }
 
-        function claimDailyBonus() {
-            currentBalance += 5;
-            document.getElementById('balanceDisplay').innerText = currentBalance;
-            alert('🎉 مبروك! حصلت على مكافأة الحضور اليومي بقيمة 5 ج.م');
+        function startApp() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('registerScreen').style.display = 'none';
+            document.getElementById('appContainer').style.display = 'flex';
+            updateUI();
         }
 
-        function buyPackage(price, name) {
-            alert(`طلب الاشتراك في ${name} بقيمة ${price} ج.م قيد المراجعة. يرجى التواصل مع خدمة العملاء عبر تليجرام لإتمام الإيداع.`);
+        function updateUI() {
+            document.getElementById('balanceDisplay').innerText = currentUser.balance;
+            document.getElementById('headerUserName').innerText = currentUser.name;
+            document.getElementById('headerUserImg').src = currentUser.image;
+            document.getElementById('editNameInput').value = currentUser.name;
+            document.getElementById('editImgInput').value = currentUser.image;
+        }
+
+        function switchTab(tabId, element) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            element.classList.add('active');
+        }
+
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+        function saveProfile() {
+            const newName = document.getElementById('editNameInput').value.trim();
+            const newImg = document.getElementById('editImgInput').value.trim();
+            if(newName) currentUser.name = newName;
+            if(newImg) currentUser.image = newImg;
+            updateUI();
+            closeModal('profileModal');
+            alert('تم تحديث بيانات الحساب بنجاح!');
+        }
+
+        function subscribePackage(price, name) {
+            alert(`طلب الاشتراك في ${name} بقيمة ${price} ج.م قيد المراجعة. تواصل مع خدمة العملاء عبر تليجرام للتفعيل.`);
             window.open('https://t.me/tasawwoq_plus', '_blank');
         }
 
-        function processWithdraw() {
-            const phone = document.getElementById('withdrawPhone').value;
-            const amount = parseFloat(document.getElementById('withdrawAmount').value);
-
-            if(!phone || !amount) {
-                alert('يرجى ملء جميع البيانات بشكل صحيح');
+        function completeTask(taskId, reward) {
+            const taskCard = document.getElementById('task*'.replace('*', taskId));
+            if(taskCard.classList.contains('completed')) {
+                alert('لقد قمت بإنجاز هذه المهمة مسبقاً اليوم!');
                 return;
             }
-
-            if(amount > currentBalance) {
-                alert('رصيدك غير كافٍ لإتمام طلب السحب!');
-                return;
-            }
-
-            alert(`تم إرسال طلب سحب ${amount} ج.م إلى الرقم ${phone} بنجاح! سيتم التحويل خلال 24 ساعة.`);
-            currentBalance -= amount;
-            document.getElementById('balanceDisplay').innerText = currentBalance;
-            closeModal('withdrawModal');
-        }
-
-        function copyReferralLink() {
-            const copyText = document.getElementById("referralLink");
-            copyText.select();
-            document.execCommand("copy");
-            alert("تم نسخ رابط الإحالة الخاص بك بنجاح!");
+            currentUser.balance += reward;
+            taskCard.classList.add('completed');
+            taskCard.querySelector('.task-btn').innerText = 'تم الإنجاز ✓';
+            taskCard.querySelector('.task-btn').style.background = '#64748b';
+            updateUI();
+            alert(`🎉 مبروك! تمت إنجاز المهمة بنجاح وتمت إضافة ${reward} ج.م لرصيدك.`);
         }
     </script>
 </body>
